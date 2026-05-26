@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:gco="http://www.isotc211.org/2005/gco"
+                 xmlns:gml="http://www.opengis.net/gml/3.2"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd">
+
+  <gmd:fileIdentifier>
+    <gco:CharacterString>acf90dc2-c359-481d-a4f5-3cc3ec7ad3a2</gco:CharacterString>
+  </gmd:fileIdentifier>
+
+  <gmd:language>
+    <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ind">ind</gmd:LanguageCode>
+  </gmd:language>
+
+  <gmd:characterSet>
+    <gmd:MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8">utf8</gmd:MD_CharacterSetCode>
+  </gmd:characterSet>
+
+  <gmd:hierarchyLevel>
+    <gmd:MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</gmd:MD_ScopeCode>
+  </gmd:hierarchyLevel>
+
+  <gmd:contact>
+    <gmd:CI_ResponsibleParty>
+      <gmd:individualName>
+        <gco:CharacterString>Komunitas Pemerhati Data Spasial Publik</gco:CharacterString>
+      </gmd:individualName>
+      <gmd:organisationName>
+        <gco:CharacterString>Komunitas Pemerhati Data Spasial Publik Kotawaringin Barat</gco:CharacterString>
+      </gmd:organisationName>
+      <gmd:positionName>
+        <gco:CharacterString>Kontributor Komunitas</gco:CharacterString>
+      </gmd:positionName>
+      <gmd:contactInfo>
+        <gmd:CI_Contact>
+          <gmd:phone><gmd:CI_Telephone><gmd:voice><gco:CharacterString></gco:CharacterString></gmd:voice></gmd:CI_Telephone></gmd:phone>
+          <gmd:address>
+            <gmd:CI_Address>
+              <gmd:deliveryPoint><gco:CharacterString>Kotawaringin Barat</gco:CharacterString></gmd:deliveryPoint>
+              <gmd:city><gco:CharacterString>Pangkalan Bun</gco:CharacterString></gmd:city>
+              <gmd:administrativeArea><gco:CharacterString>Kalimantan Tengah</gco:CharacterString></gmd:administrativeArea>
+              <gmd:postalCode><gco:CharacterString>74111</gco:CharacterString></gmd:postalCode>
+              <gmd:country><gco:CharacterString>Indonesia</gco:CharacterString></gmd:country>
+              <gmd:electronicMailAddress><gco:CharacterString>geospatial@ahliweb.id</gco:CharacterString></gmd:electronicMailAddress>
+            </gmd:CI_Address>
+          </gmd:address>
+          <gmd:onlineResource>
+            <gmd:CI_OnlineResource>
+              <gmd:linkage><gmd:URL>https://github.com/ahliweb/geo-first</gmd:URL></gmd:linkage>
+              <gmd:protocol><gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString></gmd:protocol>
+              <gmd:name><gco:CharacterString>Repositori Data Spasial Publik Kotawaringin Barat</gco:CharacterString></gmd:name>
+              <gmd:description><gco:CharacterString>Repositori terbuka data spasial publik</gco:CharacterString></gmd:description>
+            </gmd:CI_OnlineResource>
+          </gmd:onlineResource>
+        </gmd:CI_Contact>
+      </gmd:contactInfo>
+      <gmd:role>
+        <gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode>
+      </gmd:role>
+    </gmd:CI_ResponsibleParty>
+  </gmd:contact>
+
+  <gmd:dateStamp><gco:Date>2026-05-26</gco:Date></gmd:dateStamp>
+
+  <gmd:metadataStandardName><gco:CharacterString>SNI ISO 19115-3:2019</gco:CharacterString></gmd:metadataStandardName>
+  <gmd:metadataStandardVersion><gco:CharacterString>SNI 8843-1:2019</gco:CharacterString></gmd:metadataStandardVersion>
+
+  <gmd:referenceSystemInfo>
+    <gmd:MD_ReferenceSystem>
+      <gmd:referenceSystemIdentifier>
+        <gmd:RS_Identifier>
+          <gmd:code><gco:CharacterString>EPSG:4326</gco:CharacterString></gmd:code>
+          <gmd:codeSpace><gco:CharacterString>EPSG</gco:CharacterString></gmd:codeSpace>
+          <gmd:version><gco:CharacterString>9.4</gco:CharacterString></gmd:version>
+        </gmd:RS_Identifier>
+      </gmd:referenceSystemIdentifier>
+    </gmd:MD_ReferenceSystem>
+  </gmd:referenceSystemInfo>
+
+  <gmd:metadataExtensionInfo>
+    <gmd:MD_MetadataExtensionInformation>
+      <gmd:extensionOnLineResource>
+        <gmd:CI_OnlineResource>
+          <gmd:linkage><gmd:URL>https://github.com/ahliweb/geo-first</gmd:URL></gmd:linkage>
+          <gmd:protocol><gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString></gmd:protocol>
+          <gmd:name><gco:CharacterString>Repositori Data Spasial Publik Kotawaringin Barat</gco:CharacterString></gmd:name>
+          <gmd:description><gco:CharacterString>Kumpulan data spasial publik Kabupaten Kotawaringin Barat</gco:CharacterString></gmd:description>
+        </gmd:CI_OnlineResource>
+      </gmd:extensionOnLineResource>
+    </gmd:MD_MetadataExtensionInformation>
+  </gmd:metadataExtensionInfo>
+
+  <gmd:identificationInfo>
+    <gmd:MD_DataIdentification>
+      <gmd:citation>
+        <gmd:CI_Citation>
+          <gmd:title><gco:CharacterString>Batas Administrasi Kabupaten Kotawaringin Barat</gco:CharacterString></gmd:title>
+          <gmd:alternateTitle><gco:CharacterString>Administrative Boundaries of West Kotawaringin Regency</gco:CharacterString></gmd:alternateTitle>
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date><gco:Date>2026-05-26</gco:Date></gmd:date>
+              <gmd:dateType><gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode></gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date><gco:Date>2026-05-26</gco:Date></gmd:date>
+              <gmd:dateType><gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode></gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+          <gmd:identifier>
+            <gmd:MD_Identifier><gmd:code><gco:CharacterString>acf90dc2-c359-481d-a4f5-3cc3ec7ad3a2</gco:CharacterString></gmd:code></gmd:MD_Identifier>
+          </gmd:identifier>
+        </gmd:CI_Citation>
+      </gmd:citation>
+
+      <gmd:abstract>
+        <gco:CharacterString>Peta batas administrasi Kabupaten Kotawaringin Barat, Kalimantan Tengah, Indonesia. Dataset ini mencakup:
+
+1. Batas Kabupaten Kotawaringin Barat — diperoleh dari OpenStreetMap (boundary relation 16179711), diverifikasi dengan koordinat bbox resmi
+
+2. Batas Kecamatan (6 kecamatan) — diestimasi menggunakan metode Voronoi/Thiessen dari titik pusat kecamatan yang diketahui, di-intersect dengan batas kabupaten. BUKAN DATA RESMI.
+
+3. Pusat Kecamatan (6 titik) — koordinat ibukota kecamatan dari referensi publik
+
+6 Kecamatan:
+- Kumai (62.01.01, ibukota: Kumai Hulu)
+- Arut Selatan (62.01.02, ibukota: Pangkalan Bun)
+- Kotawaringin Lama (62.01.03, ibukota: Kotawaringin Hilir)
+- Arut Utara (62.01.04, ibukota: Pangkut)
+- Pangkalan Lada (62.01.05, ibukota: Pangkalan Lada)
+- Pangkalan Banteng (62.01.06, ibukota: Pangkalan Banteng)
+
+⚠️ PERINGATAN: Batas kecamatan adalah ESTIMASI KOMUNITAS, bukan data resmi. Untuk keperluan hukum atau administratif, gunakan data resmi dari BIG (tanahair.indonesia.go.id) atau Kemendagri.</gco:CharacterString>
+      </gmd:abstract>
+
+      <gmd:purpose>
+        <gco:CharacterString>Menyediakan data batas administrasi untuk visualisasi awal, perencanaan, pendidikan, dan analisis spasial non-hukum di Kabupaten Kotawaringin Barat.</gco:CharacterString>
+      </gmd:purpose>
+
+      <gmd:credit>
+        <gco:CharacterString>Batas kabupaten: OpenStreetMap contributors (ODbL). Batas kecamatan: estimasi komunitas menggunakan metode Voronoi dari titik pusat kecamatan.</gco:CharacterString>
+      </gmd:credit>
+
+      <gmd:status>
+        <gmd:MD_ProgressCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ProgressCode" codeListValue="onGoing">onGoing</gmd:MD_ProgressCode>
+      </gmd:status>
+
+      <gmd:pointOfContact>
+        <gmd:CI_ResponsibleParty>
+          <gmd:organisationName><gco:CharacterString>Komunitas Pemerhati Data Spasial Publik Kotawaringin Barat</gco:CharacterString></gmd:organisationName>
+          <gmd:contactInfo>
+            <gmd:CI_Contact>
+              <gmd:address>
+                <gmd:CI_Address>
+                  <gmd:electronicMailAddress><gco:CharacterString>geospatial@ahliweb.id</gco:CharacterString></gmd:electronicMailAddress>
+                </gmd:CI_Address>
+              </gmd:address>
+            </gmd:CI_Contact>
+          </gmd:contactInfo>
+          <gmd:role><gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="custodian">custodian</gmd:CI_RoleCode></gmd:role>
+        </gmd:CI_ResponsibleParty>
+      </gmd:pointOfContact>
+
+      <gmd:spatialRepresentationType>
+        <gmd:MD_SpatialRepresentationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="vector">vector</gmd:MD_SpatialRepresentationTypeCode>
+      </gmd:spatialRepresentationType>
+
+      <gmd:spatialResolution>
+        <gmd:MD_Resolution>
+          <gmd:equivalentScale>
+            <gmd:MD_RepresentativeFraction>
+              <gmd:denominator><gco:Integer>50000</gco:Integer></gmd:denominator>
+            </gmd:MD_RepresentativeFraction>
+          </gmd:equivalentScale>
+        </gmd:MD_Resolution>
+      </gmd:spatialResolution>
+
+      <gmd:language>
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ind">ind</gmd:LanguageCode>
+      </gmd:language>
+
+      <gmd:topicCategory><gmd:MD_TopicCategoryCode>boundaries</gmd:MD_TopicCategoryCode></gmd:topicCategory>
+      <gmd:topicCategory><gmd:MD_TopicCategoryCode>planningCadastre</gmd:MD_TopicCategoryCode></gmd:topicCategory>
+
+      <gmd:extent>
+        <gmd:EX_Extent>
+          <gmd:description><gco:CharacterString>Kabupaten Kotawaringin Barat, Kalimantan Tengah, Indonesia</gco:CharacterString></gmd:description>
+          <gmd:geographicElement>
+            <gmd:EX_GeographicBoundingBox>
+              <gmd:westBoundLongitude><gco:Decimal>111.2176</gco:Decimal></gmd:westBoundLongitude>
+              <gmd:eastBoundLongitude><gco:Decimal>112.1398</gco:Decimal></gmd:eastBoundLongitude>
+              <gmd:southBoundLatitude><gco:Decimal>-3.5253</gco:Decimal></gmd:southBoundLatitude>
+              <gmd:northBoundLatitude><gco:Decimal>-1.4832</gco:Decimal></gmd:northBoundLatitude>
+            </gmd:EX_GeographicBoundingBox>
+          </gmd:geographicElement>
+          <gmd:geographicElement>
+            <gmd:EX_GeographicDescription>
+              <gmd:geographicIdentifier>
+                <gmd:MD_Identifier>
+                  <gmd:code><gco:CharacterString>Kotawaringin Barat</gco:CharacterString></gmd:code>
+                  <gmd:codeSpace><gco:CharacterString>Kabupaten</gco:CharacterString></gmd:codeSpace>
+                </gmd:MD_Identifier>
+              </gmd:geographicIdentifier>
+            </gmd:EX_GeographicDescription>
+          </gmd:geographicElement>
+          <gmd:temporalElement>
+            <gmd:EX_TemporalExtent>
+              <gmd:extent>
+                <gml:TimePeriod gml:id="tp1">
+                  <gml:beginPosition>2026-05-26</gml:beginPosition>
+                  <gml:endPosition indeterminatePosition="now"/>
+                </gml:TimePeriod>
+              </gmd:extent>
+            </gmd:EX_TemporalExtent>
+          </gmd:temporalElement>
+        </gmd:EX_Extent>
+      </gmd:extent>
+
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword><gco:CharacterString>Batas Administrasi</gco:CharacterString></gmd:keyword>
+          <gmd:keyword><gco:CharacterString>Kabupaten</gco:CharacterString></gmd:keyword>
+          <gmd:keyword><gco:CharacterString>Kecamatan</gco:CharacterString></gmd:keyword>
+          <gmd:keyword><gco:CharacterString>Kotawaringin Barat</gco:CharacterString></gmd:keyword>
+          <gmd:keyword><gco:CharacterString>Kalimantan Tengah</gco:CharacterString></gmd:keyword>
+          <gmd:type><gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</gmd:MD_KeywordTypeCode></gmd:type>
+          <gmd:thesaurusName><gmd:CI_Citation><gmd:title><gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString></gmd:title></gmd:CI_Citation></gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword><gco:CharacterString>Kotawaringin Barat</gco:CharacterString></gmd:keyword>
+          <gmd:keyword><gco:CharacterString>Pangkalan Bun</gco:CharacterString></gmd:keyword>
+          <gmd:keyword><gco:CharacterString>Kumai</gco:CharacterString></gmd:keyword>
+          <gmd:keyword><gco:CharacterString>Kalimantan Tengah</gco:CharacterString></gmd:keyword>
+          <gmd:type><gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="place">place</gmd:MD_KeywordTypeCode></gmd:type>
+          <gmd:thesaurusName><gmd:CI_Citation><gmd:title><gco:CharacterString>GeoNames</gco:CharacterString></gmd:title></gmd:CI_Citation></gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+
+      <gmd:resourceConstraints>
+        <gmd:MD_LegalConstraints>
+          <gmd:useLimitation>
+            <gco:CharacterString>Data batas kabupaten: Open Database License (ODbL) v1.0. Batas kecamatan: estimasi komunitas, tidak mengikat secara hukum.</gco:CharacterString>
+          </gmd:useLimitation>
+          <gmd:accessConstraints><gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license">license</gmd:MD_RestrictionCode></gmd:accessConstraints>
+          <gmd:useConstraints><gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license">license</gmd:MD_RestrictionCode></gmd:useConstraints>
+          <gmd:otherConstraints>
+            <gco:CharacterString>Wajib mencantumkan atribusi: "OpenStreetMap contributors (ODbL)" dan "Estimasi batas kecamatan: Komunitas Pemerhati Data Spasial Publik".</gco:CharacterString>
+          </gmd:otherConstraints>
+        </gmd:MD_LegalConstraints>
+      </gmd:resourceConstraints>
+
+      <gmd:resourceConstraints>
+        <gmd:MD_Constraints>
+          <gmd:useLimitation>
+            <gco:CharacterString>⚠️ BATAS KECAMATAN ADALAH ESTIMASI KOMUNITAS, BUKAN DATA RESMI. Dihasilkan dari metode Voronoi/Thiessen menggunakan titik pusat kecamatan. TIDAK dapat digunakan untuk keperluan hukum, penetapan batas wilayah, atau keputusan administratif. Untuk data resmi, hubungi BIG (Badan Informasi Geospasial) atau Kemendagri.</gco:CharacterString>
+          </gmd:useLimitation>
+        </gmd:MD_Constraints>
+      </gmd:resourceConstraints>
+
+      <gmd:defaultLocale>
+        <gmd:PT_Locale>
+          <gmd:language><gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ind">ind</gmd:LanguageCode></gmd:language>
+          <gmd:country><gmd:Country codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#Country" codeListValue="IDN">IDN</gmd:Country></gmd:country>
+          <gmd:characterEncoding><gmd:MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8">utf8</gmd:MD_CharacterSetCode></gmd:characterEncoding>
+        </gmd:PT_Locale>
+      </gmd:defaultLocale>
+    </gmd:MD_DataIdentification>
+  </gmd:identificationInfo>
+
+  <gmd:distributionInfo>
+    <gmd:MD_Distribution>
+      <gmd:distributionFormat>
+        <gmd:MD_Format>
+          <gmd:name><gco:CharacterString>ESRI Shapefile</gco:CharacterString></gmd:name>
+          <gmd:version><gco:CharacterString>1.0</gco:CharacterString></gmd:version>
+          <gmd:specification><gco:CharacterString>ESRI Shapefile Technical Description</gco:CharacterString></gmd:specification>
+        </gmd:MD_Format>
+      </gmd:distributionFormat>
+      <gmd:distributionFormat>
+        <gmd:MD_Format>
+          <gmd:name><gco:CharacterString>GeoPackage 1.3</gco:CharacterString></gmd:name>
+          <gmd:version><gco:CharacterString>1.3.0</gco:CharacterString></gmd:version>
+          <gmd:specification><gco:CharacterString>OGC GeoPackage Encoding Standard 1.3.0</gco:CharacterString></gmd:specification>
+        </gmd:MD_Format>
+      </gmd:distributionFormat>
+      <gmd:transferOptions>
+        <gmd:MD_DigitalTransferOptions>
+          <gmd:unitsOfDistribution><gco:CharacterString>File Shapefile (.shp/.shx/.dbf/.prj/.cpg), GeoPackage (.gpkg), dan project QGIS (.qgs)</gco:CharacterString></gmd:unitsOfDistribution>
+          <gmd:onLine>
+            <gmd:CI_OnlineResource>
+              <gmd:linkage><gmd:URL>https://github.com/ahliweb/geo-first</gmd:URL></gmd:linkage>
+              <gmd:protocol><gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString></gmd:protocol>
+              <gmd:name><gco:CharacterString>Repositori Data Spasial Publik Kotawaringin Barat</gco:CharacterString></gmd:name>
+              <gmd:description><gco:CharacterString>Akses data melalui repositori GitHub</gco:CharacterString></gmd:description>
+              <gmd:function><gmd:CI_OnLineFunctionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">download</gmd:CI_OnLineFunctionCode></gmd:function>
+            </gmd:CI_OnlineResource>
+          </gmd:onLine>
+        </gmd:MD_DigitalTransferOptions>
+      </gmd:transferOptions>
+    </gmd:MD_Distribution>
+  </gmd:distributionInfo>
+
+  <gmd:dataQualityInfo>
+    <gmd:DQ_DataQuality>
+      <gmd:scope>
+        <gmd:DQ_Scope>
+          <gmd:level><gmd:MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</gmd:MD_ScopeCode></gmd:level>
+        </gmd:DQ_Scope>
+      </gmd:scope>
+      <gmd:lineage>
+        <gmd:LI_Lineage>
+          <gmd:statement>
+            <gco:CharacterString>Batas kabupaten: diekstrak dari OpenStreetMap relation 16179711 pada 26 Mei 2026. Batas kecamatan: diestimasi menggunakan metode Voronoi/Thiessen dari 6 titik pusat kecamatan yang diketahui dari sumber publik, kemudian di-intersect dengan batas kabupaten OSM. Akurasi batas kecamatan terbatas — hanya cocok untuk visualisasi dan analisis awal. Untuk keputusan resmi, selalu gunakan data dari BIG atau Kemendagri.</gco:CharacterString>
+          </gmd:statement>
+          <gmd:processStep>
+            <gmd:LI_ProcessStep>
+              <gmd:description>
+                <gco:CharacterString>1. Batas kabupaten Kotawaringin Barat diunduh dari OSM API (relation 16179711) menggunakan 11 way member. 2. Titik pusat 6 kecamatan dikumpulkan dari referensi publik. 3. Batas kecamatan diestimasi menggunakan partisi Voronoi/Thiessen dari titik pusat, di-intersect dengan poligon batas kabupaten. 4. Data dikonversi ke format GeoPackage dan ESRI Shapefile (EPSG:4326, UTF-8).</gco:CharacterString>
+              </gmd:description>
+              <gmd:dateTime><gco:DateTime>2026-05-26T00:00:00</gco:DateTime></gmd:dateTime>
+            </gmd:LI_ProcessStep>
+          </gmd:processStep>
+          <gmd:source>
+            <gmd:LI_Source>
+              <gmd:description><gco:CharacterString>OpenStreetMap - batas kabupaten dari OSM relation 16179711. Titik pusat kecamatan dari referensi koordinat publik.</gco:CharacterString></gmd:description>
+              <gmd:sourceCitation>
+                <gmd:CI_Citation>
+                  <gmd:title><gco:CharacterString>OpenStreetMap Boundary - Kotawaringin Barat (Admin Level 5)</gco:CharacterString></gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date><gco:Date>2026-05-26</gco:Date></gmd:date>
+                      <gmd:dateType><gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode></gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                </gmd:CI_Citation>
+              </gmd:sourceCitation>
+            </gmd:LI_Source>
+          </gmd:source>
+        </gmd:LI_Lineage>
+      </gmd:lineage>
+    </gmd:DQ_DataQuality>
+  </gmd:dataQualityInfo>
+</gmd:MD_Metadata>

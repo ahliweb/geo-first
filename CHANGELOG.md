@@ -1,9 +1,31 @@
 # Changelog
 
-Semua perubahan yang signifikan pada repositori ini akan dicatat dalam file ini.
-
 Format berdasarkan [Keep a Changelog](https://keepachangelog.com/id/1.0.0/),
 dan proyek ini mengikuti [Semantic Versioning](https://semver.org/lang/id/).
+
+---
+
+## [1.1.0] - 2026-05-26
+
+### Added
+- Batas administrasi Kabupaten Kotawaringin Barat dari OSM (relation 16179711)
+- Batas 6 kecamatan (estimasi Voronoi/Thiessen dari pusat kecamatan)
+- Titik pusat kecamatan (6 ibukota kecamatan)
+- Shapefile + GeoPackage untuk semua layer admin
+- Project QGIS `batas_admin_kobar.qgs` dengan style per kecamatan
+- Script PyQGIS `scripts/export_batas_admin.py` untuk ekspor SVG/PNG
+- Metadata SNI ISO 19115-3:2019 untuk batas admin
+- Ekspor SVG mandiri via GDAL (tanpa QGIS)
+
+### Layer
+| Layer | Geometri | Fitur | Sumber |
+|-------|----------|-------|--------|
+| kabupaten | Polygon | 1 | OSM |
+| kecamatan | Polygon | 6 | Estimasi Voronoi |
+| pusat_kecamatan | Point | 6 | Koordinat publik |
+
+### ⚠️ Disclaimer
+Batas kecamatan adalah ESTIMASI komunitas, BUKAN data resmi BIG/Mendagri.
 
 ---
 
@@ -39,7 +61,7 @@ dan proyek ini mengikuti [Semantic Versioning](https://semver.org/lang/id/).
 
 ## [Unreleased]
 ### Planned
-- Batas administrasi desa/kelurahan
+- Batas administrasi desa/kelurahan (resmi)
 - Data kependudukan (BPS)
 - Peta rawan bencana
 - Peta tata ruang (RTRW)
