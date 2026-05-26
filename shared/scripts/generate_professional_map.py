@@ -145,9 +145,17 @@ def style_kecamatan(layer):
     ls.dist = 1.5
 
     fmt = QgsTextFormat()
-    fmt.setFont(QFont('Sans Serif', 9, QFont.Bold))
-    fmt.setSize(9)
-    fmt.setColor(QColor(80, 80, 80))
+    fmt.setFont(QFont('Sans Serif', 8, QFont.Bold))
+    fmt.setSize(8)
+    fmt.setColor(QColor(60, 60, 60))
+    
+    # Add white buffer (halo)
+    buffer = QgsTextBufferSettings()
+    buffer.setEnabled(True)
+    buffer.setSize(0.8)
+    buffer.setColor(QColor(255, 255, 255, 180))
+    fmt.setBuffer(buffer)
+    
     ls.setFormat(fmt)
 
     layer.setLabelsEnabled(True)
@@ -155,30 +163,14 @@ def style_kecamatan(layer):
 
 
 def style_desa(layer):
-    """Apply desa boundary style with subtle labels."""
+    """Apply desa boundary style with labels disabled for regency-scale clarity."""
     layer.renderer().setSymbol(QgsFillSymbol.createSimple({
         'color': 'transparent',
-        'outline_color': '#b0b0b0',
-        'outline_width': '0.2',
+        'outline_color': '#c0c0c0',
+        'outline_width': '0.15',
         'outline_style': 'dash'
     }))
-
-    # Labels
-    ls = QgsPalLayerSettings()
-    ls.fieldName = 'nama'
-    ls.enabled = True
-    ls.placement = QgsPalLayerSettings.OverPoint
-    ls.priority = 1
-    ls.dist = 0.5
-
-    fmt = QgsTextFormat()
-    fmt.setFont(QFont('Sans Serif', 6))
-    fmt.setSize(5.5)
-    fmt.setColor(QColor(150, 150, 150))
-    ls.setFormat(fmt)
-
-    layer.setLabelsEnabled(True)
-    layer.setLabeling(QgsVectorLayerSimpleLabeling(ls))
+    layer.setLabelsEnabled(False)
 
 
 def style_roads(layer):
@@ -213,12 +205,12 @@ def style_buildings(layer):
 def style_faskes(layer):
     """Apply health facility categorized style."""
     cats = {
-        'rumah_sakit': ('Rumah Sakit', '#d73027', 10),
-        'puskesmas': ('Puskesmas', '#4575b4', 8),
-        'klinik': ('Klinik', '#1a9850', 7),
-        'posyandu': ('Posyandu', '#f46d43', 6),
-        'apotek': ('Apotek', '#91219e', 6),
-        'pustu': ('Pustu', '#663399', 5),
+        'rumah_sakit': ('Rumah Sakit', '#d73027', 3.0),
+        'puskesmas': ('Puskesmas', '#4575b4', 2.6),
+        'klinik': ('Klinik', '#1a9850', 2.4),
+        'posyandu': ('Posyandu', '#f46d43', 2.0),
+        'apotek': ('Apotek', '#91219e', 2.0),
+        'pustu': ('Pustu', '#663399', 1.8),
     }
 
     renderer = QgsCategorizedSymbolRenderer('kategori')
@@ -228,7 +220,7 @@ def style_faskes(layer):
             'color': color,
             'size': str(size),
             'outline_color': '#ffffff',
-            'outline_width': '1.0'
+            'outline_width': '0.25'
         })
         renderer.addCategory(QgsRendererCategory(val, sym, label, True))
 
@@ -241,26 +233,34 @@ def style_faskes(layer):
     fl.placement = QgsPalLayerSettings.OverPoint
     fl.priority = 5
     fl.dist = 1.0
-    fl.yOffset = 2.5
+    fl.yOffset = 1.8
 
     ff = QgsTextFormat()
-    ff.setFont(QFont('Sans Serif', 7))
-    ff.setSize(7)
+    ff.setFont(QFont('Sans Serif', 6))
+    ff.setSize(6)
     ff.setColor(QColor(30, 30, 30))
+    
+    # Add white buffer (halo)
+    buffer = QgsTextBufferSettings()
+    buffer.setEnabled(True)
+    buffer.setSize(0.6)
+    buffer.setColor(QColor(255, 255, 255, 200))
+    ff.setBuffer(buffer)
+    
     fl.setFormat(ff)
 
     layer.setLabelsEnabled(True)
     layer.setLabeling(QgsVectorLayerSimpleLabeling(fl))
 
 
-def style_generic_point(layer, color='#333333', size=4):
+def style_generic_point(layer, color='#333333', size=2.5):
     """Apply generic point style."""
     layer.renderer().setSymbol(QgsMarkerSymbol.createSimple({
         'name': 'circle',
         'color': color,
         'size': str(size),
         'outline_color': '#ffffff',
-        'outline_width': '0.5'
+        'outline_width': '0.2'
     }))
 
 
@@ -567,13 +567,34 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     legend.setFrameStrokeColor(QColor(100, 100, 100))
     legend.setFrameStrokeWidth(QgsLayoutMeasurement(0.3, QgsUnitTypes.LayoutMillimeters))
     legend.setBackgroundColor(QColor(255, 255, 255, 245))
-    legend.setSymbolHeight(3.5)
-    legend.setSymbolWidth(5)
-    legend.setColumnSpace(2)
+    legend.setSymbolHeight(2.5)
+    legend.setSymbolWidth(4.0)
+    legend.setColumnSpace(1.5)
+    legend.setBoxSpace(1.5)
+    legend.setColumnCount(2)
+
+    # Tighten spacing by adjusting style margins and applying custom text format
+    for s_type in [QgsLegendStyle.Title, QgsLegendStyle.Group, QgsLegendStyle.Subgroup, QgsLegendStyle.SymbolLabel]:
+        fmt = QgsTextFormat()
+        is_bold = s_type in [QgsLegendStyle.Title, QgsLegendStyle.Group, QgsLegendStyle.Subgroup]
+        font_size = 8.5 if s_type == QgsLegendStyle.Title else (7.5 if s_type == QgsLegendStyle.Group else (7.0 if s_type == QgsLegendStyle.Subgroup else 6.5))
+        fmt.setFont(QFont('Sans Serif', int(font_size), QFont.Bold if is_bold else QFont.Normal))
+        fmt.setSize(font_size)
+        fmt.setColor(QColor(40, 40, 40))
+        legend.rstyle(s_type).setTextFormat(fmt)
+
+    # Set custom style margins (Top, Bottom, Left, Right)
+    legend.rstyle(QgsLegendStyle.Title).setMargin(QgsLegendStyle.Bottom, 1.5)
+    legend.rstyle(QgsLegendStyle.Group).setMargin(QgsLegendStyle.Top, 1.5)
+    legend.rstyle(QgsLegendStyle.Subgroup).setMargin(QgsLegendStyle.Top, 1.5)
+    legend.rstyle(QgsLegendStyle.Symbol).setMargin(QgsLegendStyle.Top, 0.5)
+    legend.rstyle(QgsLegendStyle.SymbolLabel).setMargin(QgsLegendStyle.Top, 0.5)
+    legend.rstyle(QgsLegendStyle.SymbolLabel).setMargin(QgsLegendStyle.Left, 1.0)
 
     root = QgsLayerTree()
-    # Only add groups that have layers
-    admin_names = [n for n in ['kabupaten', 'desa', 'kecamatan'] if n in loaded_by_name]
+    # In the legend, we only display Kecamatan (colored areas) and thematic layer.
+    # kabupaten outline and desa boundary dashed lines are self-explanatory and clutter the legend.
+    admin_names = [n for n in ['kecamatan'] if n in loaded_by_name]
     if admin_names:
         admin_group = root.addGroup('Peta Dasar')
         for layer_name in admin_names:
@@ -600,16 +621,21 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     legend.adjustBoxSize()
     layout.addLayoutItem(legend)
 
-    # Footer
-    footer = _make_label(
-        layout,
-        'Sumber Data: Kotawaringin Barat Geospatial Community  |  '
-        'Standar: SNI ISO 19115-3:2019 / BIG  |  '
-        'Proyeksi: EPSG:4326 (WGS 84)  |  '
-        'Dibuat: 2026',
-        5, color=QColor(136, 136, 136)
+    # Footer metadata (relocated to bottom of sidebar)
+    footer_text = (
+        "SUMBER DATA:\n"
+        "• Kobar Geospatial Community\n"
+        "• OpenStreetMap Contributors\n"
+        "• Kemenkes RI (Fasilitas Kesehatan)\n\n"
+        "STANDAR METADATA:\n"
+        "• SNI ISO 19115-3:2019 / BIG\n\n"
+        "SISTEM KOORDINAT:\n"
+        "• Proyeksi: EPSG:4326 (WGS 84)\n\n"
+        "Dibuat: Mei 2026  |  Lisensi: AW-NC-1.0"
     )
-    footer.attemptMove(QgsLayoutPoint(MARGIN, 200, QgsUnitTypes.LayoutMillimeters))
+    footer = _make_label(layout, footer_text, 5.5, color=QColor(120, 120, 120))
+    footer.attemptMove(QgsLayoutPoint(SIDEBAR_LEFT, 145, QgsUnitTypes.LayoutMillimeters))
+    footer.attemptResize(QgsLayoutSize(SIDEBAR_WIDTH, 55, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(footer)
 
     if layout not in mgr.layouts():
