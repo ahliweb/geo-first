@@ -2,6 +2,9 @@
 
 AI-assisted geospatial data management and professional map generation for Kotawaringin Barat Regency, Central Kalimantan.
 
+For the quick start, see `docs/guides/sopd-quick-start.md`.
+For the master manual, see `docs/guides/manual-automatic-map-production.md`.
+
 ## Quick Start
 
 ### Generate a Professional Map
@@ -17,6 +20,16 @@ python3 shared/scripts/generate_professional_map.py \
 ```
 
 Warning: if output filenames already exist, they will be overwritten.
+
+Typical inputs:
+- CSV / GeoJSON / VRT / GeoPackage point data
+- Base map layers: `kabupaten`, `kecamatan`, `desa`
+- Sector profile from `shared/config/sector_profiles.json`
+
+Typical outputs:
+- PNG, PDF, SVG
+- QGIS project file with relative paths
+- ISO 19139 metadata XML
 
 ### Create a New Project
 

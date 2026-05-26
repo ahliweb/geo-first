@@ -4,6 +4,9 @@ Step-by-step guide for adding health facility data (puskesmas, hospitals, clinic
 
 The map generator prefers the project GeoPackage when available and uses the village/sub-district base map (`kabupaten`, `kecamatan`, `desa`) by default.
 
+For the quick start, see `docs/guides/sopd-quick-start.md`.
+For the master manual, see `docs/guides/manual-automatic-map-production.md`.
+
 ---
 
 ## 1. Data Structure

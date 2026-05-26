@@ -2,6 +2,9 @@
 
 Geospatial map project for Kotawaringin Barat Regency.
 
+For the quick start, see `../../docs/guides/sopd-quick-start.md`.
+For the master manual, see `../../docs/guides/manual-automatic-map-production.md`.
+
 ## Project Structure
 
 ```

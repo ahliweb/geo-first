@@ -2,6 +2,9 @@
 
 This guide defines a consistent workflow for SOPDs that need to produce sector maps while staying aligned with BIG / PALAPA expectations.
 
+For a fast operator-facing version, see `docs/guides/sopd-quick-start.md`.
+For the master manual, see `docs/guides/manual-automatic-map-production.md`.
+
 ## Core Rules
 
 - Use `kabupaten`, `kecamatan`, and `desa` as the base map.

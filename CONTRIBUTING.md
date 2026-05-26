@@ -2,6 +2,8 @@
 
 This project is a community initiative for public geospatial data. Data sources are open and official (OpenStreetMap, BIG/Kemendagri, BPS), not sensitive government data. Contributions are open to anyone.
 
+For the master manual, see `docs/guides/manual-automatic-map-production.md`.
+
 ## License
 
 This repository is licensed under the **AW Non-Commercial License 1.0**.

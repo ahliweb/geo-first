@@ -18,3 +18,4 @@ Generate Geoportal-ready metadata automatically from project inputs using a sing
 ## Notes
 - This work stays within the AW Non-Commercial License 1.0.
 - Commercial use requires separate written permission.
+- Follow `docs/guides/manual-automatic-map-production.md` as the implementation reference.

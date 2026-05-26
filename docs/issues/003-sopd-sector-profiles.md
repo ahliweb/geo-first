@@ -17,3 +17,4 @@ Make the repository usable by SOPDs so they can generate maps by sector, duties,
 ## Notes
 - This work stays within the AW Non-Commercial License 1.0.
 - Commercial use requires separate written permission.
+- Follow `docs/guides/manual-automatic-map-production.md` as the implementation reference.

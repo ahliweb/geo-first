@@ -101,6 +101,24 @@ Or use PyQGIS directly (see `shared/scripts/` for templates).
 
 For SOPD workflows, prefer the sector profile registry in `shared/config/sector_profiles.json` and keep `kabupaten`, `kecamatan`, and `desa` as the base map.
 
+### 4a. Automatic Map Workflow From Coordinates
+
+This repository is optimized for automatic map generation from coordinate data and descriptive attributes.
+
+For a compact operator-facing version, see `docs/guides/sopd-quick-start.md`.
+For the master manual, see `docs/guides/manual-automatic-map-production.md`.
+
+Canonical workflow:
+1. Create or ingest coordinate data in CSV, GeoJSON, VRT, or GeoPackage.
+2. Validate `longitude`/`latitude` and required attributes such as `nama` and `kategori`.
+3. Build or update a project GeoPackage in `projects/<name>/data/`.
+4. Generate metadata with `shared/scripts/generate_big_metadata.py`.
+5. Render the map with `shared/scripts/generate_professional_map.py`.
+6. Export PNG, PDF, SVG, and a reusable QGIS project.
+7. Warn users that same-named outputs are overwritten.
+
+Prefer GeoPackage-first packaging. Treat shapefiles as interchange artifacts, not the primary project source.
+
 ### 5. Metadata Generation
 
 - Format: ISO 19115-3 / ISO 19139 (CatMDEdit compatible)
