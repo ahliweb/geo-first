@@ -21,6 +21,7 @@ faskes-kobar/
 - **Project GeoPackage**: `data/faskes_kobar.gpkg` — contains `kabupaten`, `kecamatan`, `desa`, and `faskes`
 - **Example data**: `data/faskes_contoh.csv` — 10 sample health facility points
 - **Shapefile**: `shapefiles/faskes.shp` — derived from CSV via VRT
+- **Base map**: `kabupaten`, `kecamatan`, and `desa` are the cartographic base layers
 
 ## Generate Maps
 
@@ -51,6 +52,8 @@ All exports use the village/sub-district administrative boundary map as the cart
 - `desa`
 
 Thematic layers are rendered on top of this base map.
+
+If a filename already exists in `output/`, the next export replaces it.
 
 ## License
 

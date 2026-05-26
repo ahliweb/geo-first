@@ -10,6 +10,9 @@ This guide defines a consistent workflow for SOPDs that need to produce sector m
 - Write metadata before publication.
 - Keep all outputs in `projects/<project-name>/output/`.
 - If an output filename already exists, the generator will overwrite it.
+- Keep the project GeoPackage in `projects/<project-name>/data/<project-name>.gpkg` when possible.
+
+The generator prefers the project GeoPackage over shapefiles when both exist.
 
 ## Sector Profiles
 
@@ -24,7 +27,7 @@ Use `shared/config/sector_profiles.json` to select a sector profile:
 ## Typical Flow
 
 1. Create a new project from `projects/_template/`.
-2. Add sector data into `projects/<project>/data/` and `shapefiles/`.
+2. Add sector data into `projects/<project>/data/` and `shapefiles/` if needed, but prefer the GeoPackage workflow.
 3. Generate metadata with `shared/scripts/generate_big_metadata.py`.
 4. Render maps with `shared/scripts/generate_professional_map.py`.
 5. Export PNG, PDF, and SVG.

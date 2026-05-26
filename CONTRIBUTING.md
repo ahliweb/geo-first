@@ -35,7 +35,7 @@ git checkout -b feat/add-<map-name>
 
 ### 2. Add Data
 
-- Place shapefiles in `projects/<name>/shapefiles/<name>.shp`
+- Prefer GeoPackage in `projects/<name>/data/<name>.gpkg`; if needed, place shapefiles in `projects/<name>/shapefiles/<name>.shp`
 - Format: EPSG:4326, UTF-8 encoding
 - If from GeoPackage/GeoJSON, convert with `ogr2ogr`
 
@@ -43,7 +43,7 @@ git checkout -b feat/add-<map-name>
 
 - Open the relevant `.qgs` project in QGIS, add new layers, configure styles
 - Or create a new project in the project directory
-- Save the project, ensure datasource paths are relative (`../../shared/shapefiles/...`)
+- Save the project, ensure datasource paths are relative and prefer `../data/<name>.gpkg|layername=<layer>` when available
 - Validate XML: `python3 -c "import xml.etree.ElementTree as ET; ET.parse('project.qgs')"`
 
 ### 4. Metadata (PALAPA/SIMPADU BIG)

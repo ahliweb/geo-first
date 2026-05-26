@@ -79,8 +79,10 @@ for layer in kabupaten kecamatan desa; do
     "projects/<name>/shapefiles/${layer}.shp" \
     projects/<name>/data/admin.gpkg "$layer" \
     -lco ENCODING=UTF-8
-done
+  done
 ```
+
+Prefer GeoPackage-first project packaging whenever possible. Use shapefiles only for interchange or legacy compatibility.
 
 ### 4. Map Generation
 
@@ -123,6 +125,7 @@ For SOPD workflows, prefer the sector profile registry in `shared/config/sector_
 - **Metadata**: `theme_metadata.xml` in `projects/<name>/metadata/`
 - **Projects**: `project-name` (kebab-case) — e.g., `faskes-kobar`, `sekolah-kobar`
 - **Outputs**: `peta_<theme>_<region>.<ext>` — e.g., `peta_faskes_kobar.png`
+- **Base map**: always include `kabupaten`, `kecamatan`, and `desa` before thematic layers
 
 ## Shared Datasets
 
@@ -153,12 +156,12 @@ For SOPD workflows, prefer the sector profile registry in `shared/config/sector_
 
 ## Pre-Commit Validation Checklist
 
-1. `ogrinfo projects/<name>/shapefiles/layer.shp layer` — Feature Count > 0
+1. `ogrinfo projects/<name>/data/<name>.gpkg layer` or `ogrinfo projects/<name>/shapefiles/layer.shp layer` — Feature Count > 0
 2. QGS XML valid (parse test)
 3. Metadata XML valid (ISO 19139 namespace)
 4. Metadata FileIdentifier is valid UUID
 5. Metadata Language uses `gmd:LanguageCode`, NOT `gco:CharacterString`
-6. QGS datasource paths use relative paths (`../../shared/shapefiles/...`)
+6. QGS datasource paths use relative paths and prefer `../data/<name>.gpkg|layername=<layer>` when available
 7. No temp files committed (`.osm`, `.tmp`, `.bak`)
 8. All outputs in `projects/<name>/output/` directory
 

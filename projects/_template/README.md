@@ -35,6 +35,8 @@ The generator also writes a reusable QGIS project into `qgis/` with relative dat
 
 If your project includes an integrated GeoPackage, keep it in `data/` and name it after the project.
 
+If an output filename already exists, the next export replaces it.
+
 ## License
 
 This project is licensed under the **AW Non-Commercial License 1.0**.

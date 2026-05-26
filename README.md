@@ -34,6 +34,8 @@ python3 shared/scripts/generate_professional_map.py \
   --output-format png,pdf
 ```
 
+Use the project GeoPackage when available. The generator will prefer `projects/<name>/data/<name>.gpkg` before shapefiles.
+
 ## Repository Structure
 
 ```
@@ -71,6 +73,7 @@ geo-first/
 - **Admin Boundaries**: Kemendagri 2020
 - **Coordinate System**: EPSG:4326
 - **Base Map**: kabupaten + kecamatan + desa/kelurahan
+- **Overwrite Behavior**: same-named outputs are replaced by the next export
 
 ## License
 

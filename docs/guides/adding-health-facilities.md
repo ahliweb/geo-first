@@ -2,6 +2,8 @@
 
 Step-by-step guide for adding health facility data (puskesmas, hospitals, clinics, posyandu, pharmacies) to this repository, ready for PALAPA geoportal upload and PyQGIS processing.
 
+The map generator prefers the project GeoPackage when available and uses the village/sub-district base map (`kabupaten`, `kecamatan`, `desa`) by default.
+
 ---
 
 ## 1. Data Structure
@@ -43,7 +45,7 @@ Projection **EPSG:4326** (WGS 84), encoding **UTF-8**.
 
 ### Option A: CSV → Shapefile
 
-1. Create CSV file at `projects/<name>/data/faskes.csv`:
+1. Create CSV file at `projects/<name>/data/faskes.csv` (or reuse the project GeoPackage when the project is already built):
 
 ```csv
 osm_id,nama,kategori,sub_kategori,operator,alamat,kecamatan,desa,telepon,sumber,lon,lat
@@ -95,6 +97,7 @@ python3 shared/scripts/generate_professional_map.py \
 ```
 
 The map base uses `kabupaten`, `kecamatan`, and `desa` as the administrative reference.
+The generator will overwrite files with matching names in `output/`.
 
 Output files will be placed in `projects/<name>/output/`.
 
