@@ -411,10 +411,10 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     MARGIN = 8
     MAP_TOP = 28
     MAP_LEFT = MARGIN
-    MAP_WIDTH = 190
-    MAP_HEIGHT = 155
+    MAP_WIDTH = 120
+    MAP_HEIGHT = 261
     SIDEBAR_LEFT = MAP_LEFT + MAP_WIDTH + 4
-    SIDEBAR_WIDTH = 297 - SIDEBAR_LEFT - MARGIN
+    SIDEBAR_WIDTH = 210 - SIDEBAR_LEFT - MARGIN
 
     ext = extent_layer.extent()
     pad_x = (ext.xMaximum() - ext.xMinimum()) * 0.12
@@ -460,7 +460,7 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     except Exception:
         pass
     page = layout.pageCollection().page(0)
-    page.setPageSize(QgsLayoutSize(297, 210, QgsUnitTypes.LayoutMillimeters))
+    page.setPageSize(QgsLayoutSize(210, 297, QgsUnitTypes.LayoutMillimeters))
 
 
     # Main map
@@ -528,7 +528,7 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
         label.adjustSizeToText()
         return label
 
-    title = _make_label(layout, profile.get('title', 'PETA').upper(), 16, bold=True)
+    title = _make_label(layout, profile.get('title', 'PETA').upper(), 14, bold=True)
     title.attemptMove(QgsLayoutPoint(MARGIN, 4, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(title)
 
@@ -541,14 +541,14 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     note.attemptMove(QgsLayoutPoint(MARGIN, 20, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(note)
 
-    # North arrow
+    # North arrow (centered in the 70mm sidebar)
     north = QgsLayoutItemPicture(layout)
     north.setPicturePath('/usr/share/qgis/svg/arrows/NorthArrow_01.svg')
     north.attemptResize(QgsLayoutSize(12, 16, QgsUnitTypes.LayoutMillimeters))
-    north.attemptMove(QgsLayoutPoint(SIDEBAR_LEFT + 2, MAP_TOP + 2, QgsUnitTypes.LayoutMillimeters))
+    north.attemptMove(QgsLayoutPoint(SIDEBAR_LEFT + 29, MAP_TOP + 2, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(north)
 
-    # Scale bar
+    # Scale bar (placed inside the map frame in the bottom-left corner)
     scalebar = QgsLayoutItemScaleBar(layout)
     scalebar.setStyle('Line Ticks Up')
     scalebar.setLinkedMap(main_map)
@@ -556,7 +556,9 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     scalebar.setNumberOfSegments(2)
     scalebar.setNumberOfSegmentsLeft(0)
     scalebar.setUnitLabel('km')
-    scalebar.attemptMove(QgsLayoutPoint(MAP_LEFT + 5, MAP_TOP + MAP_HEIGHT + 4, QgsUnitTypes.LayoutMillimeters))
+    scalebar.attemptMove(QgsLayoutPoint(MAP_LEFT + 5, MAP_TOP + MAP_HEIGHT - 12, QgsUnitTypes.LayoutMillimeters))
+    scalebar.setBackgroundEnabled(True)
+    scalebar.setBackgroundColor(QColor(255, 255, 255, 180))
     layout.addLayoutItem(scalebar)
 
     # Legend — placed in sidebar, outside map
@@ -571,7 +573,7 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     legend.setSymbolWidth(4.0)
     legend.setColumnSpace(1.5)
     legend.setBoxSpace(1.5)
-    legend.setColumnCount(2)
+    legend.setColumnCount(1)  # Set to 1 column to perfectly fit the 70mm sidebar width
 
     # Tighten spacing by adjusting style margins and applying custom text format
     for s_type in [QgsLegendStyle.Title, QgsLegendStyle.Group, QgsLegendStyle.Subgroup, QgsLegendStyle.SymbolLabel]:
@@ -621,21 +623,35 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     legend.adjustBoxSize()
     layout.addLayoutItem(legend)
 
-    # Footer metadata (relocated to bottom of sidebar)
+    # Footer metadata (relocated to bottom of sidebar, placed below the legend box)
+    metadata_top = 125
+    metadata_height = (MAP_TOP + MAP_HEIGHT) - metadata_top
+
     footer_text = (
+        " INFORMASI PETA\n\n"
+        "SISTEM PROYEKSI:\n"
+        "• Proyeksi: EPSG:4326 (WGS 84)\n\n"
+        "STANDAR METADATA:\n"
+        "• SNI ISO 19115-3:2019 / BIG\n\n"
         "SUMBER DATA:\n"
         "• Kobar Geospatial Community\n"
         "• OpenStreetMap Contributors\n"
         "• Kemenkes RI (Fasilitas Kesehatan)\n\n"
-        "STANDAR METADATA:\n"
-        "• SNI ISO 19115-3:2019 / BIG\n\n"
-        "SISTEM KOORDINAT:\n"
-        "• Proyeksi: EPSG:4326 (WGS 84)\n\n"
-        "Dibuat: Mei 2026  |  Lisensi: AW-NC-1.0"
+        "PEMBUAT:\n"
+        "• Kobar Geospatial Community\n\n"
+        "Dibuat: Mei 2026\n"
+        "Lisensi: AW-NC-1.0"
     )
-    footer = _make_label(layout, footer_text, 5.5, color=QColor(120, 120, 120))
-    footer.attemptMove(QgsLayoutPoint(SIDEBAR_LEFT, 145, QgsUnitTypes.LayoutMillimeters))
-    footer.attemptResize(QgsLayoutSize(SIDEBAR_WIDTH, 55, QgsUnitTypes.LayoutMillimeters))
+    footer = _make_label(layout, footer_text, 6, color=QColor(40, 40, 40))
+    footer.setFrameEnabled(True)
+    footer.setFrameStrokeColor(QColor(100, 100, 100))
+    footer.setFrameStrokeWidth(QgsLayoutMeasurement(0.3, QgsUnitTypes.LayoutMillimeters))
+    footer.setBackgroundColor(QColor(255, 255, 255, 245))
+    footer.setMarginX(3.0)
+    footer.setMarginY(3.0)
+    
+    footer.attemptMove(QgsLayoutPoint(SIDEBAR_LEFT, metadata_top, QgsUnitTypes.LayoutMillimeters))
+    footer.attemptResize(QgsLayoutSize(SIDEBAR_WIDTH, metadata_height, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(footer)
 
     if layout not in mgr.layouts():
