@@ -24,19 +24,19 @@
         <Option value="" type="QString" name="not-checked"/>
       </Option>
     </customproperties>
-    <layer-tree-layer checked="Qt::Checked" expanded="1" id="751bf671-8fdb-4ae8-9c03-6bf14a32b7c5" legend_exp="" legend_split_behavior="0" name="Fasilitas Umum (POI)" patch_size="-1,-1" providerKey="ogr" source="./data/kobar.gpkg|layername=poi">
+    <layer-tree-layer checked="Qt::Checked" expanded="1" id="751bf671-8fdb-4ae8-9c03-6bf14a32b7c5" legend_exp="" legend_split_behavior="0" name="Fasilitas Umum (POI)" patch_size="-1,-1" providerKey="ogr" source="./shapefiles/poi.shp">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer checked="Qt::Checked" expanded="1" id="fcc28048-d054-4647-af4e-b7633beb5079" legend_exp="" legend_split_behavior="0" name="Bangunan" patch_size="-1,-1" providerKey="ogr" source="./data/kobar.gpkg|layername=buildings">
+    <layer-tree-layer checked="Qt::Checked" expanded="1" id="fcc28048-d054-4647-af4e-b7633beb5079" legend_exp="" legend_split_behavior="0" name="Bangunan" patch_size="-1,-1" providerKey="ogr" source="./shapefiles/buildings.shp">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer checked="Qt::Checked" expanded="1" id="9ea72207-2f0d-4722-b4aa-91d0c9edad97" legend_exp="" legend_split_behavior="0" name="Penggunaan Lahan" patch_size="-1,-1" providerKey="ogr" source="./data/kobar.gpkg|layername=landuse">
+    <layer-tree-layer checked="Qt::Checked" expanded="1" id="9ea72207-2f0d-4722-b4aa-91d0c9edad97" legend_exp="" legend_split_behavior="0" name="Penggunaan Lahan" patch_size="-1,-1" providerKey="ogr" source="./shapefiles/landuse.shp">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer checked="Qt::Checked" expanded="1" id="a2f0d79a-a590-44c9-a170-7be407b0fd59" legend_exp="" legend_split_behavior="0" name="Sungai" patch_size="-1,-1" providerKey="ogr" source="./data/kobar.gpkg|layername=waterways">
+    <layer-tree-layer checked="Qt::Checked" expanded="1" id="a2f0d79a-a590-44c9-a170-7be407b0fd59" legend_exp="" legend_split_behavior="0" name="Sungai" patch_size="-1,-1" providerKey="ogr" source="./shapefiles/waterways.shp">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer checked="Qt::Checked" expanded="1" id="1d9060d9-99d0-468b-a08f-83d15fd4e8db" legend_exp="" legend_split_behavior="0" name="Jalan" patch_size="-1,-1" providerKey="ogr" source="./data/kobar.gpkg|layername=roads">
+    <layer-tree-layer checked="Qt::Checked" expanded="1" id="1d9060d9-99d0-468b-a08f-83d15fd4e8db" legend_exp="" legend_split_behavior="0" name="Jalan" patch_size="-1,-1" providerKey="ogr" source="./shapefiles/roads.shp">
       <customproperties/>
     </layer-tree-layer>
     <custom-order enabled="0">
@@ -118,7 +118,7 @@
               simplifyLocal="1" simplifyMaxScale="1" styleCategories="AllStyleCategories"
               type="vector" wkbType="MultiLineString">
       <id>1d9060d9-99d0-468b-a08f-83d15fd4e8db</id>
-      <datasource>./data/kobar.gpkg|layername=roads</datasource>
+      <datasource>./shapefiles/roads.shp</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -635,7 +635,7 @@
               simplifyLocal="1" simplifyMaxScale="1" styleCategories="AllStyleCategories"
               type="vector" wkbType="MultiLineString">
       <id>a2f0d79a-a590-44c9-a170-7be407b0fd59</id>
-      <datasource>./data/kobar.gpkg|layername=waterways</datasource>
+      <datasource>./shapefiles/waterways.shp</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -983,7 +983,7 @@
               simplifyLocal="1" simplifyMaxScale="1" styleCategories="AllStyleCategories"
               type="vector" wkbType="MultiPolygon">
       <id>9ea72207-2f0d-4722-b4aa-91d0c9edad97</id>
-      <datasource>./data/kobar.gpkg|layername=landuse</datasource>
+      <datasource>./shapefiles/landuse.shp</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -1024,7 +1024,7 @@
           <qgis>
             <pipe>
               <rnderer>
-                <renderer-v2 enableorderby="0" forceraster="0" referencescale="-1" symbollevels="0" type="categorizedSymbol" attr="sub_kategori" value="sub_kategori">
+                <renderer-v2 enableorderby="0" forceraster="0" referencescale="-1" symbollevels="0" type="categorizedSymbol" attr="sub_katego" value="sub_katego">
                   <categories>
 
                     <category symbol="" value="forest" label="forest" render="true">
@@ -1425,7 +1425,7 @@
         <field configurationFlags="NoFlag" name="kategori">
           <editWidget type="TextEdit"><config><Option/></config></editWidget>
         </field>
-        <field configurationFlags="NoFlag" name="sub_kategori">
+        <field configurationFlags="NoFlag" name="sub_katego">
           <editWidget type="TextEdit"><config><Option/></config></editWidget>
         </field>
       </fieldConfiguration>
@@ -1433,31 +1433,31 @@
         <alias field="osm_id" index="" name=""/>
         <alias field="name" index="" name=""/>
         <alias field="kategori" index="" name=""/>
-        <alias field="sub_kategori" index="" name=""/>
+        <alias field="sub_katego" index="" name=""/>
       </aliases>
       <splitPolicies>
         <policy field="osm_id" policy="Duplicate"/>
         <policy field="name" policy="Duplicate"/>
         <policy field="kategori" policy="Duplicate"/>
-        <policy field="sub_kategori" policy="Duplicate"/>
+        <policy field="sub_katego" policy="Duplicate"/>
       </splitPolicies>
       <defaults>
         <default applyOnUpdate="0" expression="" field="osm_id"/>
         <default applyOnUpdate="0" expression="" field="name"/>
         <default applyOnUpdate="0" expression="" field="kategori"/>
-        <default applyOnUpdate="0" expression="" field="sub_kategori"/>
+        <default applyOnUpdate="0" expression="" field="sub_katego"/>
       </defaults>
       <constraints>
         <constraint constraints="0" exp_strength="0" field="osm_id" notnull_strength="0" unique_strength="0"/>
         <constraint constraints="0" exp_strength="0" field="name" notnull_strength="0" unique_strength="0"/>
         <constraint constraints="0" exp_strength="0" field="kategori" notnull_strength="0" unique_strength="0"/>
-        <constraint constraints="0" exp_strength="0" field="sub_kategori" notnull_strength="0" unique_strength="0"/>
+        <constraint constraints="0" exp_strength="0" field="sub_katego" notnull_strength="0" unique_strength="0"/>
       </constraints>
       <constraintExpressions>
         <constraint desc="" exp="" field="osm_id"/>
         <constraint desc="" exp="" field="name"/>
         <constraint desc="" exp="" field="kategori"/>
-        <constraint desc="" exp="" field="sub_kategori"/>
+        <constraint desc="" exp="" field="sub_katego"/>
       </constraintExpressions>
       <expressionfields/>
       <attributeactions>
@@ -1488,19 +1488,19 @@
         <field editable="1" name="osm_id"/>
         <field editable="1" name="name"/>
         <field editable="1" name="kategori"/>
-        <field editable="1" name="sub_kategori"/>
+        <field editable="1" name="sub_katego"/>
       </editable>
       <labelOnTop>
         <field labelOnTop="0" name="osm_id"/>
         <field labelOnTop="0" name="name"/>
         <field labelOnTop="0" name="kategori"/>
-        <field labelOnTop="0" name="sub_kategori"/>
+        <field labelOnTop="0" name="sub_katego"/>
       </labelOnTop>
       <reuseLastValue>
         <field name="osm_id" reuseLastValue="0"/>
         <field name="name" reuseLastValue="0"/>
         <field name="kategori" reuseLastValue="0"/>
-        <field name="sub_kategori" reuseLastValue="0"/>
+        <field name="sub_katego" reuseLastValue="0"/>
       </reuseLastValue>
       <dataDefinedFieldProperties/>
       <widgets/>
@@ -1515,7 +1515,7 @@
               simplifyLocal="1" simplifyMaxScale="1" styleCategories="AllStyleCategories"
               type="vector" wkbType="MultiPolygon">
       <id>fcc28048-d054-4647-af4e-b7633beb5079</id>
-      <datasource>./data/kobar.gpkg|layername=buildings</datasource>
+      <datasource>./shapefiles/buildings.shp</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -1749,7 +1749,7 @@
               simplifyLocal="1" simplifyMaxScale="1" styleCategories="AllStyleCategories"
               type="vector" wkbType="Point">
       <id>751bf671-8fdb-4ae8-9c03-6bf14a32b7c5</id>
-      <datasource>./data/kobar.gpkg|layername=poi</datasource>
+      <datasource>./shapefiles/poi.shp</datasource>
       <keywordList>
         <value></value>
       </keywordList>
@@ -2067,7 +2067,7 @@
         <field configurationFlags="NoFlag" name="kategori">
           <editWidget type="TextEdit"><config><Option/></config></editWidget>
         </field>
-        <field configurationFlags="NoFlag" name="sub_kategori">
+        <field configurationFlags="NoFlag" name="sub_katego">
           <editWidget type="TextEdit"><config><Option/></config></editWidget>
         </field>
         <field configurationFlags="NoFlag" name="type">
@@ -2084,7 +2084,7 @@
         <alias field="osm_id" index="" name=""/>
         <alias field="name" index="" name=""/>
         <alias field="kategori" index="" name=""/>
-        <alias field="sub_kategori" index="" name=""/>
+        <alias field="sub_katego" index="" name=""/>
         <alias field="type" index="" name=""/>
         <alias field="operator" index="" name=""/>
         <alias field="street" index="" name=""/>
@@ -2093,7 +2093,7 @@
         <policy field="osm_id" policy="Duplicate"/>
         <policy field="name" policy="Duplicate"/>
         <policy field="kategori" policy="Duplicate"/>
-        <policy field="sub_kategori" policy="Duplicate"/>
+        <policy field="sub_katego" policy="Duplicate"/>
         <policy field="type" policy="Duplicate"/>
         <policy field="operator" policy="Duplicate"/>
         <policy field="street" policy="Duplicate"/>
@@ -2102,7 +2102,7 @@
         <default applyOnUpdate="0" expression="" field="osm_id"/>
         <default applyOnUpdate="0" expression="" field="name"/>
         <default applyOnUpdate="0" expression="" field="kategori"/>
-        <default applyOnUpdate="0" expression="" field="sub_kategori"/>
+        <default applyOnUpdate="0" expression="" field="sub_katego"/>
         <default applyOnUpdate="0" expression="" field="type"/>
         <default applyOnUpdate="0" expression="" field="operator"/>
         <default applyOnUpdate="0" expression="" field="street"/>
@@ -2111,7 +2111,7 @@
         <constraint constraints="0" exp_strength="0" field="osm_id" notnull_strength="0" unique_strength="0"/>
         <constraint constraints="0" exp_strength="0" field="name" notnull_strength="0" unique_strength="0"/>
         <constraint constraints="0" exp_strength="0" field="kategori" notnull_strength="0" unique_strength="0"/>
-        <constraint constraints="0" exp_strength="0" field="sub_kategori" notnull_strength="0" unique_strength="0"/>
+        <constraint constraints="0" exp_strength="0" field="sub_katego" notnull_strength="0" unique_strength="0"/>
         <constraint constraints="0" exp_strength="0" field="type" notnull_strength="0" unique_strength="0"/>
         <constraint constraints="0" exp_strength="0" field="operator" notnull_strength="0" unique_strength="0"/>
         <constraint constraints="0" exp_strength="0" field="street" notnull_strength="0" unique_strength="0"/>
@@ -2120,7 +2120,7 @@
         <constraint desc="" exp="" field="osm_id"/>
         <constraint desc="" exp="" field="name"/>
         <constraint desc="" exp="" field="kategori"/>
-        <constraint desc="" exp="" field="sub_kategori"/>
+        <constraint desc="" exp="" field="sub_katego"/>
         <constraint desc="" exp="" field="type"/>
         <constraint desc="" exp="" field="operator"/>
         <constraint desc="" exp="" field="street"/>
@@ -2154,7 +2154,7 @@
         <field editable="1" name="osm_id"/>
         <field editable="1" name="name"/>
         <field editable="1" name="kategori"/>
-        <field editable="1" name="sub_kategori"/>
+        <field editable="1" name="sub_katego"/>
         <field editable="1" name="type"/>
         <field editable="1" name="operator"/>
         <field editable="1" name="street"/>
@@ -2163,7 +2163,7 @@
         <field labelOnTop="0" name="osm_id"/>
         <field labelOnTop="0" name="name"/>
         <field labelOnTop="0" name="kategori"/>
-        <field labelOnTop="0" name="sub_kategori"/>
+        <field labelOnTop="0" name="sub_katego"/>
         <field labelOnTop="0" name="type"/>
         <field labelOnTop="0" name="operator"/>
         <field labelOnTop="0" name="street"/>
@@ -2172,7 +2172,7 @@
         <field name="osm_id" reuseLastValue="0"/>
         <field name="name" reuseLastValue="0"/>
         <field name="kategori" reuseLastValue="0"/>
-        <field name="sub_kategori" reuseLastValue="0"/>
+        <field name="sub_katego" reuseLastValue="0"/>
         <field name="type" reuseLastValue="0"/>
         <field name="operator" reuseLastValue="0"/>
         <field name="street" reuseLastValue="0"/>

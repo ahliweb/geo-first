@@ -412,7 +412,21 @@ Data diperoleh dari OpenStreetMap (2026-05-26) dengan lisensi Open Database Lice
       <gmd:distributionFormat>
         <gmd:MD_Format>
           <gmd:name>
+            <gco:CharacterString>ESRI Shapefile</gco:CharacterString>
+          </gmd:name>
+          <gmd:version>
+            <gco:CharacterString>1.0</gco:CharacterString>
+          </gmd:version>
+          <gmd:specification>
+            <gco:CharacterString>ESRI Shapefile Technical Description</gco:CharacterString>
+          </gmd:specification>
+        </gmd:MD_Format>
+      </gmd:distributionFormat>
+      <gmd:distributionFormat>
+        <gmd:MD_Format>
+          <gmd:name>
             <gco:CharacterString>GeoPackage 1.3</gco:CharacterString>
+          </gmd:name>
           </gmd:name>
           <gmd:version>
             <gco:CharacterString>1.3.0</gco:CharacterString>
@@ -435,7 +449,7 @@ Data diperoleh dari OpenStreetMap (2026-05-26) dengan lisensi Open Database Lice
       <gmd:transferOptions>
         <gmd:MD_DigitalTransferOptions>
           <gmd:unitsOfDistribution>
-            <gco:CharacterString>File GeoPackage (.gpkg) dan file project QGIS (.qgs)</gco:CharacterString>
+            <gco:CharacterString>File ESRI Shapefile (.shp/.shx/.dbf/.prj), GeoPackage (.gpkg), dan file project QGIS (.qgs)</gco:CharacterString>
           </gmd:unitsOfDistribution>
           <gmd:transferSize>
             <gco:Real>3.6</gco:Real>
