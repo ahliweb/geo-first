@@ -13,6 +13,8 @@ docs/              ← Dokumentasi tambahan
 *.qgs              ← Project QGIS di root
 VERSION            ← Versi dataset (SemVer)
 CHANGELOG.md       ← Riwayat perubahan
+CONTRIBUTING.md    ← Panduan kontribusi
+README.md          ← Informasi umum
 ```
 
 ## Konvensi Penamaan
@@ -52,8 +54,11 @@ done
 
 ### 4. Buat/Update Metadata
 - Format ISO 19115/19139 (namespace `http://www.isotc211.org/2005/gmd`)
-- Bisa dibuka CatMDEdit
-- Sertakan: title, abstract, date, keywords, extent, contact, license
+- Standar: **SNI ISO 19115-3:2019** (kompatibel PALAPA/SIMPADU BIG)
+- FileIdentifier wajib format **UUID**
+- Sertakan: title, abstract, date, keywords, extent, contact, license, purpose, credit, lineage
+- Language element wajib pakai `gmd:LanguageCode` (bukan `gco:CharacterString`)
+- Sertakan `gmd:metadataExtensionInfo` untuk PALAPA
 
 ### 5. Update Versi & Changelog
 - Bump versi di `VERSION` (SemVer)
@@ -74,5 +79,11 @@ done
 1. `ogrinfo shapefiles/layer.shp layer` — pastikan Feature Count > 0
 2. XML QGS valid (parse test)
 3. Metadata XML valid (namespace ISO 19139)
-4. Path datasource di `.qgs` pakai relative path (`./shapefiles/...`)
-5. Tidak ada file temp (.osm, .tmp, .bak) yang tercommit
+4. Metadata FileIdentifier format UUID
+5. Metadata Language pakai `gmd:LanguageCode`, bukan `gco:CharacterString`
+6. Path datasource di `.qgs` pakai relative path (`./shapefiles/...`)
+7. Tidak ada file temp (.osm, .tmp, .bak) yang tercommit
+
+## Kontak
+- Community: geospatial@ahliweb.id
+- Diskusi melalui GitHub Issues
