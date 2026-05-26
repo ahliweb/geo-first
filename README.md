@@ -12,18 +12,48 @@ Metadata mengikuti standar **SNI ISO 19115-3:2019 (SNI 8843-1:2019)** — kompat
 ├── AGENTS.md            # Panduan AI Agent
 ├── CONTRIBUTING.md      # Panduan kontribusi
 ├── README.md            # File ini
-├── kobar_infrastruktur.qgs    # Project QGIS
+├── kobar_infrastruktur.qgs   # Project QGIS (infrastruktur)
+├── batas_admin_kobar.qgs     # Project QGIS (batas admin)
 ├── shapefiles/          # Data spasial (ESRI Shapefile)
-│   ├── roads.*          # Jaringan jalan (1.209 fitur)
-│   ├── waterways.*      # Jaringan sungai (707 fitur)
-│   ├── buildings.*      # Bangunan (12.047 fitur)
-│   ├── landuse.*        # Penggunaan lahan (14 fitur)
-│   └── poi.*            # Fasilitas umum (38 fitur)
-├── data/               # Data alternatif (GeoPackage)
-│   └── kobar.gpkg
-└── metadata/           # Metadata SNI ISO 19115-3:2019
-    └── kobar_infrastruktur_metadata.xml
+│   ├── roads.*          # Jaringan jalan
+│   ├── waterways.*      # Jaringan sungai
+│   ├── buildings.*      # Bangunan
+│   ├── landuse.*        # Penggunaan lahan
+│   ├── poi.*            # Fasilitas umum
+│   ├── kabupaten.*      # Batas kabupaten
+│   ├── kecamatan.*      # Batas kecamatan (estimasi)
+│   └── pusat_kecamatan.* # Titik ibukota kecamatan
+├── data/               # GeoPackage
+│   ├── kobar.gpkg       # Infrastruktur
+│   └── batas_admin.gpkg # Batas administrasi
+├── metadata/           # Metadata SNI ISO 19115-3:2019
+│   ├── kobar_infrastruktur_metadata.xml
+│   └── batas_admin_metadata.xml
+└── scripts/            # PyQGIS & utilitas
+    └── export_batas_admin.py  # Ekspor SVG/PNG
 ```
+
+
+## Dataset
+
+### Infrastruktur (`kobar_infrastruktur.qgs`)
+| Layer | Geometri | Fitur | Sumber |
+|-------|----------|-------|--------|
+| roads | Line | 1.209 | OSM |
+| waterways | Line | 707 | OSM |
+| buildings | Polygon | 12.047 | OSM |
+| landuse | Polygon | 14 | OSM |
+| poi | Point | 38 | OSM |
+
+### Batas Administrasi (`batas_admin_kobar.qgs`)
+| Layer | Geometri | Fitur | Sumber |
+|-------|----------|-------|--------|
+| kabupaten | Polygon | 1 | OSM |
+| kecamatan | Polygon | 6 | Estimasi Voronoi |
+| pusat_kecamatan | Point | 6 | Koordinat publik |
+
+> ⚠️ Batas kecamatan adalah **estimasi komunitas**, BUKAN data resmi BIG/Mendagri.
+> Untuk keperluan hukum, selalu gunakan data resmi dari [tanahair.indonesia.go.id](https://tanahair.indonesia.go.id).
 
 ## Cara Menggunakan
 
