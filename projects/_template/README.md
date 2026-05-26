@@ -33,6 +33,8 @@ Use `kabupaten`, `kecamatan`, and `desa` as the default map base for BIG-complia
 
 The generator also writes a reusable QGIS project into `qgis/` with relative datasource paths.
 
+If your project includes an integrated GeoPackage, keep it in `data/` and name it after the project.
+
 ## License
 
 This project is licensed under the **AW Non-Commercial License 1.0**.

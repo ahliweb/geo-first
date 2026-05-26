@@ -18,9 +18,13 @@ import os
 import sys
 import json
 import argparse
+import uuid
+import subprocess
+import warnings
 from pathlib import Path
 
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+warnings.filterwarnings('ignore', category=FutureWarning)
 
 from qgis.core import *
 from qgis.PyQt.QtCore import QRectF
@@ -53,6 +57,21 @@ def load_json(path):
     if not path.exists():
         return {}
     return json.loads(path.read_text(encoding='utf-8'))
+
+
+def gpkg_layer_names(path):
+    try:
+        from osgeo import ogr
+    except Exception:
+        return set()
+    if not path.exists():
+        return set()
+    ds = ogr.Open(str(path))
+    if ds is None:
+        return set()
+    names = {ds.GetLayerByIndex(i).GetName() for i in range(ds.GetLayerCount())}
+    ds = None
+    return names
 
 
 def resolve_profile(sector=None):
@@ -293,8 +312,21 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     loaded_layers = []
     loaded_by_name = {}
     shared_shp = SHARED_ROOT / 'shapefiles'
+    project_gpkg = project_dir / 'data' / f"{project_dir.name.replace('-', '_')}.gpkg"
+    project_gpkg_layers = gpkg_layer_names(project_gpkg)
 
     for layer_name in wanted_layers:
+        # Try project GeoPackage first so each project can stay self-contained.
+        if project_gpkg.exists() and layer_name in project_gpkg_layers:
+            gpkg_source = f"{project_gpkg}|layername={layer_name}"
+            lyr = load_layer(gpkg_source, layer_name.title())
+            if lyr:
+                apply_style(lyr, layer_name)
+                project.addMapLayer(lyr)
+                loaded_layers.append(lyr)
+                loaded_by_name[layer_name] = lyr
+                continue
+
         # Try project-specific shapefile first
         proj_shp = project_dir / 'shapefiles' / f'{layer_name}.shp'
         if proj_shp.exists():
@@ -322,6 +354,8 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     if not loaded_layers:
         print("✗ No valid layers loaded. Aborting.")
         return
+
+    print("⚠ Warning: existing output files with the same names will be overwritten.")
 
     # ============================================================
     # DETERMINE EXTENT
@@ -482,26 +516,62 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     # ============================================================
     exp = QgsLayoutExporter(layout)
     base_name = profile.get('output_prefix') or f'peta_{project_dir.name}'
+    temp_dir = Path('/tmp/opencode/geospatial_exports')
+    temp_dir.mkdir(parents=True, exist_ok=True)
 
     for fmt in output_formats:
         fmt = fmt.lower().strip()
         out_path = output_dir / f'{base_name}.{fmt}'
+        tmp_path = temp_dir / f'{base_name}.{uuid.uuid4().hex}.{fmt}'
+
+        if tmp_path.exists():
+            try:
+                tmp_path.unlink()
+            except Exception:
+                pass
+        if out_path.exists():
+            try:
+                out_path.unlink()
+            except Exception:
+                pass
+        for extra_suffix in ('.aux.xml', '.ovr', '.wld'):
+            extra_path = Path(str(out_path) + extra_suffix)
+            if extra_path.exists():
+                try:
+                    extra_path.unlink()
+                except Exception:
+                    pass
 
         if fmt == 'png':
-            settings = QgsLayoutExporter.ImageExportSettings()
-            settings.dpi = dpi
-            result = exp.exportToImage(str(out_path), settings)
+            tmp_pdf = temp_dir / f'{base_name}.{uuid.uuid4().hex}.pdf'
+            pdf_settings = QgsLayoutExporter.PdfExportSettings()
+            pdf_result = exp.exportToPdf(str(tmp_pdf), pdf_settings)
+            if pdf_result == QgsLayoutExporter.Success:
+                tmp_png_base = temp_dir / f'{base_name}.{uuid.uuid4().hex}'
+                cmd = ['pdftoppm', '-png', '-singlefile', '-r', str(dpi), str(tmp_pdf), str(tmp_png_base)]
+                proc = subprocess.run(cmd, check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                result = QgsLayoutExporter.Success if proc.returncode == 0 else proc.returncode
+                tmp_path = Path(str(tmp_png_base) + '.png')
+            else:
+                result = pdf_result
         elif fmt == 'pdf':
             settings = QgsLayoutExporter.PdfExportSettings()
-            result = exp.exportToPdf(str(out_path), settings)
+            result = exp.exportToPdf(str(tmp_path), settings)
         elif fmt == 'svg':
             settings = QgsLayoutExporter.SvgExportSettings()
-            result = exp.exportToSvg(str(out_path), settings)
+            result = exp.exportToSvg(str(tmp_path), settings)
         else:
             print(f"  ⚠ Unsupported format: {fmt}")
             continue
 
         if result == QgsLayoutExporter.Success:
+            if tmp_path.exists():
+                tmp_path.replace(out_path)
+            if fmt == 'png':
+                try:
+                    tmp_pdf.unlink(missing_ok=True)
+                except Exception:
+                    pass
             size_kb = out_path.stat().st_size / 1024
             print(f'  ✓ {fmt.upper()}: {size_kb:.0f} KB → {out_path}')
         else:
@@ -513,8 +583,11 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     if project.write(str(qgs_path)):
         qgs_text = qgs_path.read_text(encoding='utf-8')
         rel_shared = os.path.relpath((SHARED_ROOT / 'shapefiles').resolve(), qgis_dir.resolve())
+        rel_project_gpkg = os.path.relpath(project_gpkg.resolve(), qgis_dir.resolve()) if project_gpkg.exists() else ''
         rel_project = os.path.relpath((project_dir / 'shapefiles').resolve(), qgis_dir.resolve())
         qgs_text = qgs_text.replace(str((SHARED_ROOT / 'shapefiles').resolve()), rel_shared)
+        if rel_project_gpkg:
+            qgs_text = qgs_text.replace(str(project_gpkg.resolve()), rel_project_gpkg)
         qgs_text = qgs_text.replace(str((project_dir / 'shapefiles').resolve()), rel_project)
         qgs_text = qgs_text.replace(f'{project_dir.as_posix()}/shapefiles', '../shapefiles')
         qgs_path.write_text(qgs_text, encoding='utf-8')

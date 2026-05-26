@@ -9,6 +9,7 @@ This guide defines a consistent workflow for SOPDs that need to produce sector m
 - Generate PNG, PDF, and SVG for every publication map.
 - Write metadata before publication.
 - Keep all outputs in `projects/<project-name>/output/`.
+- If an output filename already exists, the generator will overwrite it.
 
 ## Sector Profiles
 

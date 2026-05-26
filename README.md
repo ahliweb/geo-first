@@ -16,6 +16,8 @@ python3 shared/scripts/generate_professional_map.py \
   --dpi 300
 ```
 
+Warning: if output filenames already exist, they will be overwritten.
+
 ### Create a New Project
 
 ```bash

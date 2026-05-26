@@ -18,6 +18,7 @@ faskes-kobar/
 
 ## Data Sources
 
+- **Project GeoPackage**: `data/faskes_kobar.gpkg` — contains `kabupaten`, `kecamatan`, `desa`, and `faskes`
 - **Example data**: `data/faskes_contoh.csv` — 10 sample health facility points
 - **Shapefile**: `shapefiles/faskes.shp` — derived from CSV via VRT
 
@@ -39,6 +40,8 @@ python3 ../../shared/scripts/generate_professional_map.py \
 - `output/peta_faskes_kobar.svg` — vector SVG for editing
 - `qgis/peta_faskes_kobar.qgs` — reusable QGIS project with relative datasource paths
 - `output/faskes_summary.csv` — quick summary by kecamatan
+
+Warning: if these filenames already exist, new runs will overwrite them.
 
 ## Base Map Convention
 

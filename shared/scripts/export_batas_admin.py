@@ -26,10 +26,11 @@ Output:
     projects/faskes-kobar/output/batas_admin_per_kecamatan.png (satu PNG per kecamatan)
 """
 
-import os, sys
+import os, sys, subprocess, warnings
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+warnings.filterwarnings('ignore', category=FutureWarning)
 
 # --- CONFIG ---
 PROJECT_FILE = REPO_ROOT / 'shared' / 'qgis' / 'batas_admin_kobar.qgs'
@@ -127,14 +128,24 @@ def export_full_map(project, output_base, dpi=300):
     legend.attemptMove(QgsLayoutPoint(10, 275, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(legend)
     
-    # Export PNG
+    # Export PNG via temp PDF + pdftoppm to avoid PNG driver overwrite issues
     png_path = os.path.join(OUTPUT_DIR, f'{output_base}.png')
+    tmp_pdf = os.path.join(OUTPUT_DIR, f'.{output_base}.tmp.pdf')
     exporter = QgsLayoutExporter(layout)
-    result = exporter.exportToImage(png_path, QgsLayoutExporter.ImageExportSettings())
-    if result == QgsLayoutExporter.Success:
-        print(f'✓ PNG exported: {png_path}')
+    pdf_result = exporter.exportToPdf(tmp_pdf, QgsLayoutExporter.PdfExportSettings())
+    if pdf_result == QgsLayoutExporter.Success:
+        tmp_png_base = os.path.join(OUTPUT_DIR, f'.{output_base}.tmp')
+        proc = subprocess.run(['pdftoppm', '-png', '-singlefile', '-r', str(dpi), tmp_pdf, tmp_png_base], check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if proc.returncode == 0 and os.path.exists(tmp_png_base + '.png'):
+            os.replace(tmp_png_base + '.png', png_path)
+            print(f'✓ PNG exported: {png_path}')
+        else:
+            print(f'❌ PNG export failed: pdftoppm returned {proc.returncode}')
     else:
-        print(f'❌ PNG export failed: {result}')
+        print(f'❌ PNG export failed: {pdf_result}')
+    for path in [tmp_pdf, tmp_png_base + '.png' if "tmp_png_base" in locals() else None]:
+        if path and os.path.exists(path):
+            os.remove(path)
     
     # Export SVG
     svg_path = os.path.join(OUTPUT_DIR, f'{output_base}.svg')

@@ -21,12 +21,13 @@ Output:
     projects/faskes-kobar/output/faskes_summary.csv
 """
 
-import os, sys, csv, subprocess
+import os, sys, csv, subprocess, warnings
 from pathlib import Path
 from collections import Counter, defaultdict
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_DIR = REPO_ROOT / 'projects' / 'faskes-kobar'
+warnings.filterwarnings('ignore', category=FutureWarning)
 
 # --- CONFIG ---
 SHAPEFILE_PATH = PROJECT_DIR / 'shapefiles' / 'faskes.shp'
