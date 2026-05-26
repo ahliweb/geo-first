@@ -62,4 +62,4 @@ Buat Pull Request ke `main`.
 Data yang ditambahkan harus memiliki lisensi yang memperbolehkan publikasi ulang. Sebutkan lisensi di metadata.
 
 ## Kontak
-diskominfo@kotawaringinbaratkab.go.id
+Silakan gunakan GitHub Issues untuk diskusi dan pertanyaan.

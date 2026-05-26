@@ -2206,7 +2206,7 @@
     <PositionPrecision><Automatic type="bool">true</Automatic><DecimalPlaces type="int">2</DecimalPlaces><DegreeFormat type="QString">MU</DegreeFormat></PositionPrecision>
     <RenderMapTile type="bool">false</RenderMapTile>
     <SpatialRefSys><ProjectionsEnabled type="int">1</ProjectionsEnabled></SpatialRefSys>
-    <Variables><variableNames type="QStringList"><value>project_abstract</value><value>project_author</value><value>project_creation_date</value><value>project_crs</value><value>project_filename</value><value>project_folder</value><value>project_home</value><value>project_keywords</value><value>project_path</value><value>project_title</value></variableNames><variableValues type="QStringList"><value>Peta Infrastruktur berbasis data OpenStreetMap untuk Kabupaten Kotawaringin Barat, Kalimantan Tengah. Peta ini mencakup data jalan, sungai, bangunan, penggunaan lahan, dan fasilitas umum.</value><value>Dinas Komunikasi dan Informatika Kab. Kotawaringin Barat</value><value>2026-05-26</value><value>EPSG:4326</value><value>kobar_infrastruktur.qgs</value><value>./</value><value></value><value>Kotawaringin Barat,infrastruktur,peta,OSM,Pangkalan Bun</value><value>./kobar_infrastruktur.qgs</value><value>Peta Infrastruktur Kabupaten Kotawaringin Barat</value></variableValues></Variables>
+    <Variables><variableNames type="QStringList"><value>project_abstract</value><value>project_author</value><value>project_creation_date</value><value>project_crs</value><value>project_filename</value><value>project_folder</value><value>project_home</value><value>project_keywords</value><value>project_path</value><value>project_title</value></variableNames><variableValues type="QStringList"><value>Peta Infrastruktur berbasis data OpenStreetMap untuk Kabupaten Kotawaringin Barat, Kalimantan Tengah. Peta ini mencakup data jalan, sungai, bangunan, penggunaan lahan, dan fasilitas umum.</value><value>Komunitas Pemerhati Data Spasial Publik Kotawaringin Barat</value><value>2026-05-26</value><value>EPSG:4326</value><value>kobar_infrastruktur.qgs</value><value>./</value><value></value><value>Kotawaringin Barat,infrastruktur,peta,OSM,Pangkalan Bun</value><value>./kobar_infrastruktur.qgs</value><value>Peta Infrastruktur Kabupaten Kotawaringin Barat</value></variableValues></Variables>
     <WCSLayers type="QStringList"/>
     <WCSUrl type="QString"></WCSUrl>
     <WFSLayers type="QStringList"/>
@@ -2215,9 +2215,9 @@
     <WFSUrl type="QString"></WFSUrl>
     <WMSAccessConstraints type="QString">OpenStreetMap (ODbL)</WMSAccessConstraints>
     <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
-    <WMSContactMail type="QString">diskominfo@kotawaringinbaratkab.go.id</WMSContactMail>
-    <WMSContactOrganization type="QString">Pemerintah Kabupaten Kotawaringin Barat</WMSContactOrganization>
-    <WMSContactPerson type="QString">Diskominfo</WMSContactPerson>
+    <WMSContactMail type="QString"></WMSContactMail>
+    <WMSContactOrganization type="QString">Komunitas Pemerhati Data Spasial Publik</WMSContactOrganization>
+    <WMSContactPerson type="QString"></WMSContactPerson>
     <WMSContactPhone type="QString"></WMSContactPhone>
     <WMSContactPosition type="QString"></WMSContactPosition>
     <WMSCrsList type="QStringList"><value>EPSG:4326</value></WMSCrsList>
@@ -2227,7 +2227,7 @@
     <WMSImageQuality type="int">90</WMSImageQuality>
     <WMSKeywordList type="QStringList"><value>Kotawaringin Barat</value><value>infrastruktur</value><value>peta</value></WMSKeywordList>
     <WMSMaxAtlasFeatures type="int">1</WMSMaxAtlasFeatures>
-    <WMSOnlineResource type="QString">https://geoportal.kotawaringinbaratkab.go.id</WMSOnlineResource>
+    <WMSOnlineResource type="QString">https://github.com/ahliweb/geo-first</WMSOnlineResource>
     <WMSPrecision type="QString">6</WMSPrecision>
     <WMSRootName type="QString">Peta Infrastruktur Kabupaten Kotawaringin Barat</WMSRootName>
     <WMSSegmentizeFeatureInfoGeometry type="bool">false</WMSSegmentizeFeatureInfoGeometry>
