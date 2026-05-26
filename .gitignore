@@ -1,0 +1,17 @@
+# QGIS
+*.qgs~
+*.qgz
+*.qgs.orig
+.qgis*
+
+# Temp files
+*.osm
+*.tmp
+*.bak
+*~
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
