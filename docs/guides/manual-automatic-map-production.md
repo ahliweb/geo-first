@@ -84,6 +84,9 @@ python3 shared/scripts/generate_professional_map.py \
 
 This markdown file is intended to be print-friendly.
 
+Rendered PDF artifact:
+- `docs/guides/manual-automatic-map-production.pdf`
+
 To generate a PDF version, use your preferred Markdown-to-PDF tool, for example:
 
 ```bash

@@ -4,6 +4,7 @@ AI-assisted geospatial data management and professional map generation for Kotaw
 
 For the quick start, see `docs/guides/sopd-quick-start.md`.
 For the master manual, see `docs/guides/manual-automatic-map-production.md`.
+PDF copy: `docs/guides/manual-automatic-map-production.pdf`
 
 ## Quick Start
 
