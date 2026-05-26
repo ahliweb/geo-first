@@ -30,6 +30,7 @@ Typical outputs:
 - PNG, PDF, SVG
 - QGIS project file with relative paths
 - ISO 19139 metadata XML
+- Project GeoPackage when available (`projects/<name>/data/<name>.gpkg`)
 
 ### Create a New Project
 

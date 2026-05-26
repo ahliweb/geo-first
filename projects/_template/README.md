@@ -40,6 +40,8 @@ If your project includes an integrated GeoPackage, keep it in `data/` and name i
 
 If an output filename already exists, the next export replaces it.
 
+For automatic coordinate-based workflows, follow `../../docs/guides/sopd-quick-start.md` and `../../docs/guides/manual-automatic-map-production.md`.
+
 ## License
 
 This project is licensed under the **AW Non-Commercial License 1.0**.

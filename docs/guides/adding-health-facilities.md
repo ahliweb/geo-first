@@ -128,6 +128,7 @@ Required updates:
 - **Extent**: Update coordinates
 - **Date**: Current date
 - **Source**: Cite data source (Dinkes, OSM, etc.)
+- **Repository note**: the current `faskes-kobar` project ships with a rebuilt GeoPackage covering all 94 villages and 10 corrected facility points
 
 Validate:
 

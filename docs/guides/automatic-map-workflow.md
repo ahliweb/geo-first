@@ -16,6 +16,9 @@ The new manual covers:
 - PNG/PDF/SVG/QGIS outputs
 - overwrite warnings
 
+Current example package:
+- `projects/faskes-kobar/data/faskes_kobar.gpkg` contains the rebuilt 94-village base map and 10 faskes points.
+
 ## License
 
 This repository is licensed under the **AW Non-Commercial License 1.0**.

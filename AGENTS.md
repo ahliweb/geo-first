@@ -144,6 +144,7 @@ Prefer GeoPackage-first packaging. Treat shapefiles as interchange artifacts, no
 - **Projects**: `project-name` (kebab-case) — e.g., `faskes-kobar`, `sekolah-kobar`
 - **Outputs**: `peta_<theme>_<region>.<ext>` — e.g., `peta_faskes_kobar.png`
 - **Base map**: always include `kabupaten`, `kecamatan`, and `desa` before thematic layers
+- **Final state example**: `projects/faskes-kobar/data/faskes_kobar.gpkg` contains 94 villages and 10 health-facility points, with exports in `projects/faskes-kobar/output/`
 
 ## Shared Datasets
 

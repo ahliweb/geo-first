@@ -78,6 +78,7 @@ python3 shared/scripts/generate_professional_map.py \
 - `output/*.pdf`
 - `output/*.svg`
 - `qgis/*.qgs`
+- `data/<project>.gpkg` when the project is packaged as a self-contained GeoPackage
 
 ## PDF / Print Export Note
 
@@ -113,6 +114,7 @@ pandoc docs/guides/manual-automatic-map-production.md -o manual-automatic-map-pr
 - If the base map is missing, confirm `kabupaten`, `kecamatan`, and `desa` exist in the project GeoPackage or shared shapefiles.
 - If the wrong outputs appear, check for same-named files in `projects/<project>/output/`.
 - If metadata fails to parse, validate the XML before upload.
+- If the project is `faskes-kobar`, the rebuilt GeoPackage should contain 94 villages and 10 faskes points.
 
 ## License
 

@@ -53,6 +53,8 @@ python3 shared/scripts/generate_professional_map.py \
 
 If a file with the same name already exists, the next export will replace it.
 
+Current repository state: `projects/faskes-kobar/data/faskes_kobar.gpkg` is the self-contained example package with `kabupaten`, `kecamatan`, `desa`, and `faskes`.
+
 ## Best Practice
 
 - Prefer GeoPackage over shapefile.
