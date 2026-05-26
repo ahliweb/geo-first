@@ -7,7 +7,7 @@
   
   <!-- File Identifier -->
   <gmd:fileIdentifier>
-    <gco:CharacterString>kobar_infrastruktur_2026</gco:CharacterString>
+    <gco:CharacterString>51ee0b7c-cc02-41dc-83c7-ca76f8b04001</gco:CharacterString>
   </gmd:fileIdentifier>
   
   <!-- Language -->
@@ -99,10 +99,10 @@
   
   <!-- Metadata Standard -->
   <gmd:metadataStandardName>
-    <gco:CharacterString>ISO 19115/19139</gco:CharacterString>
+    <gco:CharacterString>SNI ISO 19115-3:2019</gco:CharacterString>
   </gmd:metadataStandardName>
   <gmd:metadataStandardVersion>
-    <gco:CharacterString>1.0</gco:CharacterString>
+    <gco:CharacterString>SNI 8843-1:2019</gco:CharacterString>
   </gmd:metadataStandardVersion>
   
   <!-- Reference System Info -->
@@ -124,6 +124,26 @@
     </gmd:MD_ReferenceSystem>
   </gmd:referenceSystemInfo>
   
+'  <gmd:metadataExtensionInfo>
+    <gmd:MD_MetadataExtensionInformation>
+      <gmd:extensionOnLineResource>
+        <gmd:CI_OnlineResource>
+          <gmd:linkage>
+            <gmd:URL>https://github.com/ahliweb/geo-first</gmd:URL>
+          </gmd:linkage>
+          <gmd:protocol>
+            <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+          </gmd:protocol>
+          <gmd:name>
+            <gco:CharacterString>Repositori Data Spasial Publik Kotawaringin Barat</gco:CharacterString>
+          </gmd:name>
+          <gmd:description>
+            <gco:CharacterString>Kumpulan data spasial publik Kabupaten Kotawaringin Barat</gco:CharacterString>
+          </gmd:description>
+        </gmd:CI_OnlineResource>
+      </gmd:extensionOnLineResource>
+    </gmd:MD_MetadataExtensionInformation>
+  </gmd:metadataExtensionInfo>
   <!-- Identification Info -->
   <gmd:identificationInfo>
     <gmd:MD_DataIdentification>
@@ -158,7 +178,7 @@
           <gmd:identifier>
             <gmd:MD_Identifier>
               <gmd:code>
-                <gco:CharacterString>kobar_infrastruktur_2026</gco:CharacterString>
+                <gco:CharacterString>51ee0b7c-cc02-41dc-83c7-ca76f8b04001</gco:CharacterString>
               </gmd:code>
             </gmd:MD_Identifier>
           </gmd:identifier>
@@ -230,7 +250,7 @@ Data diperoleh dari OpenStreetMap (2026-05-26) dengan lisensi Open Database Lice
       
       <!-- Language -->
       <gmd:language>
-        <gco:CharacterString>ind</gco:CharacterString>
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ind">ind</gmd:LanguageCode>
       </gmd:language>
       
       <!-- Topic Category -->
