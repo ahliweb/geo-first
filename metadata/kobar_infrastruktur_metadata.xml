@@ -64,7 +64,7 @@
                 <gco:CharacterString>Indonesia</gco:CharacterString>
               </gmd:country>
               <gmd:electronicMailAddress>
-                <gco:CharacterString>komunitas@spasial-publik.id</gco:CharacterString>
+                <gco:CharacterString>geospatial@ahliweb.id</gco:CharacterString>
               </gmd:electronicMailAddress>
             </gmd:CI_Address>
           </gmd:address>
@@ -198,7 +198,7 @@ Data diperoleh dari OpenStreetMap (2026-05-26) dengan lisensi Open Database Lice
               <gmd:address>
                 <gmd:CI_Address>
                   <gmd:electronicMailAddress>
-                    <gco:CharacterString>komunitas@spasial-publik.id</gco:CharacterString>
+                    <gco:CharacterString>geospatial@ahliweb.id</gco:CharacterString>
                   </gmd:electronicMailAddress>
                 </gmd:CI_Address>
               </gmd:address>
