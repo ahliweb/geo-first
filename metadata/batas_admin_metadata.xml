@@ -171,7 +171,7 @@
         <gmd:MD_Resolution>
           <gmd:equivalentScale>
             <gmd:MD_RepresentativeFraction>
-              <gmd:denominator><gco:Integer>50000</gco:Integer></gmd:denominator>
+              <gmd:denominator><gco:Integer>25000</gco:Integer></gmd:denominator>
             </gmd:MD_RepresentativeFraction>
           </gmd:equivalentScale>
         </gmd:MD_Resolution>
@@ -290,7 +290,7 @@
       </gmd:distributionFormat>
       <gmd:transferOptions>
         <gmd:MD_DigitalTransferOptions>
-          <gmd:unitsOfDistribution><gco:CharacterString>File Shapefile (.shp/.shx/.dbf/.prj/.cpg), GeoPackage (.gpkg), dan project QGIS (.qgs)</gco:CharacterString></gmd:unitsOfDistribution>
+          <gmd:unitsOfDistribution><gco:CharacterString>File Shapefile (.shp/.shx/.dbf/.prj/.cpg), GeoPackage (.gpkg) — 4 layer (kabupaten, kecamatan, desa, pusat_kecamatan), dan project QGIS (.qgs)</gco:CharacterString></gmd:unitsOfDistribution>
           <gmd:onLine>
             <gmd:CI_OnlineResource>
               <gmd:linkage><gmd:URL>https://github.com/ahliweb/geo-first</gmd:URL></gmd:linkage>

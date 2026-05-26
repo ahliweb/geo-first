@@ -5,69 +5,52 @@ dan proyek ini mengikuti [Semantic Versioning](https://semver.org/lang/id/).
 
 ---
 
+## [1.3.0] - 2026-05-26
+
+### Added
+- Batas desa/kelurahan RESMI Kemendagri 2020 Semester 1
+- 94 desa/kelurahan di 6 kecamatan Kotawaringin Barat
+- Data populasi, luas wilayah per desa
+- Layer `desa` di GeoPackage dan Shapefile
+
+### 6 Kecamatan (94 desa/kelurahan)
+| Kecamatan | Desa/Kel |
+|-----------|----------|
+| Arut Selatan | 20 |
+| Kumai | 18 |
+| Kotawaringin Lama | 17 |
+| Pangkalan Banteng | 17 |
+| Arut Utara | 11 |
+| Pangkalan Lada | 11 |
+
+---
+
 ## [1.2.0] - 2026-05-26
 
 ### Added
-- Batas administrasi RESMI Kemendagri 2020 Semester 1
-- Batas kabupaten Kotawaringin Barat (1 polygon)
-- Batas 6 kecamatan: Kumai, Arut Selatan, Kotawaringin Lama, Arut Utara, Pangkalan Lada, Pangkalan Banteng
-- 6 titik pusat kecamatan
-
-### Changed
-- **Data sekarang RESMI Kemendagri 2020**, bukan estimasi komunitas
-- Sumber: github.com/Alf-Anas/batas-administrasi-indonesia
-- Metadata diperbarui dengan sumber resmi
-
-### Layer
-| Layer | Geometri | Fitur | Sumber |
-|-------|----------|-------|--------|
-| kabupaten | Polygon | 1 | Kemendagri 2020 |
-| kecamatan | Polygon | 6 | Kemendagri 2020 |
-| pusat_kecamatan | Point | 6 | Koordinat publik |
+- Batas administrasi RESMI Kemendagri 2020 Semester 1 (kabupaten + kecamatan)
+- Menggantikan data estimasi komunitas sebelumnya
 
 ---
 
 ## [1.1.0] - 2026-05-26
 
 ### Added
-- Batas administrasi Kabupaten Kotawaringin Barat dari OSM (relation 16179711)
-- Batas 6 kecamatan (estimasi Voronoi/Thiessen dari pusat kecamatan)
-- Titik pusat kecamatan (6 ibukota kecamatan)
-- Shapefile + GeoPackage untuk semua layer admin
-- Project QGIS `batas_admin_kobar.qgs` dengan style per kecamatan
-- Script PyQGIS `scripts/export_batas_admin.py` untuk ekspor SVG/PNG
-- Metadata SNI ISO 19115-3:2019 untuk batas admin
-- Ekspor SVG mandiri via GDAL (tanpa QGIS)
+- Batas administrasi Kotawaringin Barat (estimasi Voronoi)
+- Script PyQGIS `scripts/export_batas_admin.py`
 
 ---
 
 ## [1.0.0] - 2026-05-26
 
 ### Added
-- Data infrastruktur Kabupaten Kotawaringin Barat dari OpenStreetMap (OSM)
-- 5 layer shapefile (.shp/.shx/.dbf/.prj/.cpg): roads, waterways, buildings, landuse, poi
-- GeoPackage (.gpkg) sebagai format alternatif
-- Project QGIS (.qgs) dengan style kategorikal untuk setiap layer
-- Metadata SNI ISO 19115-3:2019 (SNI 8843-1:2019) — kompatibel PALAPA/SIMPADU BIG
-- UUID FileIdentifier pada metadata
-- `gmd:metadataExtensionInfo` untuk PALAPA
-- Paket ZIP distribusi
-- Sistem dokumentasi: AGENTS.md, CONTRIBUTING.md, README.md
-
-### Layer
-| Layer | Geometri | Fitur | Sumber |
-|-------|----------|-------|--------|
-| roads | Line | 1.209 | OSM |
-| waterways | Line | 707 | OSM |
-| buildings | Polygon | 12.047 | OSM |
-| landuse | Polygon | 14 | OSM |
-| poi | Point | 38 | OSM |
+- Data infrastruktur dari OpenStreetMap (roads, waterways, buildings, landuse, poi)
+- Metadata SNI ISO 19115-3:2019 PALAPA/SIMPADU
+- Dokumentasi (AGENTS.md, CONTRIBUTING.md, README.md)
 
 ---
 
 ## [Unreleased]
 ### Planned
-- Batas desa/kelurahan resmi (Kemendagri 2020)
-- Data kependudukan (BPS)
-- Peta rawan bencana
+- Data kependudukan per desa (BPS)
 - Peta tata ruang (RTRW)

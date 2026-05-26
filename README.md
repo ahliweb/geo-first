@@ -28,7 +28,7 @@ Metadata mengikuti standar **SNI ISO 19115-3:2019 (SNI 8843-1:2019)** — kompat
 │   └── batas_admin.gpkg # Batas administrasi
 ├── metadata/           # Metadata SNI ISO 19115-3:2019
 │   ├── kobar_infrastruktur_metadata.xml
-│   └── batas_admin_metadata.xml
+│   └── Batas Administrasi (`batas_admin_metadata.xml`)
 └── scripts/            # PyQGIS & utilitas
     └── export_batas_admin.py  # Ekspor SVG/PNG
 ```
@@ -50,9 +50,11 @@ Metadata mengikuti standar **SNI ISO 19115-3:2019 (SNI 8843-1:2019)** — kompat
 |-------|----------|-------|--------|
 | kabupaten | Polygon | 1 | Kemendagri 2020 |
 | kecamatan | Polygon | 6 | Kemendagri 2020 |
+| desa | Polygon | 94 | Kemendagri 2020 |
 | pusat_kecamatan | Point | 6 | Koordinat publik |
 
 > ✅ Data batas administrasi **RESMI** dari Kemendagri 2020 Semester 1.
+> 94 desa/kelurahan di 6 kecamatan, lengkap dengan data populasi per desa.
 > Sumber: [Ina-Geoportal BIG](https://tanahair.indonesia.go.id) via [batas-admin.geoit.dev](https://batas-admin.geoit.dev)
 
 ## Cara Menggunakan
