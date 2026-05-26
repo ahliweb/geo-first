@@ -1,20 +1,36 @@
-# QGIS
-*.qgs~
-*.qgz
-*.qgs.orig
-.qgis*
-
-# Temp files
-*.osm
-*.tmp
-*.bak
-*~
+# OS files
 .DS_Store
 Thumbs.db
+*.log
 
 # Python
 __pycache__/
 *.pyc
+*.pyo
+.env
 
-# Output export
-output/
+# OSM raw data (never commit)
+*.osm
+*.osm.xml
+/tmp/*.osm
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# QGIS autosave
+*.qgs~
+*.qgz~
+
+# GeoPackage journals
+*-journal
+
+# Large exports (keep only final outputs)
+*.zip
+*.tar.gz
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,62 @@
+{
+  "admin": {
+    "title": "Peta Batas Administrasi",
+    "subtitle": "Kabupaten Kotawaringin Barat, Kalimantan Tengah",
+    "output_prefix": "batas_admin_kobar",
+    "base_layers": ["kabupaten", "kecamatan", "desa"],
+    "context_layers": [],
+    "thematic_layers": [],
+    "base_label_field": "nama",
+    "notes": "Use as the default cartographic base map for SOPD thematic mapping."
+  },
+  "health": {
+    "title": "Peta Fasilitas Kesehatan",
+    "subtitle": "Sektor Kesehatan",
+    "output_prefix": "peta_faskes_kobar",
+    "base_layers": ["kabupaten", "kecamatan", "desa"],
+    "context_layers": ["roads", "waterways"],
+    "thematic_layers": ["faskes"],
+    "base_label_field": "nama",
+    "notes": "Health facilities and service coverage maps."
+  },
+  "infrastructure": {
+    "title": "Peta Infrastruktur Dasar",
+    "subtitle": "Sektor Infrastruktur dan Kewilayahan",
+    "output_prefix": "peta_infrastruktur_kobar",
+    "base_layers": ["kabupaten", "kecamatan", "desa"],
+    "context_layers": ["roads", "waterways", "buildings", "landuse", "poi"],
+    "thematic_layers": [],
+    "base_label_field": "nama",
+    "notes": "General infrastructure planning and public works maps."
+  },
+  "education": {
+    "title": "Peta Layanan Pendidikan",
+    "subtitle": "Sektor Pendidikan",
+    "output_prefix": "peta_pendidikan_kobar",
+    "base_layers": ["kabupaten", "kecamatan", "desa"],
+    "context_layers": ["roads"],
+    "thematic_layers": ["sekolah"],
+    "base_label_field": "nama",
+    "notes": "School distribution, access, and service radius maps."
+  },
+  "public_works": {
+    "title": "Peta Pekerjaan Umum",
+    "subtitle": "Sektor Pekerjaan Umum dan Penataan Ruang",
+    "output_prefix": "peta_pu_kobar",
+    "base_layers": ["kabupaten", "kecamatan", "desa"],
+    "context_layers": ["roads", "waterways", "buildings"],
+    "thematic_layers": [],
+    "base_label_field": "nama",
+    "notes": "Road, drainage, and public works planning maps."
+  },
+  "agriculture": {
+    "title": "Peta Pertanian dan Ketahanan Pangan",
+    "subtitle": "Sektor Pertanian",
+    "output_prefix": "peta_pertanian_kobar",
+    "base_layers": ["kabupaten", "kecamatan", "desa"],
+    "context_layers": ["landuse", "waterways", "roads"],
+    "thematic_layers": [],
+    "base_label_field": "nama",
+    "notes": "Agriculture, land use, irrigation, and food security maps."
+  }
+}

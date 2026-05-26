@@ -1,0 +1,46 @@
+name: Validate Geospatial Repository
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile Python scripts
+        run: |
+          python -m py_compile shared/scripts/*.py
+
+      - name: Validate XML metadata
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          xml_files = list(Path('shared/metadata').glob('*.xml')) + list(Path('projects').glob('*/metadata/*.xml'))
+          for path in xml_files:
+              ET.parse(path)
+              print(f'OK: {path}')
+          PY
+
+      - name: Validate license presence
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          required = [Path('LICENSE.md'), Path('README.md'), Path('AGENTS.md')]
+          for path in required:
+              if not path.exists():
+                  raise SystemExit(f'Missing required file: {path}')
+          print('OK: license and policy files present')
+          PY

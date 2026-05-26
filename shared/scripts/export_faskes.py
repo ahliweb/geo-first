@@ -1,30 +1,38 @@
 #!/usr/bin/env python3
 """
-PyQGIS / GDAL script untuk ekspor peta fasilitas kesehatan Kotawaringin Barat.
-Output: SVG, PNG per kecamatan, dan CSV ringkasan statistik.
+PyQGIS / GDAL script for exporting health facility maps of Kotawaringin Barat.
+Output: SVG, PNG per kecamatan, PDF, and CSV summary statistics.
+
+Licensed under the AW Non-Commercial License 1.0.
+See LICENSE.md in the repository root for the full legal text.
 
 Requirements:
-    QGIS 3.x (untuk full export) ATAU GDAL (untuk SVG standalone)
+    QGIS 3.x (for standardized PNG/PDF/SVG export via shared generator)
+    GDAL (for CSV statistics and optional legacy utilities)
     python3
 
 Usage:
-    python3 scripts/export_faskes.py
+    python3 shared/scripts/export_faskes.py
 
 Output:
-    output/  faskes_kobar.svg         Peta SVG lengkap
-    output/  faskes_kobar.png         Peta PNG lengkap
-    output/  per_kec/<kec>.png        PNG per kecamatan
-    output/  faskes_summary.csv       Ringkasan statistik
+    projects/faskes-kobar/output/peta_faskes_kobar.png
+    projects/faskes-kobar/output/peta_faskes_kobar.pdf
+    projects/faskes-kobar/output/peta_faskes_kobar.svg
+    projects/faskes-kobar/output/faskes_summary.csv
 """
 
-import os, sys, csv
+import os, sys, csv, subprocess
+from pathlib import Path
 from collections import Counter, defaultdict
 
+REPO_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_DIR = REPO_ROOT / 'projects' / 'faskes-kobar'
+
 # --- CONFIG ---
-SHAPEFILE_PATH = 'shapefiles/faskes.shp'
-KECAMATAN_SHP = 'shapefiles/kecamatan.shp'
-DESA_SHP = 'shapefiles/desa.shp'
-OUTPUT_DIR = 'output'
+SHAPEFILE_PATH = PROJECT_DIR / 'shapefiles' / 'faskes.shp'
+KECAMATAN_SHP = REPO_ROOT / 'shared' / 'shapefiles' / 'kecamatan.shp'
+DESA_SHP = REPO_ROOT / 'shared' / 'shapefiles' / 'desa.shp'
+OUTPUT_DIR = PROJECT_DIR / 'output'
 
 # --- GDAL-based SVG export (no QGIS required) ---
 def export_svg_gdal():
@@ -36,9 +44,9 @@ def export_svg_gdal():
         print("⚠️  GDAL not available. Install: apt install python3-gdal")
         return
 
-    if not os.path.exists(SHAPEFILE_PATH):
+    if not SHAPEFILE_PATH.exists():
         print(f"⚠️  {SHAPEFILE_PATH} not found. Create the faskes data first.")
-        print("   See docs/panduan-faskes.md for instructions.")
+        print("   See docs/guides/adding-health-facilities.md for instructions.")
         return
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -53,14 +61,14 @@ def export_svg_gdal():
         'polindes': '#FDBF6F',
     }
 
-    ds = ogr.Open(SHAPEFILE_PATH)
+    ds = ogr.Open(str(SHAPEFILE_PATH))
     layer = ds.GetLayer(0)
 
     # Hitung extent dari data faskes (fallback ke extent kecamatan)
     ext = layer.GetExtent()
     if ext[0] == 0 and ext[1] == 0:
-        if os.path.exists(KECAMATAN_SHP):
-            kds = ogr.Open(KECAMATAN_SHP)
+        if KECAMATAN_SHP.exists():
+            kds = ogr.Open(str(KECAMATAN_SHP))
             ext = kds.GetLayer(0).GetExtent()
             kds = None
 
@@ -141,10 +149,10 @@ def export_statistics():
     except ImportError:
         return
 
-    if not os.path.exists(SHAPEFILE_PATH):
+    if not SHAPEFILE_PATH.exists():
         return
 
-    ds = ogr.Open(SHAPEFILE_PATH)
+    ds = ogr.Open(str(SHAPEFILE_PATH))
     layer = ds.GetLayer(0)
 
     per_kec = Counter()
@@ -175,66 +183,31 @@ def export_statistics():
 
 # --- QGIS-based full export (requires QGIS) ---
 def export_qgis():
-    """Full export using QGIS — high quality PNG with proper symbology"""
-    try:
-        from qgis.core import QgsApplication, QgsProject, QgsLayout, QgsLayoutExporter, \
-            QgsLayoutItemMap, QgsLayoutItemLabel, QgsLayoutItemLegend, QgsRectangle, \
-            QgsLayoutPoint, QgsUnitTypes, QgsLayoutSize
-        from qgis.PyQt.QtCore import QRectF
-    except ImportError:
+    """Full export using the shared professional generator."""
+    generator = REPO_ROOT / 'shared' / 'scripts' / 'generate_professional_map.py'
+    if not generator.exists():
+        print(f'❌ Generator not found: {generator}')
         return
 
-    qgs = QgsApplication([], False)
-    qgs.initQgis()
-
-    project = QgsProject.instance()
-    project.read('kobar_infrastruktur.qgs')
-
-    # Layout
-    manager = project.layoutManager()
-    for l in manager.layouts():
-        if l.name() == 'faskes_export':
-            manager.removeLayout(l)
-            break
-
-    layout = QgsLayout(project)
-    layout.initializeDefaults()
-    layout.setName('faskes_export')
-    layout.pageCollection().page(0).setPageSize('A4', QgsLayoutSize.Millimeters)
-
-    title = QgsLayoutItemLabel(layout)
-    title.setText('Fasilitas Kesehatan — Kotawaringin Barat')
-    title.setFont(title.font().__class__())
-    title.adjustSizeToText()
-    title.attemptMove(QgsLayoutPoint(10, 5, QgsUnitTypes.LayoutMillimeters))
-    layout.addLayoutItem(title)
-
-    map_item = QgsLayoutItemMap(layout)
-    map_item.setRect(QRectF(10, 25, 190, 250))
-
-    extent = QgsRectangle()
-    for lyr in project.mapLayers().values():
-        if 'faskes' in lyr.name().lower() or 'kecamatan' in lyr.name().lower():
-            if extent.isEmpty():
-                extent = lyr.extent()
-            else:
-                extent.combineExtentWith(lyr.extent())
-    extent.scale(1.05)
-    map_item.setExtent(extent)
-    layout.addLayoutItem(map_item)
-
-    legend = QgsLayoutItemLegend(layout)
-    legend.setTitle('Kategori')
-    legend.setLinkedMap(map_item)
-    legend.attemptMove(QgsLayoutPoint(10, 280, QgsUnitTypes.LayoutMillimeters))
-    layout.addLayoutItem(legend)
-
-    png_path = os.path.join(OUTPUT_DIR, 'faskes_kobar.png')
-    exporter = QgsLayoutExporter(layout)
-    exporter.exportToImage(png_path, QgsLayoutExporter.ImageExportSettings())
-    print(f'✓ PNG: {png_path}')
-
-    qgs.exitQgis()
+    cmd = [
+        sys.executable,
+        str(generator),
+        '--project',
+        str(PROJECT_DIR),
+        '--sector',
+        'health',
+        '--layers',
+        'faskes',
+        '--output-format',
+        'png,pdf,svg',
+        '--dpi',
+        '300',
+    ]
+    result = subprocess.run(cmd, check=False)
+    if result.returncode == 0:
+        print('✓ Professional PNG/PDF/SVG exports generated via shared generator')
+    else:
+        print(f'❌ Professional export failed with code {result.returncode}')
 
 
 # --- MAIN ---
@@ -244,13 +217,12 @@ if __name__ == '__main__':
     print('  Kabupaten Kotawaringin Barat')
     print('=' * 55)
 
-    if os.path.exists(SHAPEFILE_PATH):
-        export_svg_gdal()
+    if SHAPEFILE_PATH.exists():
         export_statistics()
         export_qgis()
     else:
         print(f'\n⚠️  {SHAPEFILE_PATH} belum ada.')
-        print('   Ikuti panduan: docs/panduan-faskes.md')
+        print('   Ikuti panduan: docs/guides/adding-health-facilities.md')
         print('   untuk membuat data fasilitas kesehatan.')
 
     print(f'\n✓ Output: {OUTPUT_DIR}/')

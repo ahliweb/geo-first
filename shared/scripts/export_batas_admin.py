@@ -1,33 +1,39 @@
 #!/usr/bin/env python3
 """
-PyQGIS script untuk ekspor peta batas administrasi Kotawaringin Barat
-ke format SVG dan PNG.
+PyQGIS script for exporting administrative boundary maps of Kotawaringin Barat
+to SVG and PNG formats.
+
+Licensed under the AW Non-Commercial License 1.0.
+See LICENSE.md in the repository root for the full legal text.
 
 Requirements:
-    QGIS 3.x dengan Python bindings (PyQGIS)
-    qgis_process atau python3 + osgeo
+    QGIS 3.x with Python bindings (PyQGIS)
+    qgis_process or python3 + osgeo
 
 Usage:
-    # Dari QGIS Python Console:
-    exec(open('scripts/export_batas_admin.py').read())
+    # From QGIS Python Console:
+    exec(open('shared/scripts/export_batas_admin.py').read())
 
-    # Dari command line (perlu environment QGIS):
-    python3 scripts/export_batas_admin.py
+    # From command line (requires QGIS environment):
+    python3 shared/scripts/export_batas_admin.py
 
     # Tanpa QGIS GUI (pakai qgis_process):
     qgis_process run export:printlayouttopdf ...
 
 Output:
-    output/batas_admin_kobar.png
-    output/batas_admin_kobar.svg
-    output/batas_admin_per_kecamatan.png (satu PNG per kecamatan)
+    projects/faskes-kobar/output/batas_admin_kobar.png
+    projects/faskes-kobar/output/batas_admin_kobar.svg
+    projects/faskes-kobar/output/batas_admin_per_kecamatan.png (satu PNG per kecamatan)
 """
 
 import os, sys
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 # --- CONFIG ---
-PROJECT_FILE = 'batas_admin_kobar.qgs'
-OUTPUT_DIR = 'output'
+PROJECT_FILE = REPO_ROOT / 'shared' / 'qgis' / 'batas_admin_kobar.qgs'
+OUTPUT_DIR = REPO_ROOT / 'projects' / 'faskes-kobar' / 'output'
 EXPORT_DPI = 300
 EXPORT_SIZE_MM = (210, 297)  # A4
 
@@ -201,7 +207,7 @@ def export_standalone_no_qgis():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
     # Open GeoPackage
-    gpkg_path = 'data/batas_admin.gpkg'
+    gpkg_path = str(REPO_ROOT / 'shared' / 'data' / 'batas_admin.gpkg')
     ds = ogr.Open(gpkg_path)
     
     svg_header = '''<?xml version="1.0" encoding="UTF-8"?>
@@ -289,9 +295,7 @@ if __name__ == '__main__':
     
     if QGIS_AVAILABLE:
         # Full QGIS export
-        project_path = os.path.join(os.path.dirname(__file__), '..', PROJECT_FILE)
-        if not os.path.exists(project_path):
-            project_path = PROJECT_FILE
+        project_path = str(PROJECT_FILE)
         
         qgs, project = init_qgis(project_path)
         
@@ -299,9 +303,9 @@ if __name__ == '__main__':
             export_full_map(project, 'batas_admin_kobar')
             export_per_kecamatan(project)
             qgs.exitQgis()
-            print('\n✓ Done. Check output/ directory.')
+            print(f'\n✓ Done. Check {OUTPUT_DIR}/ directory.')
     else:
         # Fallback: use GDAL only
         export_standalone_no_qgis()
         print('\n✓ Done. For full QGIS export, run inside QGIS Python Console.')
-        print('  QGIS Console: Plugins → Python Console → exec(open("scripts/export_batas_admin.py").read())')
+        print('  QGIS Console: Plugins → Python Console → exec(open("shared/scripts/export_batas_admin.py").read())')

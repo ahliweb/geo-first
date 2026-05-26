@@ -1,91 +1,111 @@
-# Panduan Kontribusi
+# Contributing Guide
 
-Proyek ini adalah inisiatif komunitas pemerhati data spasial publik. Data bersumber dari layanan terbuka dan resmi (OpenStreetMap, BIG/Kemendagri, BPS), bukan data sensitif pemerintah. Kontribusi terbuka untuk siapa saja.
+This project is a community initiative for public geospatial data. Data sources are open and official (OpenStreetMap, BIG/Kemendagri, BPS), not sensitive government data. Contributions are open to anyone.
 
-## Dataset Saat Ini
+## License
 
-| Tema | File | Layer | Fitur | Sumber |
-|------|------|-------|-------|--------|
-| Infrastruktur | `kobar_infrastruktur.qgs` | roads, waterways, buildings, landuse, poi | 14.015 | OSM |
-| Batas Admin | `batas_admin_kobar.qgs` | kabupaten, kecamatan, desa, pusat_kecamatan | 107 | Kemendagri 2020 |
+This repository is licensed under the **AW Non-Commercial License 1.0**.
+See [LICENSE.md](LICENSE.md) for the full legal text.
 
-## Persiapan
-1. Clone repo: `git clone <repo-url>`
-2. Pastikan GDAL terinstal: `ogrinfo --version`
-3. QGIS 3.x untuk preview peta
-4. Python 3 + `osgeo` untuk scripting
+All contributions are subject to the same license. By contributing, you agree that your contributions will be licensed under these terms.
+
+For commercial licensing inquiries, contact: [commercial@ahliweb.com](mailto:commercial@ahliweb.com)
+
+## Current Datasets
+
+| Theme | Location | Layers | Features | Source |
+|-------|----------|--------|----------|--------|
+| Infrastructure | `shared/data/kobar.gpkg` | roads, waterways, buildings, landuse, poi | 14,015 | OSM |
+| Admin Boundaries | `shared/data/batas_admin.gpkg` | kabupaten, kecamatan, desa, pusat_kecamatan | 107 | Kemendagri 2020 |
+
+## Prerequisites
+
+1. Clone the repo: `git clone <repo-url>`
+2. Ensure GDAL is installed: `ogrinfo --version`
+3. QGIS 3.x for map preview
+4. Python 3 + `osgeo` for scripting
 
 ## Workflow
 
-### 1. Buat Branch
+### 1. Create a Branch
+
 ```bash
-git checkout -b feat/tambah-peta-<nama>
+git checkout -b feat/add-<map-name>
 ```
 
-### 2. Tambah Data
-- Tempatkan shapefile di `shapefiles/<nama>.shp`
-- Format: EPSG:4326, encoding UTF-8
-- Jika dari GeoPackage/GeoJSON, konversi dengan `ogr2ogr`
+### 2. Add Data
 
-### 3. Update Project QGIS
-- Buka project `.qgs` yang relevan di QGIS, tambah layer baru, atur style
-- Atau buat project baru di root repo
-- Simpan project, pastikan datasource relatif (`./shapefiles/...`)
-- Validasi XML: `python3 -c "import xml.etree.ElementTree as ET; ET.parse('project.qgs')"`
+- Place shapefiles in `projects/<name>/shapefiles/<name>.shp`
+- Format: EPSG:4326, UTF-8 encoding
+- If from GeoPackage/GeoJSON, convert with `ogr2ogr`
+
+### 3. Update QGIS Project
+
+- Open the relevant `.qgs` project in QGIS, add new layers, configure styles
+- Or create a new project in the project directory
+- Save the project, ensure datasource paths are relative (`../../shared/shapefiles/...`)
+- Validate XML: `python3 -c "import xml.etree.ElementTree as ET; ET.parse('project.qgs')"`
 
 ### 4. Metadata (PALAPA/SIMPADU BIG)
-- Standar: **SNI ISO 19115-3:2019** (SNI 8843-1:2019)
-- Salin template dari `metadata/batas_admin_metadata.xml` atau `metadata/kobar_infrastruktur_metadata.xml`
-- Wajib:
-  - FileIdentifier format **UUID**
-  - Language pakai `gmd:LanguageCode` (bukan `gco:CharacterString`)
-  - Sertakan `gmd:metadataExtensionInfo`
+
+- Standard: **SNI ISO 19115-3:2019** (SNI 8843-1:2019)
+- Copy template from `shared/metadata/batas_admin_metadata.xml` or `shared/metadata/kobar_infrastruktur_metadata.xml`
+- Required:
+  - FileIdentifier in **UUID** format
+  - Language uses `gmd:LanguageCode` (NOT `gco:CharacterString`)
+  - Include `gmd:metadataExtensionInfo`
   - Title, abstract, date, keywords, extent, contact, license
   - Purpose, credit, lineage, source description
-  - Sebutkan sumber data dengan jelas (OSM, Kemendagri, dll)
-- Validasi: `python3 -c "import xml.etree.ElementTree as ET; ET.parse('metadata/file.xml')"`
+  - Clearly state data source (OSM, Kemendagri, etc.)
+- Validate: `python3 -c "import xml.etree.ElementTree as ET; ET.parse('metadata/file.xml')"`
 
 ### 5. Versioning
-- Update `VERSION` (ikuti [SemVer](https://semver.org/)):
-  - `MAJOR` — perubahan besar (restruktur)
-  - `MINOR` — tambah tema/layer baru
-  - `PATCH` — perbaikan data/style/metadata
-- Update `CHANGELOG.md` di bawah `[Unreleased]`
-- Sebelum merge, pindahkan ke versi release
-- Git tag: `git tag -a vX.Y.Z -m "deskripsi"`
+
+- Update `VERSION` (follow [SemVer](https://semver.org/)):
+  - `MAJOR` — breaking changes (restructure)
+  - `MINOR` — new themes/layers
+  - `PATCH` — data/style/metadata fixes
+- Update `CHANGELOG.md` under `[Unreleased]`
+- Before merge, move to release version
+- Git tag: `git tag -a vX.Y.Z -m "description"`
 
 ### 6. Commit & Pull Request
+
 ```bash
-git add shapefiles/<nama>.* VERSION CHANGELOG.md metadata/<nama>_metadata.xml
-git commit -m "feat: tambah peta <nama> — <deskripsi singkat>"
-git push origin feat/tambah-peta-<nama>
+git add projects/<name>/ VERSION CHANGELOG.md projects/<name>/metadata/<name>_metadata.xml
+git commit -m "feat: add <name> map — <brief description>"
+git push origin feat/add-<name>
 ```
-Buat Pull Request ke `main`.
 
-## Standar Data
-- **Proyeksi**: EPSG:4326 (WGS 84)
+Create a Pull Request to `main`.
+
+## Data Standards
+
+- **Projection**: EPSG:4326 (WGS 84)
 - **Encoding**: UTF-8
-- **Geometri**: valid (tanpa self-intersection, tanpa duplikat)
-- **Atribut**: minimal field `nama` dan `kategori`/`kode`
-- **Sumber**: disebutkan di layer dan metadata
+- **Geometry**: valid (no self-intersection, no duplicates)
+- **Attributes**: minimum `nama` and `kategori`/`kode` fields
+- **Source**: cited in layer and metadata
 
-## Sumber Data yang Direkomendasikan
+## Recommended Data Sources
 
-| Sumber | URL | Data |
+| Source | URL | Data |
 |--------|-----|------|
-| OpenStreetMap | [openstreetmap.org](https://www.openstreetmap.org) | Infrastruktur, jalan, bangunan, POI |
-| BIG / Ina-Geoportal | [tanahair.indonesia.go.id](https://tanahair.indonesia.go.id) | Batas administrasi, RBI |
-| Kemendagri (via Alf-Anas) | [GitHub](https://github.com/Alf-Anas/batas-administrasi-indonesia) | Batas admin 2020 (SHP/GPKG) |
-| BPS | [bps.go.id](https://www.bps.go.id) | Statistik, kependudukan |
-| INARISK BNPB | [inarisk.bnpb.go.id](https://inarisk.bnpb.go.id) | Risiko bencana |
-| ESDM One Map | [geoportal.esdm.go.id](https://geoportal.esdm.go.id) | Geologi, tambang |
+| OpenStreetMap | [openstreetmap.org](https://www.openstreetmap.org) | Infrastructure, roads, buildings, POI |
+| BIG / Ina-Geoportal | [tanahair.indonesia.go.id](https://tanahair.indonesia.go.id) | Administrative boundaries, RBI |
+| Kemendagri (via Alf-Anas) | [GitHub](https://github.com/Alf-Anas/batas-administrasi-indonesia) | Admin boundaries 2020 (SHP/GPKG) |
+| BPS | [bps.go.id](https://www.bps.go.id) | Statistics, demographics |
+| INARISK BNPB | [inarisk.bnpb.go.id](https://inarisk.bnpb.go.id) | Disaster risk |
+| ESDM One Map | [geoportal.esdm.go.id](https://geoportal.esdm.go.id) | Geology, mining |
 
-## Lisensi
-Data yang ditambahkan harus memiliki lisensi yang memperbolehkan publikasi ulang. Sebutkan lisensi di metadata:
-- OSM → **ODbL 1.0** (wajib atribusi)
-- Kemendagri → Data publik pemerintah (sebutkan sumber)
-- BPS → Data publik (sebutkan tahun dan sumber)
+## Source Data Licensing
 
-## Kontak
+Added data must have a license that allows republication. Cite the license in metadata:
+- OSM → **ODbL 1.0** (attribution required)
+- Kemendagri → Public government data (cite source)
+- BPS → Public data (cite year and source)
+
+## Contact
+
 - Email: geospatial@ahliweb.id
-- Diskusi: [GitHub Issues](https://github.com/ahliweb/geo-first/issues)
+- Discussions: [GitHub Issues](https://github.com/ahliweb/geo-first/issues)
