@@ -4,6 +4,8 @@ Use this one-page workflow when you need to create a map from coordinate data fa
 
 For the master manual, see `docs/guides/manual-automatic-map-production.md`.
 
+If you need a print-ready reference, the master manual is formatted for PDF export.
+
 ## What You Need
 
 - CSV, GeoJSON, VRT, or GeoPackage with coordinate fields

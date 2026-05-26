@@ -6,7 +6,7 @@
   <gmd:fileIdentifier>
     
     
-    <gco:CharacterString>6bcdd8f5-6c5c-4c27-b416-2ab695863bd8</gco:CharacterString>
+    <gco:CharacterString>0974c852-f59c-4c72-a2fd-86e36792aaa2</gco:CharacterString>
     
   
   </gmd:fileIdentifier>
@@ -302,12 +302,12 @@
           
           
           <gmd:title>
-            <gco:CharacterString>Peta Fasilitas Kesehatan Kabupaten Kotawaringin Barat</gco:CharacterString>
+            <gco:CharacterString>Peta Sebaran Fasilitas Kesehatan Kabupaten Kotawaringin Barat</gco:CharacterString>
           </gmd:title>
           
           
           <gmd:alternateTitle>
-            <gco:CharacterString>Health Facilities Map of West Kotawaringin Regency</gco:CharacterString>
+            <gco:CharacterString>Administrative Boundaries of West Kotawaringin Regency</gco:CharacterString>
           </gmd:alternateTitle>
           
           
@@ -378,7 +378,7 @@
       <gmd:abstract>
         
         
-        <gco:CharacterString>Dataset fasilitas kesehatan Kabupaten Kotawaringin Barat untuk peta tematik, analisis akses layanan, dan publikasi Geoportal BIG/PALAPA. Basis peta menggunakan batas administrasi kabupaten, kecamatan, dan desa/kelurahan.</gco:CharacterString>
+        <gco:CharacterString>Dataset spasial sebaran Fasilitas Kesehatan (Faskes) yang meliputi Rumah Sakit, Puskesmas, dan Klinik di wilayah Kabupaten Kotawaringin Barat, Provinsi Kalimantan Tengah. Data divalidasi terhadap batas wilayah administrasi resmi.</gco:CharacterString>
         
       
       </gmd:abstract>
@@ -546,22 +546,22 @@
               
               
               <gmd:westBoundLongitude>
-                <gco:Decimal>111.2648</gco:Decimal>
+                <gco:Decimal>111.265</gco:Decimal>
               </gmd:westBoundLongitude>
               
               
               <gmd:eastBoundLongitude>
-                <gco:Decimal>112.0905</gco:Decimal>
+                <gco:Decimal>112.091</gco:Decimal>
               </gmd:eastBoundLongitude>
               
               
               <gmd:southBoundLatitude>
-                <gco:Decimal>-3.53397</gco:Decimal>
+                <gco:Decimal>-3.534</gco:Decimal>
               </gmd:southBoundLatitude>
               
               
               <gmd:northBoundLatitude>
-                <gco:Decimal>-1.56283</gco:Decimal>
+                <gco:Decimal>-1.563</gco:Decimal>
               </gmd:northBoundLatitude>
               
             
@@ -649,7 +649,7 @@
           
           
           <gmd:keyword>
-            <gco:CharacterString>kesehatan</gco:CharacterString>
+            <gco:CharacterString>fasilitas kesehatan</gco:CharacterString>
           </gmd:keyword>
           
           
@@ -659,17 +659,17 @@
           
           
           <gmd:keyword>
-            <gco:CharacterString>puskesmas</gco:CharacterString>
-          </gmd:keyword>
-          
-          
-          <gmd:keyword>
             <gco:CharacterString>rumah sakit</gco:CharacterString>
           </gmd:keyword>
           
           
           <gmd:keyword>
-            <gco:CharacterString>geoportal</gco:CharacterString>
+            <gco:CharacterString>puskesmas</gco:CharacterString>
+          </gmd:keyword>
+          
+          
+          <gmd:keyword>
+            <gco:CharacterString>klinik</gco:CharacterString>
           </gmd:keyword>
           
           
@@ -701,17 +701,17 @@
           
           
           <gmd:keyword>
-            <gco:CharacterString>big</gco:CharacterString>
+            <gco:CharacterString>kotawaringin barat</gco:CharacterString>
           </gmd:keyword>
           
           
           <gmd:keyword>
-            <gco:CharacterString>palapa</gco:CharacterString>
+            <gco:CharacterString>kobar</gco:CharacterString>
           </gmd:keyword>
           
           
           <gmd:keyword>
-            <gco:CharacterString>Kumai</gco:CharacterString>
+            <gco:CharacterString>kalimantan tengah</gco:CharacterString>
           </gmd:keyword>
           
           
@@ -991,7 +991,7 @@
           <gmd:statement>
             
             
-            <gco:CharacterString>Prepared from project CSV/VRT input, validated, styled, and exported through the shared professional map pipeline.</gco:CharacterString>
+            <gco:CharacterString>Derived and validated using the repository processing pipeline.</gco:CharacterString>
             
           
           </gmd:statement>

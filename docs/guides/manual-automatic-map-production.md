@@ -1,6 +1,13 @@
 # Manual Automatic Map Production
 
-This is the concise master manual for turning coordinate data into publication-ready maps.
+This is the master manual for turning coordinate data into publication-ready maps.
+
+## Document Metadata
+
+- Audience: SOPD operators, GIS staff, and community contributors
+- Scope: automated map production from coordinate data
+- Output types: PNG, PDF, SVG, QGIS project, ISO 19139 metadata
+- Cartographic base: `kabupaten`, `kecamatan`, `desa`
 
 ## Use This When
 
@@ -8,6 +15,11 @@ This is the concise master manual for turning coordinate data into publication-r
 - You need BIG / PALAPA-ready outputs
 - You need PNG, PDF, SVG, metadata, and a reusable QGIS project
 - You want SOPD teams to follow one consistent workflow
+
+## Fast Path
+
+If you only need the shortest possible workflow, start here:
+- `docs/guides/sopd-quick-start.md`
 
 ## Core Rules
 
@@ -24,6 +36,16 @@ This is the concise master manual for turning coordinate data into publication-r
 3. Generate metadata.
 4. Render the map.
 5. Check outputs in `projects/<project>/output/`.
+
+## Validation Checklist
+
+- CSV or GeoJSON coordinates are valid
+- `longitude` / `latitude` are populated and correct
+- Base map layers are present
+- Metadata XML parses successfully
+- QGIS project uses relative paths
+- Output files were created in `output/`
+- Same-named outputs were intentionally overwritten
 
 ## Commands
 
@@ -57,6 +79,16 @@ python3 shared/scripts/generate_professional_map.py \
 - `output/*.svg`
 - `qgis/*.qgs`
 
+## PDF / Print Export Note
+
+This markdown file is intended to be print-friendly.
+
+To generate a PDF version, use your preferred Markdown-to-PDF tool, for example:
+
+```bash
+pandoc docs/guides/manual-automatic-map-production.md -o manual-automatic-map-production.pdf
+```
+
 ## Recommended Sector Profiles
 
 - `admin`
@@ -74,6 +106,13 @@ python3 shared/scripts/generate_professional_map.py \
 - lineage
 - source description
 - contact information
+
+## Troubleshooting
+
+- If a map looks empty, verify the input coordinates and CRS.
+- If the base map is missing, confirm `kabupaten`, `kecamatan`, and `desa` exist in the project GeoPackage or shared shapefiles.
+- If the wrong outputs appear, check for same-named files in `projects/<project>/output/`.
+- If metadata fails to parse, validate the XML before upload.
 
 ## License
 
