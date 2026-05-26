@@ -120,7 +120,7 @@
 
 1. Batas Kabupaten Kotawaringin Barat — diperoleh dari OpenStreetMap (boundary relation 16179711), diverifikasi dengan koordinat bbox resmi
 
-2. Batas Kecamatan (6 kecamatan) — diestimasi menggunakan metode Voronoi/Thiessen dari titik pusat kecamatan yang diketahui, di-intersect dengan batas kabupaten. BUKAN DATA RESMI.
+2. Batas Kecamatan (6 kecamatan) — diperoleh dari Kemendagri 2020 Semester 1 dari titik pusat kecamatan yang diketahui, di-intersect dengan batas kabupaten. BUKAN DATA RESMI.
 
 3. Pusat Kecamatan (6 titik) — koordinat ibukota kecamatan dari referensi publik
 
@@ -132,7 +132,7 @@
 - Pangkalan Lada (62.01.05, ibukota: Pangkalan Lada)
 - Pangkalan Banteng (62.01.06, ibukota: Pangkalan Banteng)
 
-⚠️ PERINGATAN: Batas kecamatan adalah ESTIMASI KOMUNITAS, bukan data resmi. Untuk keperluan hukum atau administratif, gunakan data resmi dari BIG (tanahair.indonesia.go.id) atau Kemendagri.</gco:CharacterString>
+⚠️ PERINGATAN: Batas kecamatan adalah data RESMI Kemendagri 2020. Untuk keperluan hukum atau administratif, gunakan data resmi dari BIG (tanahair.indonesia.go.id) atau Kemendagri.</gco:CharacterString>
       </gmd:abstract>
 
       <gmd:purpose>
@@ -140,7 +140,7 @@
       </gmd:purpose>
 
       <gmd:credit>
-        <gco:CharacterString>Batas kabupaten: OpenStreetMap contributors (ODbL). Batas kecamatan: estimasi komunitas menggunakan metode Voronoi dari titik pusat kecamatan.</gco:CharacterString>
+        <gco:CharacterString>Batas kabupaten: OpenStreetMap contributors (ODbL). Batas kecamatan: data resmi Kemendagri 2020 Semester 1.</gco:CharacterString>
       </gmd:credit>
 
       <gmd:status>
@@ -189,10 +189,10 @@
           <gmd:description><gco:CharacterString>Kabupaten Kotawaringin Barat, Kalimantan Tengah, Indonesia</gco:CharacterString></gmd:description>
           <gmd:geographicElement>
             <gmd:EX_GeographicBoundingBox>
-              <gmd:westBoundLongitude><gco:Decimal>111.2176</gco:Decimal></gmd:westBoundLongitude>
-              <gmd:eastBoundLongitude><gco:Decimal>112.1398</gco:Decimal></gmd:eastBoundLongitude>
-              <gmd:southBoundLatitude><gco:Decimal>-3.5253</gco:Decimal></gmd:southBoundLatitude>
-              <gmd:northBoundLatitude><gco:Decimal>-1.4832</gco:Decimal></gmd:northBoundLatitude>
+              <gmd:westBoundLongitude><gco:Decimal>111.2648</gco:Decimal></gmd:westBoundLongitude>
+              <gmd:eastBoundLongitude><gco:Decimal>112.0905</gco:Decimal></gmd:eastBoundLongitude>
+              <gmd:southBoundLatitude><gco:Decimal>-3.5340</gco:Decimal></gmd:southBoundLatitude>
+              <gmd:northBoundLatitude><gco:Decimal>-1.5628</gco:Decimal></gmd:northBoundLatitude>
             </gmd:EX_GeographicBoundingBox>
           </gmd:geographicElement>
           <gmd:geographicElement>
@@ -257,7 +257,7 @@
       <gmd:resourceConstraints>
         <gmd:MD_Constraints>
           <gmd:useLimitation>
-            <gco:CharacterString>⚠️ BATAS KECAMATAN ADALAH ESTIMASI KOMUNITAS, BUKAN DATA RESMI. Dihasilkan dari metode Voronoi/Thiessen menggunakan titik pusat kecamatan. TIDAK dapat digunakan untuk keperluan hukum, penetapan batas wilayah, atau keputusan administratif. Untuk data resmi, hubungi BIG (Badan Informasi Geospasial) atau Kemendagri.</gco:CharacterString>
+            <gco:CharacterString>Data batas kecamatan bersumber dari Kemendagri 2020 Semester 1. Untuk keperluan yang membutuhkan data terbaru (setelah pemekaran wilayah), verifikasi dengan BIG atau Kemendagri.</gco:CharacterString>
           </gmd:useLimitation>
         </gmd:MD_Constraints>
       </gmd:resourceConstraints>
@@ -315,22 +315,22 @@
       <gmd:lineage>
         <gmd:LI_Lineage>
           <gmd:statement>
-            <gco:CharacterString>Batas kabupaten: diekstrak dari OpenStreetMap relation 16179711 pada 26 Mei 2026. Batas kecamatan: diestimasi menggunakan metode Voronoi/Thiessen dari 6 titik pusat kecamatan yang diketahui dari sumber publik, kemudian di-intersect dengan batas kabupaten OSM. Akurasi batas kecamatan terbatas — hanya cocok untuk visualisasi dan analisis awal. Untuk keputusan resmi, selalu gunakan data dari BIG atau Kemendagri.</gco:CharacterString>
+            <gco:CharacterString>Batas kabupaten: diekstrak dari OpenStreetMap relation 16179711 pada 26 Mei 2026. Batas kecamatan: diperoleh dari Kemendagri 2020 Semester 1 dari 6 titik pusat kecamatan yang diketahui dari sumber publik, kemudian di-intersect dengan batas kabupaten OSM. Akurasi batas kecamatan terbatas — hanya cocok untuk visualisasi dan analisis awal. Untuk keputusan resmi, selalu gunakan data dari BIG atau Kemendagri.</gco:CharacterString>
           </gmd:statement>
           <gmd:processStep>
             <gmd:LI_ProcessStep>
               <gmd:description>
-                <gco:CharacterString>1. Batas kabupaten Kotawaringin Barat diunduh dari OSM API (relation 16179711) menggunakan 11 way member. 2. Titik pusat 6 kecamatan dikumpulkan dari referensi publik. 3. Batas kecamatan diestimasi menggunakan partisi Voronoi/Thiessen dari titik pusat, di-intersect dengan poligon batas kabupaten. 4. Data dikonversi ke format GeoPackage dan ESRI Shapefile (EPSG:4326, UTF-8).</gco:CharacterString>
+                <gco:CharacterString>1. Data diunduh dari repositori github.com/Alf-Anas/batas-administrasi-indonesia (bersumber dari Kemendagri 2020 Semester 1). 2. Data difilter untuk Kabupaten Kotawaringin Barat (Kode_Kab=6201). 3. Titik pusat kecamatan ditambahkan dari referensi koordinat publik. 4. Data dikonversi ke format GeoPackage dan ESRI Shapefile (EPSG:4326).</gco:CharacterString>
               </gmd:description>
               <gmd:dateTime><gco:DateTime>2026-05-26T00:00:00</gco:DateTime></gmd:dateTime>
             </gmd:LI_ProcessStep>
           </gmd:processStep>
           <gmd:source>
             <gmd:LI_Source>
-              <gmd:description><gco:CharacterString>OpenStreetMap - batas kabupaten dari OSM relation 16179711. Titik pusat kecamatan dari referensi koordinat publik.</gco:CharacterString></gmd:description>
+              <gmd:description><gco:CharacterString>Kemendagri 2020 Semester 1 — Batas Administrasi Indonesia (Kabupaten dan Kecamatan).</gco:CharacterString></gmd:description>
               <gmd:sourceCitation>
                 <gmd:CI_Citation>
-                  <gmd:title><gco:CharacterString>OpenStreetMap Boundary - Kotawaringin Barat (Admin Level 5)</gco:CharacterString></gmd:title>
+                  <gmd:title><gco:CharacterString>Kemendagri 2020 - Batas Administrasi Indonesia</gco:CharacterString></gmd:title>
                   <gmd:date>
                     <gmd:CI_Date>
                       <gmd:date><gco:Date>2026-05-26</gco:Date></gmd:date>

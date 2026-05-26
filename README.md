@@ -48,12 +48,12 @@ Metadata mengikuti standar **SNI ISO 19115-3:2019 (SNI 8843-1:2019)** — kompat
 ### Batas Administrasi (`batas_admin_kobar.qgs`)
 | Layer | Geometri | Fitur | Sumber |
 |-------|----------|-------|--------|
-| kabupaten | Polygon | 1 | OSM |
-| kecamatan | Polygon | 6 | Estimasi Voronoi |
+| kabupaten | Polygon | 1 | Kemendagri 2020 |
+| kecamatan | Polygon | 6 | Kemendagri 2020 |
 | pusat_kecamatan | Point | 6 | Koordinat publik |
 
-> ⚠️ Batas kecamatan adalah **estimasi komunitas**, BUKAN data resmi BIG/Mendagri.
-> Untuk keperluan hukum, selalu gunakan data resmi dari [tanahair.indonesia.go.id](https://tanahair.indonesia.go.id).
+> ✅ Data batas administrasi **RESMI** dari Kemendagri 2020 Semester 1.
+> Sumber: [Ina-Geoportal BIG](https://tanahair.indonesia.go.id) via [batas-admin.geoit.dev](https://batas-admin.geoit.dev)
 
 ## Cara Menggunakan
 

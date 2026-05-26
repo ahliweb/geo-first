@@ -5,6 +5,28 @@ dan proyek ini mengikuti [Semantic Versioning](https://semver.org/lang/id/).
 
 ---
 
+## [1.2.0] - 2026-05-26
+
+### Added
+- Batas administrasi RESMI Kemendagri 2020 Semester 1
+- Batas kabupaten Kotawaringin Barat (1 polygon)
+- Batas 6 kecamatan: Kumai, Arut Selatan, Kotawaringin Lama, Arut Utara, Pangkalan Lada, Pangkalan Banteng
+- 6 titik pusat kecamatan
+
+### Changed
+- **Data sekarang RESMI Kemendagri 2020**, bukan estimasi komunitas
+- Sumber: github.com/Alf-Anas/batas-administrasi-indonesia
+- Metadata diperbarui dengan sumber resmi
+
+### Layer
+| Layer | Geometri | Fitur | Sumber |
+|-------|----------|-------|--------|
+| kabupaten | Polygon | 1 | Kemendagri 2020 |
+| kecamatan | Polygon | 6 | Kemendagri 2020 |
+| pusat_kecamatan | Point | 6 | Koordinat publik |
+
+---
+
 ## [1.1.0] - 2026-05-26
 
 ### Added
@@ -16,16 +38,6 @@ dan proyek ini mengikuti [Semantic Versioning](https://semver.org/lang/id/).
 - Script PyQGIS `scripts/export_batas_admin.py` untuk ekspor SVG/PNG
 - Metadata SNI ISO 19115-3:2019 untuk batas admin
 - Ekspor SVG mandiri via GDAL (tanpa QGIS)
-
-### Layer
-| Layer | Geometri | Fitur | Sumber |
-|-------|----------|-------|--------|
-| kabupaten | Polygon | 1 | OSM |
-| kecamatan | Polygon | 6 | Estimasi Voronoi |
-| pusat_kecamatan | Point | 6 | Koordinat publik |
-
-### ⚠️ Disclaimer
-Batas kecamatan adalah ESTIMASI komunitas, BUKAN data resmi BIG/Mendagri.
 
 ---
 
@@ -51,17 +63,11 @@ Batas kecamatan adalah ESTIMASI komunitas, BUKAN data resmi BIG/Mendagri.
 | landuse | Polygon | 14 | OSM |
 | poi | Point | 38 | OSM |
 
-### Technical
-- Proyeksi: EPSG:4326 (WGS 84)
-- GDAL 3.8.4 + Python osgeo
-- Language element: `gmd:LanguageCode` (ISO 639-2)
-- Metadata validasi 26 item checklist BIG/SIMPADU
-
 ---
 
 ## [Unreleased]
 ### Planned
-- Batas administrasi desa/kelurahan (resmi)
+- Batas desa/kelurahan resmi (Kemendagri 2020)
 - Data kependudukan (BPS)
 - Peta rawan bencana
 - Peta tata ruang (RTRW)
