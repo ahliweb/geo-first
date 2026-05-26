@@ -1,0 +1,257 @@
+#!/usr/bin/env python3
+"""
+PyQGIS / GDAL script untuk ekspor peta fasilitas kesehatan Kotawaringin Barat.
+Output: SVG, PNG per kecamatan, dan CSV ringkasan statistik.
+
+Requirements:
+    QGIS 3.x (untuk full export) ATAU GDAL (untuk SVG standalone)
+    python3
+
+Usage:
+    python3 scripts/export_faskes.py
+
+Output:
+    output/  faskes_kobar.svg         Peta SVG lengkap
+    output/  faskes_kobar.png         Peta PNG lengkap
+    output/  per_kec/<kec>.png        PNG per kecamatan
+    output/  faskes_summary.csv       Ringkasan statistik
+"""
+
+import os, sys, csv
+from collections import Counter, defaultdict
+
+# --- CONFIG ---
+SHAPEFILE_PATH = 'shapefiles/faskes.shp'
+KECAMATAN_SHP = 'shapefiles/kecamatan.shp'
+DESA_SHP = 'shapefiles/desa.shp'
+OUTPUT_DIR = 'output'
+
+# --- GDAL-based SVG export (no QGIS required) ---
+def export_svg_gdal():
+    """Export SVG map using GDAL only — works without QGIS"""
+    try:
+        from osgeo import ogr
+        ogr.DontUseExceptions()
+    except ImportError:
+        print("⚠️  GDAL not available. Install: apt install python3-gdal")
+        return
+
+    if not os.path.exists(SHAPEFILE_PATH):
+        print(f"⚠️  {SHAPEFILE_PATH} not found. Create the faskes data first.")
+        print("   See docs/panduan-faskes.md for instructions.")
+        return
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    color_map = {
+        'rumah_sakit': '#E31A1C',
+        'puskesmas': '#1F78B4',
+        'klinik': '#33A02C',
+        'posyandu': '#FF7F00',
+        'apotek': '#6A3D9A',
+        'pustu': '#B15928',
+        'polindes': '#FDBF6F',
+    }
+
+    ds = ogr.Open(SHAPEFILE_PATH)
+    layer = ds.GetLayer(0)
+
+    # Hitung extent dari data faskes (fallback ke extent kecamatan)
+    ext = layer.GetExtent()
+    if ext[0] == 0 and ext[1] == 0:
+        if os.path.exists(KECAMATAN_SHP):
+            kds = ogr.Open(KECAMATAN_SHP)
+            ext = kds.GetLayer(0).GetExtent()
+            kds = None
+
+    def geo_to_svg(lon, lat, w=1000, h=800, margin=40):
+        x = margin + (lon - ext[0]) / (ext[1] - ext[0]) * (w - 2*margin)
+        y = margin + (ext[3] - lat) / (ext[3] - ext[2]) * (h - 2*margin)
+        return x, y
+
+    svg = []
+    svg.append('<?xml version="1.0" encoding="UTF-8"?>')
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800">')
+    svg.append('<style>')
+    svg.append('  .bg { fill: #f0f0f0; stroke: #ccc; stroke-width: 0.5; }')
+    svg.append('  .point { stroke: white; stroke-width: 1; }')
+    svg.append('  .label { font-family: sans-serif; font-size: 8px; fill: #333; text-anchor: middle; }')
+    svg.append('  .title { font-family: sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }')
+    svg.append('</style>')
+    svg.append('<text x="500" y="25" class="title">Fasilitas Kesehatan — Kotawaringin Barat</text>')
+
+    # Background: kecamatan boundaries
+    if os.path.exists(KECAMATAN_SHP):
+        kds = ogr.Open(KECAMATAN_SHP)
+        kl = kds.GetLayer(0)
+        for feat in kl:
+            geom = feat.GetGeometryRef()
+            if geom:
+                for i in range(geom.GetGeometryCount()):
+                    poly = geom.GetGeometryRef(i)
+                    ring = poly.GetGeometryRef(0) if poly else None
+                    if ring:
+                        pts = [f'{geo_to_svg(p[0],p[1])[0]:.1f},{geo_to_svg(p[0],p[1])[1]:.1f}' for p in ring.GetPoints()]
+                        svg.append(f'<polygon class="bg" points="{" ".join(pts)}"/>')
+        kds = None
+
+    # Kategori → points
+    kategori_points = defaultdict(list)
+    for feat in layer:
+        kat = feat.GetField('kategori') or 'lainnya'
+        nama = feat.GetField('nama') or ''
+        geom = feat.GetGeometryRef()
+        if geom:
+            px, py = geo_to_svg(geom.GetX(), geom.GetY())
+            color = color_map.get(kat, '#999999')
+            kategori_points[kat].append((px, py, nama))
+
+    # Render points
+    radius = {'rumah_sakit': 6, 'puskesmas': 5, 'klinik': 4}
+    for kat, pts in sorted(kategori_points.items()):
+        r = radius.get(kat, 3)
+        color = color_map.get(kat, '#999999')
+        for px, py, nama in pts:
+            svg.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{r}" fill="{color}" class="point"/>')
+            svg.append(f'<text x="{px:.1f}" y="{py-5:.1f}" class="label">{nama}</text>')
+
+    # Legend
+    ly = 780
+    svg.append(f'<text x="15" y="{ly}" style="font-family:sans-serif;font-size:10px;font-weight:bold">Legenda:</text>')
+    for i, (kat, color) in enumerate(sorted(color_map.items())):
+        by = ly + 15 + i*15
+        svg.append(f'<rect x="15" y="{by-8}" width="10" height="10" fill="{color}"/>')
+        svg.append(f'<text x="30" y="{by}" style="font-family:sans-serif;font-size:9px">{kat.replace("_"," ").title()}</text>')
+
+    svg.append('</svg>')
+
+    svg_path = os.path.join(OUTPUT_DIR, 'faskes_kobar.svg')
+    with open(svg_path, 'w') as f:
+        f.write('\n'.join(svg))
+    print(f'✓ SVG: {svg_path}')
+
+    ds = None
+
+
+# --- CSV Statistics export ---
+def export_statistics():
+    """Generate CSV summary of facilities per kecamatan/desa"""
+    try:
+        from osgeo import ogr
+    except ImportError:
+        return
+
+    if not os.path.exists(SHAPEFILE_PATH):
+        return
+
+    ds = ogr.Open(SHAPEFILE_PATH)
+    layer = ds.GetLayer(0)
+
+    per_kec = Counter()
+    per_kec_kat = defaultdict(Counter)
+    per_desa = Counter()
+
+    for feat in layer:
+        kec = feat.GetField('kecamatan') or 'Tidak Diketahui'
+        desa = feat.GetField('desa') or 'Tidak Diketahui'
+        kat = feat.GetField('kategori') or 'lainnya'
+        per_kec[kec] += 1
+        per_kec_kat[kec][kat] += 1
+        per_desa[f'{kec}|{desa}'] += 1
+
+    ds = None
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    csv_path = os.path.join(OUTPUT_DIR, 'faskes_summary.csv')
+    with open(csv_path, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Kecamatan', 'Jumlah Faskes', 'Kategori'])
+        for kec, n in sorted(per_kec.items()):
+            kat_str = '; '.join(f'{k}={v}' for k, v in sorted(per_kec_kat[kec].items()))
+            writer.writerow([kec, n, kat_str])
+
+    print(f'✓ CSV summary: {csv_path}')
+
+
+# --- QGIS-based full export (requires QGIS) ---
+def export_qgis():
+    """Full export using QGIS — high quality PNG with proper symbology"""
+    try:
+        from qgis.core import QgsApplication, QgsProject, QgsLayout, QgsLayoutExporter, \
+            QgsLayoutItemMap, QgsLayoutItemLabel, QgsLayoutItemLegend, QgsRectangle, \
+            QgsLayoutPoint, QgsUnitTypes, QgsLayoutSize
+        from qgis.PyQt.QtCore import QRectF
+    except ImportError:
+        return
+
+    qgs = QgsApplication([], False)
+    qgs.initQgis()
+
+    project = QgsProject.instance()
+    project.read('kobar_infrastruktur.qgs')
+
+    # Layout
+    manager = project.layoutManager()
+    for l in manager.layouts():
+        if l.name() == 'faskes_export':
+            manager.removeLayout(l)
+            break
+
+    layout = QgsLayout(project)
+    layout.initializeDefaults()
+    layout.setName('faskes_export')
+    layout.pageCollection().page(0).setPageSize('A4', QgsLayoutSize.Millimeters)
+
+    title = QgsLayoutItemLabel(layout)
+    title.setText('Fasilitas Kesehatan — Kotawaringin Barat')
+    title.setFont(title.font().__class__())
+    title.adjustSizeToText()
+    title.attemptMove(QgsLayoutPoint(10, 5, QgsUnitTypes.LayoutMillimeters))
+    layout.addLayoutItem(title)
+
+    map_item = QgsLayoutItemMap(layout)
+    map_item.setRect(QRectF(10, 25, 190, 250))
+
+    extent = QgsRectangle()
+    for lyr in project.mapLayers().values():
+        if 'faskes' in lyr.name().lower() or 'kecamatan' in lyr.name().lower():
+            if extent.isEmpty():
+                extent = lyr.extent()
+            else:
+                extent.combineExtentWith(lyr.extent())
+    extent.scale(1.05)
+    map_item.setExtent(extent)
+    layout.addLayoutItem(map_item)
+
+    legend = QgsLayoutItemLegend(layout)
+    legend.setTitle('Kategori')
+    legend.setLinkedMap(map_item)
+    legend.attemptMove(QgsLayoutPoint(10, 280, QgsUnitTypes.LayoutMillimeters))
+    layout.addLayoutItem(legend)
+
+    png_path = os.path.join(OUTPUT_DIR, 'faskes_kobar.png')
+    exporter = QgsLayoutExporter(layout)
+    exporter.exportToImage(png_path, QgsLayoutExporter.ImageExportSettings())
+    print(f'✓ PNG: {png_path}')
+
+    qgs.exitQgis()
+
+
+# --- MAIN ---
+if __name__ == '__main__':
+    print('=' * 55)
+    print('  Export Peta Fasilitas Kesehatan')
+    print('  Kabupaten Kotawaringin Barat')
+    print('=' * 55)
+
+    if os.path.exists(SHAPEFILE_PATH):
+        export_svg_gdal()
+        export_statistics()
+        export_qgis()
+    else:
+        print(f'\n⚠️  {SHAPEFILE_PATH} belum ada.')
+        print('   Ikuti panduan: docs/panduan-faskes.md')
+        print('   untuk membuat data fasilitas kesehatan.')
+
+    print(f'\n✓ Output: {OUTPUT_DIR}/')
+    print('  Buka faskes_kobar.svg di browser untuk preview.')

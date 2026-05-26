@@ -30,8 +30,12 @@ Metadata mengikuti standar **SNI ISO 19115-3:2019 (SNI 8843-1:2019)** — kompat
 ├── metadata/                 # Metadata SNI ISO 19115-3:2019
 │   ├── kobar_infrastruktur_metadata.xml
 │   └── batas_admin_metadata.xml
-└── scripts/                  # PyQGIS & utilitas
-    └── export_batas_admin.py # Ekspor SVG/PNG
+├── docs/                     # Panduan & contoh
+    │   ├── panduan-faskes.md  # Panduan tambah faskes
+    │   └── contoh/
+    └── scripts/                  # PyQGIS & utilitas
+    ├── export_batas_admin.py # Ekspor SVG/PNG batas admin
+    └── export_faskes.py     # Ekspor SVG/PNG fasilitas kesehatan
 ```
 
 ## Dataset
