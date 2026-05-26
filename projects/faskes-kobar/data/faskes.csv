@@ -3,9 +3,9 @@ RS_PBUN_01,RSUD Sultan Imanuddin,rumah_sakit,rs_umum,Pemkab Kobar,"Jl. Sutan Sya
 PKM_KUMAI_01,Puskesmas Kumai,puskesmas,puskesmas_rawat_inap,Dinkes Kobar,"Jl. HM Idris No.10",Kumai,Kumai Hulu,0532-61234,Dinkes Kobar,111.7320,-2.7430
 PKM_ARSEL_01,Puskesmas Arut Selatan,puskesmas,puskesmas_non_rawat_inap,Dinkes Kobar,"Jl. Pangkalan Bun - Kumai KM 5",Arut Selatan,Raja,0532-21200,Dinkes Kobar,111.6430,-2.6950
 PKM_KOLAM_01,Puskesmas Kotawaringin Lama,puskesmas,puskesmas_rawat_inap,Dinkes Kobar,"Jl. Negara No.45",Kotawaringin Lama,Kotawaringin Hilir,0532-51000,Dinkes Kobar,111.5100,-2.3800
-PKM_ARUT_01,Puskesmas Arut Utara,puskesmas,puskesmas_non_rawat_inap,Dinkes Kobar,"Jl. Eden Jeha No.1, Pangkut",Arut Utara,Pangkut,,Dinkes Kobar,111.5900,-2.2000
-PKM_LADA_01,Puskesmas Pangkalan Lada,puskesmas,puskesmas_non_rawat_inap,Dinkes Kobar,"Jl. Trans Kalimantan KM 45",Pangkalan Lada,Pangkalan Lada,,Dinkes Kobar,111.2950,-2.5850
-PKM_BANTENG_01,Puskesmas Pangkalan Banteng,puskesmas,puskesmas_non_rawat_inap,Dinkes Kobar,"Jl. Raya Pangkalan Banteng No.10",Pangkalan Banteng,Pangkalan Banteng,,Dinkes Kobar,111.6680,-2.9500
+PKM_ARUT_01,Puskesmas Arut Utara,puskesmas,puskesmas_non_rawat_inap,Dinkes Kobar,"Jl. Eden Jeha No.1, Pangkut",Arut Utara,Pangkut,,Dinkes Kobar,111.9195,-2.2022
+PKM_LADA_01,Puskesmas Pangkalan Lada,puskesmas,puskesmas_non_rawat_inap,Dinkes Kobar,"Jl. Trans Kalimantan KM 45",Pangkalan Lada,Pangkalan Lada,,Dinkes Kobar,111.7759,-2.5141
+PKM_BANTENG_01,Puskesmas Pangkalan Banteng,puskesmas,puskesmas_non_rawat_inap,Dinkes Kobar,"Jl. Raya Pangkalan Banteng No.10",Pangkalan Banteng,Pangkalan Banteng,,Dinkes Kobar,111.8755,-2.4684
 PKM_PBUN_01,Puskesmas Pangkalan Bun,puskesmas,puskesmas_non_rawat_inap,Dinkes Kobar,"Jl. Sersan KKO No.3, Pangkalan Bun",Arut Selatan,Sidorejo,,Dinkes Kobar,111.6200,-2.6750
 RS_BERSALIN_01,RSIA Permata Hati,rumah_sakit,rs_khusus,Swasta,"Jl. Pangeran Antasari No.25, Pangkalan Bun",Arut Selatan,Sidorejo,0532-22000,Dinkes Kobar,111.6280,-2.6770
 KLINIK_SEHAT_01,Klinik Sehat Bersama,klinik,klinik_pratama,Swasta,"Jl. Hasanudin KM 3, Pangkalan Bun",Arut Selatan,Sidorejo,,Dinkes Kobar,111.6350,-2.6830

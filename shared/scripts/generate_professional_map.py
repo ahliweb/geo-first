@@ -101,21 +101,40 @@ def unique_ordered(items):
 
 
 def style_kabupaten(layer):
-    """Apply kabupaten background style."""
+    """Apply kabupaten outline-only style so kecamatan colors show through."""
     layer.renderer().setSymbol(QgsFillSymbol.createSimple({
         'color': '#f5f5f0',
-        'outline_color': '#4d4d4d',
-        'outline_width': '0.9'
+        'outline_color': '#333333',
+        'outline_width': '1.0'
     }))
 
 
 def style_kecamatan(layer):
-    """Apply kecamatan border style with labels."""
-    layer.renderer().setSymbol(QgsFillSymbol.createSimple({
-        'color': 'transparent',
+    """Apply kecamatan border style with unique fill colors and labels."""
+    kec_colors = {
+        'KUMAI': '#d4e6f1',
+        'ARUT SELATAN': '#fdebd0',
+        'KOTAWARINGIN LAMA': '#d5f5e3',
+        'ARUT UTARA': '#fadbd8',
+        'PANGKALAN LADA': '#e8daef',
+        'PANGKALAN BANTENG': '#fcf3cf',
+    }
+    renderer = QgsCategorizedSymbolRenderer('nama')
+    for kec_name, color in kec_colors.items():
+        sym = QgsFillSymbol.createSimple({
+            'color': color,
+            'outline_color': '#707070',
+            'outline_width': '0.55'
+        })
+        renderer.addCategory(QgsRendererCategory(kec_name, sym, kec_name.title(), True))
+    # Default fallback for any unlisted kecamatan
+    default_sym = QgsFillSymbol.createSimple({
+        'color': '#f0f0f0',
         'outline_color': '#707070',
         'outline_width': '0.55'
-    }))
+    })
+    renderer.addCategory(QgsRendererCategory('', default_sym, 'Lainnya', True))
+    layer.setRenderer(renderer)
 
     # Labels
     ls = QgsPalLayerSettings()
@@ -136,24 +155,26 @@ def style_kecamatan(layer):
 
 
 def style_desa(layer):
-    """Apply village boundary style as the cartographic base."""
+    """Apply desa boundary style with subtle labels."""
     layer.renderer().setSymbol(QgsFillSymbol.createSimple({
         'color': 'transparent',
-        'outline_color': '#b5b5b5',
-        'outline_width': '0.22',
+        'outline_color': '#b0b0b0',
+        'outline_width': '0.2',
         'outline_style': 'dash'
     }))
 
+    # Labels
     ls = QgsPalLayerSettings()
     ls.fieldName = 'nama'
     ls.enabled = True
     ls.placement = QgsPalLayerSettings.OverPoint
     ls.priority = 1
+    ls.dist = 0.5
 
     fmt = QgsTextFormat()
     fmt.setFont(QFont('Sans Serif', 6))
-    fmt.setSize(6)
-    fmt.setColor(QColor(110, 110, 110))
+    fmt.setSize(5.5)
+    fmt.setColor(QColor(150, 150, 150))
     ls.setFormat(fmt)
 
     layer.setLabelsEnabled(True)
@@ -192,12 +213,12 @@ def style_buildings(layer):
 def style_faskes(layer):
     """Apply health facility categorized style."""
     cats = {
-        'rumah_sakit': ('Rumah Sakit', '#d73027', 8),
-        'puskesmas': ('Puskesmas', '#4575b4', 6.5),
-        'klinik': ('Klinik', '#1a9850', 5.5),
-        'posyandu': ('Posyandu', '#f46d43', 4.5),
-        'apotek': ('Apotek', '#91219e', 4.5),
-        'pustu': ('Pustu', '#663399', 4),
+        'rumah_sakit': ('Rumah Sakit', '#d73027', 10),
+        'puskesmas': ('Puskesmas', '#4575b4', 8),
+        'klinik': ('Klinik', '#1a9850', 7),
+        'posyandu': ('Posyandu', '#f46d43', 6),
+        'apotek': ('Apotek', '#91219e', 6),
+        'pustu': ('Pustu', '#663399', 5),
     }
 
     renderer = QgsCategorizedSymbolRenderer('kategori')
@@ -357,6 +378,25 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
 
     print("⚠ Warning: existing output files with the same names will be overwritten.")
 
+    # Reorder layers: thematic/points on top, context middle, base at bottom.
+    # In QGIS setLayers(), first item draws on top.
+    # Correct bottom-to-top: kabupaten → kecamatan → desa → context → thematic
+    ordered = []
+    # Base layers bottom-to-top
+    for name in base_layers:  # kabupaten, kecamatan, desa
+        if name in loaded_by_name:
+            ordered.append(loaded_by_name[name])
+    # Context layers
+    for name in context_layers:
+        if name in loaded_by_name:
+            ordered.append(loaded_by_name[name])
+    # Thematic on top
+    for name in thematic_layers + layers_config:
+        if name in loaded_by_name and loaded_by_name[name] not in ordered:
+            ordered.append(loaded_by_name[name])
+    # Reverse: setLayers wants top-most first
+    loaded_layers = list(reversed(ordered))
+
     # ============================================================
     # DETERMINE EXTENT
     # ============================================================
@@ -368,13 +408,43 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
         or loaded_layers[0]
     )
 
+    MARGIN = 8
+    MAP_TOP = 28
+    MAP_LEFT = MARGIN
+    MAP_WIDTH = 190
+    MAP_HEIGHT = 155
+    SIDEBAR_LEFT = MAP_LEFT + MAP_WIDTH + 4
+    SIDEBAR_WIDTH = 297 - SIDEBAR_LEFT - MARGIN
+
     ext = extent_layer.extent()
-    pad_x = (ext.xMaximum() - ext.xMinimum()) * 0.08
-    pad_y = (ext.yMaximum() - ext.yMinimum()) * 0.08
-    full_ext = QgsRectangle(
-        ext.xMinimum() - pad_x, ext.yMinimum() - pad_y,
-        ext.xMaximum() + pad_x, ext.yMaximum() + pad_y
-    )
+    pad_x = (ext.xMaximum() - ext.xMinimum()) * 0.12
+    pad_y = (ext.yMaximum() - ext.yMinimum()) * 0.12
+    padded_xmin = ext.xMinimum() - pad_x
+    padded_xmax = ext.xMaximum() + pad_x
+    padded_ymin = ext.yMinimum() - pad_y
+    padded_ymax = ext.yMaximum() + pad_y
+
+    # Adjust extent to match map frame aspect ratio (MAP_WIDTH / MAP_HEIGHT).
+    # This ensures the full y-range is visible; QGIS won't crop the extent.
+    data_width = padded_xmax - padded_xmin
+    data_height = padded_ymax - padded_ymin
+    frame_aspect = MAP_WIDTH / MAP_HEIGHT  # ~1.226
+    data_aspect = data_width / data_height
+
+    if data_aspect < frame_aspect:
+        # Data is taller than wide → expand x to fill frame width
+        needed_width = data_height * frame_aspect
+        x_center = (padded_xmin + padded_xmax) / 2
+        padded_xmin = x_center - needed_width / 2
+        padded_xmax = x_center + needed_width / 2
+    else:
+        # Data is wider than tall → expand y to fill frame height
+        needed_height = data_width / frame_aspect
+        y_center = (padded_ymin + padded_ymax) / 2
+        padded_ymin = y_center - needed_height / 2
+        padded_ymax = y_center + needed_height / 2
+
+    full_ext = QgsRectangle(padded_xmin, padded_ymin, padded_xmax, padded_ymax)
 
     # ============================================================
     # LAYOUT SETUP
@@ -392,52 +462,90 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     page = layout.pageCollection().page(0)
     page.setPageSize(QgsLayoutSize(297, 210, QgsUnitTypes.LayoutMillimeters))
 
-    MARGIN = 8
-    MAP_TOP = 32
-    MAP_LEFT = MARGIN
-    MAP_WIDTH = 195
-    MAP_HEIGHT = 160
 
     # Main map
     main_map = QgsLayoutItemMap(layout)
-    main_map.setRect(QRectF(MAP_LEFT, MAP_TOP, MAP_WIDTH, MAP_HEIGHT))
+    main_map.setRect(QRectF(0, 0, MAP_WIDTH, MAP_HEIGHT))
     main_map.setFrameEnabled(True)
     main_map.setFrameStrokeColor(QColor(70, 70, 70))
     main_map.setFrameStrokeWidth(QgsLayoutMeasurement(0.5, QgsUnitTypes.LayoutMillimeters))
+    layout.addLayoutItem(main_map)
+
+    # Set size BEFORE extent so QGIS fits extent into the fixed frame
+    main_map.attemptResize(QgsLayoutSize(MAP_WIDTH, MAP_HEIGHT, QgsUnitTypes.LayoutMillimeters))
+    main_map.attemptMove(QgsLayoutPoint(MAP_LEFT, MAP_TOP, QgsUnitTypes.LayoutMillimeters))
     main_map.setExtent(full_ext)
     main_map.setKeepLayerSet(True)
     main_map.setLayers(loaded_layers)
-    layout.addLayoutItem(main_map)
 
-    # Title
-    title_text = (
-        '<div style="font-family: Sans Serif, sans-serif;">'
-        f'<b style="font-size: 18pt; color: #1a1a1a;">{profile.get("title", "PETA").upper()}</b><br>'
-        f'<span style="font-size: 12pt; color: #555555;">{profile.get("subtitle", "Kabupaten Kotawaringin Barat, Kalimantan Tengah")}</span>'
-        '</div>'
-    )
-    title = QgsLayoutItemLabel(layout)
-    title.setText(title_text)
-    title.adjustSizeToText()
-    title.attemptMove(QgsLayoutPoint(MARGIN, 6, QgsUnitTypes.LayoutMillimeters))
+    # Coordinate grid
+    grid = QgsLayoutItemMapGrid('Grid', main_map)
+    grid.setEnabled(True)
+    grid.setCrs(QgsCoordinateReferenceSystem('EPSG:4326'))
+    grid.setStyle(QgsLayoutItemMapGrid.FrameAnnotationsOnly)
+    # Calculate interval based on extent
+    x_range = full_ext.xMaximum() - full_ext.xMinimum()
+    y_range = full_ext.yMaximum() - full_ext.yMinimum()
+    interval = max(round(max(x_range, y_range) / 5, 1), 0.1)
+    grid.setIntervalX(interval)
+    grid.setIntervalY(interval)
+    grid.setAnnotationEnabled(True)
+    grid.setAnnotationPrecision(2)
+    grid.setAnnotationFrameDistance(1.5)
+    ann_fmt = QgsTextFormat()
+    ann_fmt.setFont(QFont('Sans Serif', 6))
+    ann_fmt.setSize(6)
+    ann_fmt.setColor(QColor(100, 100, 100))
+    grid.setAnnotationTextFormat(ann_fmt)
+    grid.setAnnotationPosition(QgsLayoutItemMapGrid.OutsideMapFrame, QgsLayoutItemMapGrid.Top)
+    grid.setAnnotationPosition(QgsLayoutItemMapGrid.OutsideMapFrame, QgsLayoutItemMapGrid.Bottom)
+    grid.setAnnotationPosition(QgsLayoutItemMapGrid.OutsideMapFrame, QgsLayoutItemMapGrid.Left)
+    grid.setAnnotationPosition(QgsLayoutItemMapGrid.OutsideMapFrame, QgsLayoutItemMapGrid.Right)
+    grid.setAnnotationDirection(QgsLayoutItemMapGrid.Horizontal, QgsLayoutItemMapGrid.Top)
+    grid.setAnnotationDirection(QgsLayoutItemMapGrid.Horizontal, QgsLayoutItemMapGrid.Bottom)
+    grid.setAnnotationDirection(QgsLayoutItemMapGrid.Vertical, QgsLayoutItemMapGrid.Left)
+    grid.setAnnotationDirection(QgsLayoutItemMapGrid.Vertical, QgsLayoutItemMapGrid.Right)
+    grid.setFrameStyle(QgsLayoutItemMapGrid.Zebra)
+    grid.setFrameWidth(2.0)
+    grid.setFramePenSize(0.3)
+    grid.setFramePenColor(QColor(80, 80, 80))
+    grid.setFrameFillColor1(QColor(255, 255, 255))
+    grid.setFrameFillColor2(QColor(0, 0, 0))
+    main_map.grids().addGrid(grid)
+
+    # Title (plain text, no HTML)
+    def _make_label(layout, text, font_size, bold=False, color=QColor(26, 26, 26)):
+        """Helper to create a label with modern QgsTextFormat API."""
+        label = QgsLayoutItemLabel(layout)
+        label.setMode(QgsLayoutItemLabel.ModeFont)
+        label.setText(text)
+        fmt = QgsTextFormat()
+        weight = QFont.Bold if bold else QFont.Normal
+        fmt.setFont(QFont('Sans Serif', int(font_size), weight))
+        fmt.setSize(font_size)
+        fmt.setColor(color)
+        label.setTextFormat(fmt)
+        label.adjustSizeToText()
+        return label
+
+    title = _make_label(layout, profile.get('title', 'PETA').upper(), 16, bold=True)
+    title.attemptMove(QgsLayoutPoint(MARGIN, 4, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(title)
 
-    # Sector / standards note.
-    note = QgsLayoutItemLabel(layout)
-    note.setText(
-        '<div style="font-family: Sans Serif, sans-serif; font-size: 6.5pt; color: #666;">'
-        'BIG-compliant base map: kabupaten, kecamatan, desa | EPSG:4326 | Geoportal-ready'
-        '</div>'
-    )
-    note.adjustSizeToText()
-    note.attemptMove(QgsLayoutPoint(MARGIN, 18, QgsUnitTypes.LayoutMillimeters))
+    subtitle = _make_label(layout, profile.get('subtitle', 'Kabupaten Kotawaringin Barat, Kalimantan Tengah'), 9, color=QColor(85, 85, 85))
+    subtitle.attemptMove(QgsLayoutPoint(MARGIN, 14, QgsUnitTypes.LayoutMillimeters))
+    layout.addLayoutItem(subtitle)
+
+    # Standards note
+    note = _make_label(layout, 'BIG-compliant base map: kabupaten, kecamatan, desa | EPSG:4326 | Geoportal-ready', 5.5, color=QColor(120, 120, 120))
+    note.attemptMove(QgsLayoutPoint(MARGIN, 20, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(note)
 
     # North arrow
     north = QgsLayoutItemPicture(layout)
-    north.setPicturePath('/usr/share/qgis/svg/north_arrows/default.svg')
-    north.attemptResize(QgsLayoutSize(15, 20, QgsUnitTypes.LayoutMillimeters))
-    north.attemptMove(QgsLayoutPoint(MAP_LEFT + MAP_WIDTH - 22, MAP_TOP + 8, QgsUnitTypes.LayoutMillimeters))
+    north.setPicturePath('/usr/share/qgis/svg/arrows/NorthArrow_01.svg')
+    north.attemptResize(QgsLayoutSize(12, 16, QgsUnitTypes.LayoutMillimeters))
+    north.attemptMove(QgsLayoutPoint(SIDEBAR_LEFT + 2, MAP_TOP + 2, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(north)
 
     # Scale bar
@@ -448,10 +556,10 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     scalebar.setNumberOfSegments(2)
     scalebar.setNumberOfSegmentsLeft(0)
     scalebar.setUnitLabel('km')
-    scalebar.attemptMove(QgsLayoutPoint(MAP_LEFT + 5, MAP_TOP + MAP_HEIGHT + 5, QgsUnitTypes.LayoutMillimeters))
+    scalebar.attemptMove(QgsLayoutPoint(MAP_LEFT + 5, MAP_TOP + MAP_HEIGHT + 4, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(scalebar)
 
-    # Legend
+    # Legend — placed in sidebar, outside map
     legend = QgsLayoutItemLegend(layout)
     legend.setTitle('Legenda')
     legend.setLinkedMap(main_map)
@@ -459,53 +567,49 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
     legend.setFrameStrokeColor(QColor(100, 100, 100))
     legend.setFrameStrokeWidth(QgsLayoutMeasurement(0.3, QgsUnitTypes.LayoutMillimeters))
     legend.setBackgroundColor(QColor(255, 255, 255, 245))
-    legend.setSymbolHeight(4)
+    legend.setSymbolHeight(3.5)
     legend.setSymbolWidth(5)
-    legend.setColumnSpace(3)
+    legend.setColumnSpace(2)
 
     root = QgsLayerTree()
-    admin_group = root.addGroup('Administrative Base Map')
-    for layer_name in ['kabupaten', 'desa', 'kecamatan']:
-        lyr = loaded_by_name.get(layer_name)
-        if lyr:
-            admin_group.addLayer(lyr)
+    # Only add groups that have layers
+    admin_names = [n for n in ['kabupaten', 'desa', 'kecamatan'] if n in loaded_by_name]
+    if admin_names:
+        admin_group = root.addGroup('Peta Dasar')
+        for layer_name in admin_names:
+            admin_group.addLayer(loaded_by_name[layer_name])
 
-    context_group = root.addGroup('Context Layers')
-    for layer_name in context_layers:
-        lyr = loaded_by_name.get(layer_name)
-        if lyr:
-            context_group.addLayer(lyr)
+    context_names = [n for n in context_layers if n in loaded_by_name]
+    if context_names:
+        context_group = root.addGroup('Konteks')
+        for layer_name in context_names:
+            context_group.addLayer(loaded_by_name[layer_name])
 
-    thematic_group = root.addGroup('Thematic Layers')
-    for layer_name in thematic_layers + [l for l in layers_config if l not in base_layers + context_layers + thematic_layers]:
-        lyr = loaded_by_name.get(layer_name)
-        if lyr:
-            thematic_group.addLayer(lyr)
+    extra_thematic = thematic_layers + [l for l in layers_config if l not in base_layers + context_layers + thematic_layers]
+    thematic_names = [n for n in extra_thematic if n in loaded_by_name]
+    if thematic_names:
+        thematic_group = root.addGroup('Tematik')
+        for layer_name in thematic_names:
+            thematic_group.addLayer(loaded_by_name[layer_name])
 
     legend.model().setRootGroup(root)
+    legend.setAutoUpdateModel(False)
     legend.adjustBoxSize()
-
-    leg_w = legend.sizeWithUnits().width()
-    leg_h = legend.sizeWithUnits().height()
-    legend.attemptMove(QgsLayoutPoint(
-        MAP_LEFT + MAP_WIDTH - leg_w - 5,
-        MAP_TOP + MAP_HEIGHT - leg_h - 5,
-        QgsUnitTypes.LayoutMillimeters
-    ))
+    legend.attemptMove(QgsLayoutPoint(SIDEBAR_LEFT, MAP_TOP + 22, QgsUnitTypes.LayoutMillimeters))
+    legend.attemptResize(QgsLayoutSize(SIDEBAR_WIDTH, 0, QgsUnitTypes.LayoutMillimeters))
+    legend.adjustBoxSize()
     layout.addLayoutItem(legend)
 
     # Footer
-    footer = QgsLayoutItemLabel(layout)
-    footer.setText(
-        '<div style="font-family: Sans Serif, sans-serif; font-size: 6pt; color: #888888;">'
-        'Sumber Data: Kotawaringin Barat Geospatial Community &nbsp;|&nbsp; '
-        'Standar: SNI ISO 19115-3:2019 / BIG &nbsp;|&nbsp; '
-        'Proyeksi: EPSG:4326 (WGS 84) &nbsp;|&nbsp; '
-        'Dibuat: 2026'
-        '</div>'
+    footer = _make_label(
+        layout,
+        'Sumber Data: Kotawaringin Barat Geospatial Community  |  '
+        'Standar: SNI ISO 19115-3:2019 / BIG  |  '
+        'Proyeksi: EPSG:4326 (WGS 84)  |  '
+        'Dibuat: 2026',
+        5, color=QColor(136, 136, 136)
     )
-    footer.adjustSizeToText()
-    footer.attemptMove(QgsLayoutPoint(MARGIN, MAP_TOP + MAP_HEIGHT + 5, QgsUnitTypes.LayoutMillimeters))
+    footer.attemptMove(QgsLayoutPoint(MARGIN, 200, QgsUnitTypes.LayoutMillimeters))
     layout.addLayoutItem(footer)
 
     if layout not in mgr.layouts():

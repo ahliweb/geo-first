@@ -11,7 +11,7 @@
   },
   "health": {
     "title": "Peta Fasilitas Kesehatan",
-    "subtitle": "Sektor Kesehatan",
+    "subtitle": "Kabupaten Kotawaringin Barat, Kalimantan Tengah",
     "output_prefix": "peta_faskes_kobar",
     "base_layers": ["kabupaten", "kecamatan", "desa"],
     "context_layers": ["roads", "waterways"],

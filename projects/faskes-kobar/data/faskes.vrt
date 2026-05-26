@@ -1,6 +1,6 @@
 <OGRVRTDataSource>
   <OGRVRTLayer name="faskes">
-    <SrcDataSource>/home/data/dev_geospatial/geo-first/projects/faskes-kobar/data/faskes.csv</SrcDataSource>
+    <SrcDataSource relativeToVRT="1">faskes.csv</SrcDataSource>
     <GeometryType>wkbPoint</GeometryType>
     <LayerSRS>EPSG:4326</LayerSRS>
     <GeometryField encoding="PointFromColumns" x="longitude" y="latitude"/>
