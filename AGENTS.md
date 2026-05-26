@@ -9,7 +9,7 @@ shapefiles/        ← Shapefile (.shp/.shx/.dbf/.prj/.cpg), satu folder per tem
 data/              ← GeoPackage (.gpkg) alternatif
 metadata/          ← XML metadata ISO 19115/19139 (CatMDEdit)
 styles/            ← QML style files untuk QGIS
-docs/              ← Dokumentasi tambahan
+scripts/           ← PyQGIS script export & utilitas
 *.qgs              ← Project QGIS di root
 VERSION            ← Versi dataset (SemVer)
 CHANGELOG.md       ← Riwayat perubahan
@@ -24,14 +24,43 @@ README.md          ← Informasi umum
 - **Layer**: sama dengan nama file, tanpa ekstensi
 - **Metadata**: `tema_metadata.xml` dalam folder `metadata/`
 
+## Dataset Saat Ini
+
+### Infrastruktur (`data/kobar.gpkg`, `kobar_infrastruktur.qgs`)
+| Layer | Geometri | Fitur | Sumber |
+|-------|----------|-------|--------|
+| roads | MultiLineString | 1.209 | OSM |
+| waterways | MultiLineString | 707 | OSM |
+| buildings | MultiPolygon | 12.047 | OSM |
+| landuse | MultiPolygon | 14 | OSM |
+| poi | Point | 38 | OSM |
+
+### Batas Administrasi (`data/batas_admin.gpkg`, `batas_admin_kobar.qgs`)
+| Layer | Geometri | Fitur | Sumber |
+|-------|----------|-------|--------|
+| kabupaten | MultiPolygon | 1 | Kemendagri 2020 |
+| kecamatan | MultiPolygon | 6 | Kemendagri 2020 |
+| desa | MultiPolygon | 94 | Kemendagri 2020 |
+| pusat_kecamatan | Point | 6 | Koordinat publik |
+
 ## Alur Menambah Peta Baru
 
 ### 1. Dapatkan Data Sumber
+
 - **OpenStreetMap**: API bbox `https://api.openstreetmap.org/api/0.6/map?bbox=`
 - Setiap tile max 50.000 node, gunakan area kecil per request
 - Simpan data mentah OSM XML ke `/tmp/`, jangan commit file .osm
 
+- **Kemendagri (BIG)**: Data resmi dari [Ina-Geoportal](https://tanahair.indonesia.go.id)
+- Tersedia via [batas-admin.geoit.dev](https://batas-admin.geoit.dev) atau [GitHub Alf-Anas](https://github.com/Alf-Anas/batas-administrasi-indonesia)
+- Data 2020: kabupaten, kecamatan, desa/kelurahan (format SHP/GPKG)
+- Filter per kabupaten menggunakan `Kode_Kab` atau `nama_kab_siak`
+
+- **BPS**: Data statistik kependudukan, ekonomi
+- **INARISK/BNPB**: Data risiko bencana
+
 ### 2. Konversi ke Shapefile dan GeoPackage
+
 ```bash
 # Dari OSM XML → GeoPackage (pakai Python GDAL)
 python3 -c "
@@ -39,10 +68,15 @@ from osgeo import ogr
 # parsing OSM, filter tags, buat layer...
 "
 
+# Dari Kemendagri GPKG → ekstrak per kabupaten
+ogr2ogr -f GPKG batas_admin.gpkg sumber.gpkg \
+  -where "nama_kab_siak='KOTAWARINGIN BARAT'" \
+  -nln desa -nlt MULTIPOLYGON
+
 # GeoPackage → Shapefile
 mkdir -p shapefiles
-for layer in roads waterways buildings landuse poi; do
-  ogr2ogr -f 'ESRI Shapefile' "shapefiles/${layer}.shp" data/kobar.gpkg "$layer" -lco ENCODING=UTF-8
+for layer in kabupaten kecamatan desa pusat_kecamatan; do
+  ogr2ogr -f 'ESRI Shapefile' "shapefiles/${layer}.shp" data/batas_admin.gpkg "$layer" -lco ENCODING=UTF-8
 done
 ```
 
