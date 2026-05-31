@@ -1,9 +1,9 @@
-# Geospatial First — Kotawaringin Barat
+# AWCMS Geospatial (`awcms-geospatial` / `awcms-geospatialTemplate`)
 
-AI-assisted geospatial data management and professional map generation for Kotawaringin Barat Regency, Central Kalimantan.
+Independent geospatial plugin/template workspace for Kotawaringin Barat Regency, Central Kalimantan.
 
-This repo is geospatial-first and can be integrated with AWCMS-Micro as an external job boundary.
-See `docs/guides/awcms-micro-compatibility.md` for safe extension rules.
+This repo stays independent while using AWCMS-Micro and EmDash as compatibility references.
+See `docs/guides/awcms-geospatial-plugin.md` for the plugin/template rules.
 
 For the quick start, see `docs/guides/sopd-quick-start.md`.
 For the master manual, see `docs/guides/manual-automatic-map-production.md`.
@@ -25,11 +25,13 @@ python3 shared/scripts/generate_professional_map.py \
 
 Warning: if output filenames already exist, they will be overwritten.
 
-## AWCMS-Micro Compatibility
+## Plugin Identity
 
-- Use `shared/config/awcms-micro.env.example` as the host-side environment template.
-- Keep protected AWCMS-Micro internals out of this repository.
-- Prefer env or CLI overrides over hard-coded paths when adding new scripts.
+- Plugin name: `awcms-geospatial`
+- Template name: `awcms-geospatialTemplate`
+- Use `shared/config/awcms-geospatial.env.example` as the canonical plugin config template.
+- Use `shared/config/awcms-geospatialTemplate.env.example` for template-specific overrides.
+- Legacy `GEOFIRST_*` env vars remain supported as fallback only.
 
 Typical inputs:
 - CSV / GeoJSON / VRT / GeoPackage point data
@@ -63,7 +65,7 @@ Use the project GeoPackage when available. The generator will prefer `projects/<
 ## Repository Structure
 
 ```
-geo-first/
+awcms-geospatial/
 ├── projects/                    # Isolated project workspaces
 │   ├── faskes-kobar/           # Health facilities map project
 │   │   └── output/             # Generated maps (PNG/PDF/SVG)

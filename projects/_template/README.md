@@ -1,9 +1,10 @@
-# {{project-name}}
+# {{project-name}} (`awcms-geospatialTemplate`)
 
-Geospatial map project for Kotawaringin Barat Regency.
+Geospatial map project scaffold for the `awcms-geospatialTemplate` template.
 
 For the quick start, see `../../docs/guides/sopd-quick-start.md`.
 For the master manual, see `../../docs/guides/manual-automatic-map-production.md`.
+For plugin rules, see `../../docs/guides/awcms-geospatial-plugin.md`.
 
 ## Project Structure
 

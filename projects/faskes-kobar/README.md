@@ -1,9 +1,10 @@
-# Faskes Kotawaringin Barat
+# Faskes Kotawaringin Barat (`awcms-geospatial` sample)
 
-Health facility (fasilitas kesehatan) map project for Kotawaringin Barat Regency, Central Kalimantan.
+Health facility map project for the `awcms-geospatial` plugin.
 
 For the quick start, see `../../docs/guides/sopd-quick-start.md`.
 For the master manual, see `../../docs/guides/manual-automatic-map-production.md`.
+For plugin rules, see `../../docs/guides/awcms-geospatial-plugin.md`.
 
 ## Project Structure
 

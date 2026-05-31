@@ -43,11 +43,11 @@ def configure_paths(project_dir: Optional[Path] = None, shapefile_path: Optional
     """Override default paths without changing legacy behavior."""
     global PROJECT_DIR, SHAPEFILE_PATH, KECAMATAN_SHP, DESA_SHP, OUTPUT_DIR
 
-    env_project_dir = os.getenv('GEOFIRST_PROJECT_DIR')
-    env_shapefile_path = os.getenv('GEOFIRST_SHAPEFILE_PATH')
-    env_kecamatan_shp = os.getenv('GEOFIRST_KECAMATAN_SHP')
-    env_desa_shp = os.getenv('GEOFIRST_DESA_SHP')
-    env_output_dir = os.getenv('GEOFIRST_OUTPUT_DIR')
+    env_project_dir = os.getenv('AWCMS_GEOSPATIAL_PROJECT_DIR') or os.getenv('GEOFIRST_PROJECT_DIR')
+    env_shapefile_path = os.getenv('AWCMS_GEOSPATIAL_SHAPEFILE_PATH') or os.getenv('GEOFIRST_SHAPEFILE_PATH')
+    env_kecamatan_shp = os.getenv('AWCMS_GEOSPATIAL_KECAMATAN_SHP') or os.getenv('GEOFIRST_KECAMATAN_SHP')
+    env_desa_shp = os.getenv('AWCMS_GEOSPATIAL_DESA_SHP') or os.getenv('GEOFIRST_DESA_SHP')
+    env_output_dir = os.getenv('AWCMS_GEOSPATIAL_OUTPUT_DIR') or os.getenv('GEOFIRST_OUTPUT_DIR')
 
     if project_dir is not None:
         PROJECT_DIR = project_dir

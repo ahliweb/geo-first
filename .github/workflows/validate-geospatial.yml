@@ -33,6 +33,23 @@ jobs:
               print(f'OK: {path}')
           PY
 
+      - name: Validate AWCMS Geospatial manifests
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          manifest_files = [
+              Path('shared/config/awcms-geospatial.plugin.json'),
+              Path('shared/config/awcms-geospatialTemplate.plugin.json'),
+          ]
+          for path in manifest_files:
+              data = json.loads(path.read_text(encoding='utf-8'))
+              if not data.get('name'):
+                  raise SystemExit(f'Missing name in {path}')
+              print(f'OK: {path}')
+          PY
+
       - name: Validate license presence
         run: |
           python - <<'PY'

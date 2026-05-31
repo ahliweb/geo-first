@@ -44,8 +44,8 @@ def configure_paths(project_file: Optional[Path] = None, output_dir: Optional[Pa
     """Override default paths without changing legacy behavior."""
     global PROJECT_FILE, OUTPUT_DIR
 
-    env_project_file = os.getenv('GEOFIRST_PROJECT_FILE')
-    env_output_dir = os.getenv('GEOFIRST_OUTPUT_DIR')
+    env_project_file = os.getenv('AWCMS_GEOSPATIAL_PROJECT_FILE') or os.getenv('GEOFIRST_PROJECT_FILE')
+    env_output_dir = os.getenv('AWCMS_GEOSPATIAL_OUTPUT_DIR') or os.getenv('GEOFIRST_OUTPUT_DIR')
 
     if project_file is not None:
         PROJECT_FILE = project_file

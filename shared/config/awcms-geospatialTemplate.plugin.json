@@ -1,0 +1,12 @@
+{
+  "name": "awcms-geospatialTemplate",
+  "displayName": "AWCMS Geospatial Template",
+  "kind": "template",
+  "plugin": "awcms-geospatial",
+  "version": "1.0.0",
+  "envPrefix": "AWCMS_GEOSPATIAL_",
+  "scaffold": {
+    "projectTemplate": "projects/_template",
+    "defaultProject": "projects/faskes-kobar"
+  }
+}

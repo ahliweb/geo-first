@@ -1,10 +1,14 @@
-# AWCMS-Micro Compatibility Guide
+# Deprecated Compatibility Guide
 
-This repository stays geospatial-first. It does not replace protected AWCMS-Micro scripts.
+This guide is retained for legacy references.
+
+Use `docs/guides/awcms-geospatial-plugin.md` as the canonical plugin/template guide.
+
+This repository stays independent and does not replace protected AWCMS-Micro scripts.
 
 ## Compatibility Rules
 
-- Treat `geo-first` as a job boundary and data workspace.
+- Treat `awcms-geospatial` as a job boundary and data workspace.
 - Keep plugin-host logic thin in AWCMS-Micro.
 - Do not copy or rewrite protected AWCMS-Micro internals into this repo.
 - Use local path overrides and env-based configuration when the host provides them.
@@ -26,7 +30,7 @@ This repository stays geospatial-first. It does not replace protected AWCMS-Micr
 ## Environment Strategy
 
 If a root `.env` exists, prefer it for local overrides.
-If not, use `shared/config/awcms-micro.env.example` as the reference template.
+If not, use `shared/config/awcms-geospatial.env.example` as the reference template.
 
 ## Migration Goal
 

@@ -1,0 +1,19 @@
+{
+  "name": "awcms-geospatial",
+  "displayName": "AWCMS Geospatial",
+  "kind": "plugin",
+  "template": "awcms-geospatialTemplate",
+  "version": "1.0.0",
+  "compatibility": {
+    "awcmsMicro": true,
+    "emdashReference": true,
+    "legacyPrefixFallback": "GEOFIRST_"
+  },
+  "envPrefix": "AWCMS_GEOSPATIAL_",
+  "safeAreas": [
+    "shared/scripts/",
+    "shared/config/",
+    "projects/_template/",
+    "docs/"
+  ]
+}

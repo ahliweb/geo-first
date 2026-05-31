@@ -1,11 +1,11 @@
 # AGENTS.md — AI Agent Guidelines for Geospatial Project Management
 
-This repository manages geospatial data projects for Kotawaringin Barat Regency, Central Kalimantan. Follow these guidelines when working with this repository.
+This repository manages the independent `awcms-geospatial` plugin/template workspace for Kotawaringin Barat Regency, Central Kalimantan. Follow these guidelines when working with this repository.
 
 ## Architecture
 
 ```
-geo-first/
+awcms-geospatial/
 ├── projects/                    # Isolated project workspaces
 │   ├── <project-name>/         # Each map project gets its own directory
 │   │   ├── data/               # Project-specific GeoPackage/CSV sources
@@ -35,6 +35,13 @@ geo-first/
 ```
 
 ## Project Lifecycle
+
+### Plugin Identity
+
+- Canonical plugin name: `awcms-geospatial`
+- Canonical template name: `awcms-geospatialTemplate`
+- Keep AWCMS-Micro and EmDash references at the compatibility boundary only.
+- Do not reimplement protected host internals in this repository.
 
 ### 1. Initialize Project
 
@@ -99,7 +106,7 @@ python3 shared/scripts/generate_professional_map.py \
 
 Or use PyQGIS directly (see `shared/scripts/` for templates).
 
-For SOPD workflows, prefer the sector profile registry in `shared/config/sector_profiles.json` and keep `kabupaten`, `kecamatan`, and `desa` as the base map.
+For plugin/template workflows, prefer the sector profile registry in `shared/config/sector_profiles.json` and keep `kabupaten`, `kecamatan`, and `desa` as the base map.
 
 ### 4a. Automatic Map Workflow From Coordinates
 
@@ -142,6 +149,8 @@ Prefer GeoPackage-first packaging. Treat shapefiles as interchange artifacts, no
 - **Layers**: Match filename without extension
 - **Metadata**: `theme_metadata.xml` in `projects/<name>/metadata/`
 - **Projects**: `project-name` (kebab-case) — e.g., `faskes-kobar`, `sekolah-kobar`
+- **Plugin**: `awcms-geospatial`
+- **Template**: `awcms-geospatialTemplate`
 - **Outputs**: `peta_<theme>_<region>.<ext>` — e.g., `peta_faskes_kobar.png`
 - **Base map**: always include `kabupaten`, `kecamatan`, and `desa` before thematic layers
 - **Final state example**: `projects/faskes-kobar/data/faskes_kobar.gpkg` contains 94 villages and 10 health-facility points, with exports in `projects/faskes-kobar/output/`
