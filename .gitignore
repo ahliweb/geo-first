@@ -31,6 +31,9 @@ __pycache__/
 *.zip
 *.tar.gz
 
+# Upstream vendor snapshot runtime state
+upstream/awcms-micro/.wrangler/
+
 # IDE
 .vscode/
 .idea/

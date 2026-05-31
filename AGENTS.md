@@ -43,6 +43,12 @@ awcms-geospatial/
 - Keep AWCMS-Micro and EmDash references at the compatibility boundary only.
 - Do not reimplement protected host internals in this repository.
 
+### Upstream Snapshot
+
+- `upstream/awcms-micro/` is a read-only vendor snapshot of the upstream AWCMS-Micro workspace.
+- Refresh it with `scripts/sync-awcms-micro-upstream.sh` when you need a newer upstream baseline.
+- Do not place active geospatial work inside the snapshot tree.
+
 ### 1. Initialize Project
 
 ```bash

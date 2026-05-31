@@ -33,6 +33,13 @@ Warning: if output filenames already exist, they will be overwritten.
 - Use `shared/config/awcms-geospatialTemplate.env.example` for template-specific overrides.
 - Legacy `GEOFIRST_*` env vars remain supported as fallback only.
 
+## Upstream Snapshot
+
+- Read-only upstream reference: `upstream/awcms-micro/`
+- Refresh script: `scripts/sync-awcms-micro-upstream.sh`
+- Snapshot sync marker: `upstream/awcms-micro/.upstream-commit`
+- Treat the snapshot as vendor/reference material, not active geospatial source.
+
 Typical inputs:
 - CSV / GeoJSON / VRT / GeoPackage point data
 - Base map layers: `kabupaten`, `kecamatan`, `desa`
