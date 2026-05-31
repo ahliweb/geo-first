@@ -43,24 +43,44 @@ def configure_paths(project_dir: Optional[Path] = None, shapefile_path: Optional
     """Override default paths without changing legacy behavior."""
     global PROJECT_DIR, SHAPEFILE_PATH, KECAMATAN_SHP, DESA_SHP, OUTPUT_DIR
 
+    env_project_dir = os.getenv('GEOFIRST_PROJECT_DIR')
+    env_shapefile_path = os.getenv('GEOFIRST_SHAPEFILE_PATH')
+    env_kecamatan_shp = os.getenv('GEOFIRST_KECAMATAN_SHP')
+    env_desa_shp = os.getenv('GEOFIRST_DESA_SHP')
+    env_output_dir = os.getenv('GEOFIRST_OUTPUT_DIR')
+
     if project_dir is not None:
         PROJECT_DIR = project_dir
+    elif env_project_dir:
+        PROJECT_DIR = Path(env_project_dir)
+
     if shapefile_path is not None:
         SHAPEFILE_PATH = shapefile_path
+    elif env_shapefile_path:
+        SHAPEFILE_PATH = Path(env_shapefile_path)
     else:
         SHAPEFILE_PATH = PROJECT_DIR / 'shapefiles' / 'faskes.shp'
 
     if kecamatan_shp is not None:
         KECAMATAN_SHP = kecamatan_shp
+    elif env_kecamatan_shp:
+        KECAMATAN_SHP = Path(env_kecamatan_shp)
     else:
         KECAMATAN_SHP = REPO_ROOT / 'shared' / 'shapefiles' / 'kecamatan.shp'
 
     if desa_shp is not None:
         DESA_SHP = desa_shp
+    elif env_desa_shp:
+        DESA_SHP = Path(env_desa_shp)
     else:
         DESA_SHP = REPO_ROOT / 'shared' / 'shapefiles' / 'desa.shp'
 
-    OUTPUT_DIR = output_dir or (PROJECT_DIR / 'output')
+    if output_dir is not None:
+        OUTPUT_DIR = output_dir
+    elif env_output_dir:
+        OUTPUT_DIR = Path(env_output_dir)
+    else:
+        OUTPUT_DIR = PROJECT_DIR / 'output'
 
 # --- GDAL-based SVG export (no QGIS required) ---
 def export_svg_gdal():

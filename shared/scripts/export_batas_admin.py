@@ -26,8 +26,9 @@ Output:
     projects/faskes-kobar/output/batas_admin_per_kecamatan.png (satu PNG per kecamatan)
 """
 
-import os, sys, subprocess, warnings
+import os, sys, subprocess, warnings, argparse
 from pathlib import Path
+from typing import Optional
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 warnings.filterwarnings('ignore', category=FutureWarning)
@@ -37,6 +38,23 @@ PROJECT_FILE = REPO_ROOT / 'shared' / 'qgis' / 'batas_admin_kobar.qgs'
 OUTPUT_DIR = REPO_ROOT / 'projects' / 'faskes-kobar' / 'output'
 EXPORT_DPI = 300
 EXPORT_SIZE_MM = (210, 297)  # A4
+
+
+def configure_paths(project_file: Optional[Path] = None, output_dir: Optional[Path] = None) -> None:
+    """Override default paths without changing legacy behavior."""
+    global PROJECT_FILE, OUTPUT_DIR
+
+    env_project_file = os.getenv('GEOFIRST_PROJECT_FILE')
+    env_output_dir = os.getenv('GEOFIRST_OUTPUT_DIR')
+
+    if project_file is not None:
+        PROJECT_FILE = project_file
+    elif env_project_file:
+        PROJECT_FILE = Path(env_project_file)
+    if output_dir is not None:
+        OUTPUT_DIR = output_dir
+    elif env_output_dir:
+        OUTPUT_DIR = Path(env_output_dir)
 
 # --- Setup QGIS environment ---
 try:
@@ -298,8 +316,16 @@ def export_standalone_no_qgis():
     ds = None
 
 
-# --- MAIN ---
-if __name__ == '__main__':
+def main(argv=None):
+    parser = argparse.ArgumentParser(description='Export administrative boundary maps for Kotawaringin Barat')
+    parser.add_argument('--project-file', type=Path, default=PROJECT_FILE,
+                        help='QGIS project file to load')
+    parser.add_argument('--output-dir', type=Path, default=OUTPUT_DIR,
+                        help='Directory to write exports to')
+    args = parser.parse_args(argv)
+
+    configure_paths(project_file=args.project_file, output_dir=args.output_dir)
+
     print('='*60)
     print('  Peta Batas Administrasi - Kotawaringin Barat')
     print('='*60)
@@ -320,3 +346,7 @@ if __name__ == '__main__':
         export_standalone_no_qgis()
         print('\n✓ Done. For full QGIS export, run inside QGIS Python Console.')
         print('  QGIS Console: Plugins → Python Console → exec(open("shared/scripts/export_batas_admin.py").read())')
+
+
+if __name__ == '__main__':
+    main()

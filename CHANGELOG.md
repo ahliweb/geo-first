@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Spatial planning maps (RTRW)
 - AWCMS-Micro plugin refactor assessment and adapter boundary
 - Parameterize legacy export scripts for reusable job invocation
+- AWCMS-Micro compatibility bridge and env-driven path overrides
 
 ---
 

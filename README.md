@@ -2,6 +2,9 @@
 
 AI-assisted geospatial data management and professional map generation for Kotawaringin Barat Regency, Central Kalimantan.
 
+This repo is geospatial-first and can be integrated with AWCMS-Micro as an external job boundary.
+See `docs/guides/awcms-micro-compatibility.md` for safe extension rules.
+
 For the quick start, see `docs/guides/sopd-quick-start.md`.
 For the master manual, see `docs/guides/manual-automatic-map-production.md`.
 PDF copy: `docs/guides/manual-automatic-map-production.pdf`
@@ -21,6 +24,12 @@ python3 shared/scripts/generate_professional_map.py \
 ```
 
 Warning: if output filenames already exist, they will be overwritten.
+
+## AWCMS-Micro Compatibility
+
+- Use `shared/config/awcms-micro.env.example` as the host-side environment template.
+- Keep protected AWCMS-Micro internals out of this repository.
+- Prefer env or CLI overrides over hard-coded paths when adding new scripts.
 
 Typical inputs:
 - CSV / GeoJSON / VRT / GeoPackage point data
