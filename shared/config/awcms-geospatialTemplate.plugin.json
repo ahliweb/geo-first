@@ -4,6 +4,7 @@
   "kind": "template",
   "plugin": "awcms-geospatial",
   "version": "1.0.0",
+  "defaultEnabled": true,
   "envPrefix": "AWCMS_GEOSPATIAL_",
   "scaffold": {
     "projectTemplate": "projects/_template",

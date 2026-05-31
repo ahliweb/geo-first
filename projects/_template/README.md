@@ -23,12 +23,7 @@ For plugin rules, see `../../docs/guides/awcms-geospatial-plugin.md`.
 ## Generate Maps
 
 ```bash
-python3 ../../shared/scripts/generate_professional_map.py \
-  --project projects/{{project-name}} \
-  --sector admin \
-  --layers my-layer \
-  --output-format png,pdf,svg \
-  --dpi 300
+python3 ../../shared/scripts/generate_professional_map.py
 ```
 
 ## Base Map Convention

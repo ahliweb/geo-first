@@ -4,6 +4,9 @@
   "kind": "plugin",
   "template": "awcms-geospatialTemplate",
   "version": "1.0.0",
+  "defaultEnabled": true,
+  "adminEnabledByDefault": true,
+  "publicEnabledByDefault": true,
   "compatibility": {
     "awcmsMicro": true,
     "emdashReference": true,

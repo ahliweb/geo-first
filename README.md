@@ -11,16 +11,20 @@ PDF copy: `docs/guides/manual-automatic-map-production.pdf`
 
 ## Quick Start
 
+### Bootstrap the Repository
+
+```bash
+bash scripts/setup-awcms-geospatial.sh
+```
+
+The setup script creates a local `.env` from `shared/config/awcms-geospatial.env.example` when needed.
+The core scripts automatically load `.env` if it exists.
+
 ### Generate a Professional Map
 
 ```bash
 # Using the shared script (recommended)
-python3 shared/scripts/generate_professional_map.py \
-  --project projects/faskes-kobar \
-  --sector health \
-  --layers faskes \
-  --output-format png,pdf,svg \
-  --dpi 300
+python3 shared/scripts/generate_professional_map.py
 ```
 
 Warning: if output filenames already exist, they will be overwritten.

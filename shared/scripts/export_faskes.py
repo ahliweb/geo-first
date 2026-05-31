@@ -26,6 +26,10 @@ from pathlib import Path
 from collections import Counter, defaultdict
 from typing import Optional
 
+from env_loader import load_repo_env
+
+load_repo_env()
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_DIR = REPO_ROOT / 'projects' / 'faskes-kobar'
 warnings.filterwarnings('ignore', category=FutureWarning)
@@ -260,15 +264,16 @@ def export_qgis():
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description='Export health facility maps for Kotawaringin Barat')
-    parser.add_argument('--project-dir', type=Path, default=PROJECT_DIR,
+    default_project_dir = Path(os.getenv('AWCMS_GEOSPATIAL_PROJECT_DIR') or os.getenv('GEOFIRST_PROJECT_DIR') or str(PROJECT_DIR))
+    parser.add_argument('--project-dir', type=Path, default=default_project_dir,
                         help='Project directory (default: projects/faskes-kobar)')
-    parser.add_argument('--shapefile-path', type=Path, default=None,
+    parser.add_argument('--shapefile-path', type=Path, default=Path(os.getenv('AWCMS_GEOSPATIAL_SHAPEFILE_PATH') or os.getenv('GEOFIRST_SHAPEFILE_PATH') or str(default_project_dir / 'shapefiles' / 'faskes.shp')),
                         help='Path to thematic shapefile (default: <project-dir>/shapefiles/faskes.shp)')
-    parser.add_argument('--kecamatan-shp', type=Path, default=None,
+    parser.add_argument('--kecamatan-shp', type=Path, default=Path(os.getenv('AWCMS_GEOSPATIAL_KECAMATAN_SHP') or os.getenv('GEOFIRST_KECAMATAN_SHP') or str(REPO_ROOT / 'shared' / 'shapefiles' / 'kecamatan.shp')),
                         help='Path to kecamatan boundary shapefile')
-    parser.add_argument('--desa-shp', type=Path, default=None,
+    parser.add_argument('--desa-shp', type=Path, default=Path(os.getenv('AWCMS_GEOSPATIAL_DESA_SHP') or os.getenv('GEOFIRST_DESA_SHP') or str(REPO_ROOT / 'shared' / 'shapefiles' / 'desa.shp')),
                         help='Path to desa boundary shapefile')
-    parser.add_argument('--output-dir', type=Path, default=None,
+    parser.add_argument('--output-dir', type=Path, default=Path(os.getenv('AWCMS_GEOSPATIAL_OUTPUT_DIR') or os.getenv('GEOFIRST_OUTPUT_DIR') or str(default_project_dir / 'output')),
                         help='Output directory (default: <project-dir>/output)')
     args = parser.parse_args(argv)
 

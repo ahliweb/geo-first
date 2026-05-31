@@ -35,6 +35,12 @@ This repository is the independent geospatial workspace for the `awcms-geospatia
 3. Prefer declarative config over hard-coded paths.
 4. Avoid copying protected AWCMS-Micro internals into this repo.
 
+## Local Setup
+
+- Run `bash scripts/setup-awcms-geospatial.sh` after clone to create `.env` when it does not exist.
+- The Python automation scripts auto-load `.env` from the repository root.
+- Default map generation targets `projects/faskes-kobar/` with the `health` sector and `faskes` layer unless overridden.
+
 ## License
 
 This repository is licensed under the AW Non-Commercial License 1.0.

@@ -30,12 +30,7 @@ faskes-kobar/
 ## Generate Maps
 
 ```bash
-python3 ../../shared/scripts/generate_professional_map.py \
-  --project projects/faskes-kobar \
-  --sector health \
-  --layers faskes \
-  --output-format png,pdf,svg \
-  --dpi 300
+python3 ../../shared/scripts/generate_professional_map.py
 ```
 
 ## Output Files

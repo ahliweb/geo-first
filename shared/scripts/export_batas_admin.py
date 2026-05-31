@@ -30,6 +30,10 @@ import os, sys, subprocess, warnings, argparse
 from pathlib import Path
 from typing import Optional
 
+from env_loader import load_repo_env
+
+load_repo_env()
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 warnings.filterwarnings('ignore', category=FutureWarning)
 
@@ -318,9 +322,11 @@ def export_standalone_no_qgis():
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description='Export administrative boundary maps for Kotawaringin Barat')
-    parser.add_argument('--project-file', type=Path, default=PROJECT_FILE,
+    default_project_file = Path(os.getenv('AWCMS_GEOSPATIAL_PROJECT_FILE') or os.getenv('GEOFIRST_PROJECT_FILE') or str(PROJECT_FILE))
+    default_output_dir = Path(os.getenv('AWCMS_GEOSPATIAL_OUTPUT_DIR') or os.getenv('GEOFIRST_OUTPUT_DIR') or str(OUTPUT_DIR))
+    parser.add_argument('--project-file', type=Path, default=default_project_file,
                         help='QGIS project file to load')
-    parser.add_argument('--output-dir', type=Path, default=OUTPUT_DIR,
+    parser.add_argument('--output-dir', type=Path, default=default_output_dir,
                         help='Directory to write exports to')
     args = parser.parse_args(argv)
 

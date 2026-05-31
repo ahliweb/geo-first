@@ -39,6 +39,10 @@ python3 shared/scripts/generate_big_metadata.py \
 5. Render the map:
 
 ```bash
+# Uses .env defaults after `bash scripts/setup-awcms-geospatial.sh`
+python3 shared/scripts/generate_professional_map.py
+
+# Or override the defaults explicitly:
 python3 shared/scripts/generate_professional_map.py \
   --project projects/<project-name> \
   --sector <sector-name> \

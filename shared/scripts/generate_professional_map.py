@@ -24,6 +24,9 @@ import warnings
 from pathlib import Path
 
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+from env_loader import load_repo_env
+
+load_repo_env()
 warnings.filterwarnings('ignore', category=FutureWarning)
 
 from qgis.core import *
@@ -826,10 +829,14 @@ def generate_map(project_dir, sector, layers_config, output_formats, dpi=300):
 
 def main():
     parser = argparse.ArgumentParser(description='Generate professional geospatial maps')
-    parser.add_argument('--project', required=True, help='Project directory path')
-    parser.add_argument('--sector', default='admin', help='Sector profile name (admin, health, infrastructure, education, public_works, agriculture)')
-    parser.add_argument('--layers', default='', help='Comma-separated extra layer names')
-    parser.add_argument('--output-format', default='png,pdf,svg', help='Output formats (comma-separated)')
+    default_project = os.getenv('AWCMS_GEOSPATIAL_PROJECT_DIR') or os.getenv('GEOFIRST_PROJECT_DIR') or 'projects/faskes-kobar'
+    default_sector = os.getenv('AWCMS_GEOSPATIAL_DEFAULT_SECTOR') or os.getenv('GEOFIRST_DEFAULT_SECTOR') or 'admin'
+    default_layers = os.getenv('AWCMS_GEOSPATIAL_DEFAULT_LAYERS') or os.getenv('GEOFIRST_DEFAULT_LAYERS') or ''
+    default_formats = os.getenv('AWCMS_GEOSPATIAL_DEFAULT_OUTPUT_FORMATS') or os.getenv('GEOFIRST_DEFAULT_OUTPUT_FORMATS') or 'png,pdf,svg'
+    parser.add_argument('--project', default=default_project, help='Project directory path')
+    parser.add_argument('--sector', default=default_sector, help='Sector profile name (admin, health, infrastructure, education, public_works, agriculture)')
+    parser.add_argument('--layers', default=default_layers, help='Comma-separated extra layer names')
+    parser.add_argument('--output-format', default=default_formats, help='Output formats (comma-separated)')
     parser.add_argument('--dpi', type=int, default=300, help='DPI for PNG export')
 
     args = parser.parse_args()
