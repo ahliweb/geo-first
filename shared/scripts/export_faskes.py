@@ -21,9 +21,10 @@ Output:
     projects/faskes-kobar/output/faskes_summary.csv
 """
 
-import os, sys, csv, subprocess, warnings
+import os, sys, csv, subprocess, warnings, argparse
 from pathlib import Path
 from collections import Counter, defaultdict
+from typing import Optional
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_DIR = REPO_ROOT / 'projects' / 'faskes-kobar'
@@ -34,6 +35,32 @@ SHAPEFILE_PATH = PROJECT_DIR / 'shapefiles' / 'faskes.shp'
 KECAMATAN_SHP = REPO_ROOT / 'shared' / 'shapefiles' / 'kecamatan.shp'
 DESA_SHP = REPO_ROOT / 'shared' / 'shapefiles' / 'desa.shp'
 OUTPUT_DIR = PROJECT_DIR / 'output'
+
+
+def configure_paths(project_dir: Optional[Path] = None, shapefile_path: Optional[Path] = None,
+                    kecamatan_shp: Optional[Path] = None, desa_shp: Optional[Path] = None,
+                    output_dir: Optional[Path] = None) -> None:
+    """Override default paths without changing legacy behavior."""
+    global PROJECT_DIR, SHAPEFILE_PATH, KECAMATAN_SHP, DESA_SHP, OUTPUT_DIR
+
+    if project_dir is not None:
+        PROJECT_DIR = project_dir
+    if shapefile_path is not None:
+        SHAPEFILE_PATH = shapefile_path
+    else:
+        SHAPEFILE_PATH = PROJECT_DIR / 'shapefiles' / 'faskes.shp'
+
+    if kecamatan_shp is not None:
+        KECAMATAN_SHP = kecamatan_shp
+    else:
+        KECAMATAN_SHP = REPO_ROOT / 'shared' / 'shapefiles' / 'kecamatan.shp'
+
+    if desa_shp is not None:
+        DESA_SHP = desa_shp
+    else:
+        DESA_SHP = REPO_ROOT / 'shared' / 'shapefiles' / 'desa.shp'
+
+    OUTPUT_DIR = output_dir or (PROJECT_DIR / 'output')
 
 # --- GDAL-based SVG export (no QGIS required) ---
 def export_svg_gdal():
@@ -211,8 +238,28 @@ def export_qgis():
         print(f'❌ Professional export failed with code {result.returncode}')
 
 
-# --- MAIN ---
-if __name__ == '__main__':
+def main(argv=None):
+    parser = argparse.ArgumentParser(description='Export health facility maps for Kotawaringin Barat')
+    parser.add_argument('--project-dir', type=Path, default=PROJECT_DIR,
+                        help='Project directory (default: projects/faskes-kobar)')
+    parser.add_argument('--shapefile-path', type=Path, default=None,
+                        help='Path to thematic shapefile (default: <project-dir>/shapefiles/faskes.shp)')
+    parser.add_argument('--kecamatan-shp', type=Path, default=None,
+                        help='Path to kecamatan boundary shapefile')
+    parser.add_argument('--desa-shp', type=Path, default=None,
+                        help='Path to desa boundary shapefile')
+    parser.add_argument('--output-dir', type=Path, default=None,
+                        help='Output directory (default: <project-dir>/output)')
+    args = parser.parse_args(argv)
+
+    configure_paths(
+        project_dir=args.project_dir,
+        shapefile_path=args.shapefile_path,
+        kecamatan_shp=args.kecamatan_shp,
+        desa_shp=args.desa_shp,
+        output_dir=args.output_dir,
+    )
+
     print('=' * 55)
     print('  Export Peta Fasilitas Kesehatan')
     print('  Kabupaten Kotawaringin Barat')
@@ -228,3 +275,7 @@ if __name__ == '__main__':
 
     print(f'\n✓ Output: {OUTPUT_DIR}/')
     print('  Buka faskes_kobar.svg di browser untuk preview.')
+
+
+if __name__ == '__main__':
+    main()
