@@ -26,6 +26,8 @@ For plugin rules, see `../../docs/guides/awcms-geospatial-plugin.md`.
 python3 ../../shared/scripts/generate_professional_map.py
 ```
 
+After `bash scripts/setup-awcms-geospatial.sh`, the repository defaults can be used without extra flags.
+
 ## Base Map Convention
 
 Use `kabupaten`, `kecamatan`, and `desa` as the default map base for BIG-compliant output.

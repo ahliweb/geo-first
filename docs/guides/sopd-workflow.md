@@ -29,6 +29,7 @@ Use `shared/config/sector_profiles.json` to select a sector profile:
 
 ## Typical Flow
 
+Before you start, run `bash scripts/setup-awcms-geospatial.sh` once after clone to create a local `.env`.
 1. Create a new project from `projects/_template/`.
 2. Add sector data into `projects/<project>/data/` and `shapefiles/` if needed, but prefer the GeoPackage workflow.
 3. Generate metadata with `shared/scripts/generate_big_metadata.py`.
@@ -39,12 +40,7 @@ Use `shared/config/sector_profiles.json` to select a sector profile:
 ## Example
 
 ```bash
-python3 shared/scripts/generate_professional_map.py \
-  --project projects/faskes-kobar \
-  --sector health \
-  --layers faskes \
-  --output-format png,pdf,svg \
-  --dpi 300
+python3 shared/scripts/generate_professional_map.py
 ```
 
 ## License

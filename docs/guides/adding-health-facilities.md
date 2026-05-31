@@ -91,6 +91,10 @@ ogr2ogr -f "ESRI Shapefile" \
 ## 3. Generate Map
 
 ```bash
+# Uses `.env` defaults after `bash scripts/setup-awcms-geospatial.sh`.
+python3 shared/scripts/generate_professional_map.py
+
+# Or override the defaults explicitly.
 python3 shared/scripts/generate_professional_map.py \
   --project projects/<name> \
   --sector health \

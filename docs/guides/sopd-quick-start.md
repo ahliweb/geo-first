@@ -21,6 +21,8 @@ Always use these as the base map:
 
 ## Fast Workflow
 
+Before you start, run `bash scripts/setup-awcms-geospatial.sh` once after clone to create a local `.env`.
+
 1. Put your source data into `projects/<project-name>/data/`.
 2. If needed, convert coordinate CSV to point data using VRT or `ogr2ogr`.
 3. Build or update `projects/<project-name>/data/<project-name>.gpkg`.
@@ -39,7 +41,6 @@ python3 shared/scripts/generate_big_metadata.py \
 5. Render the map:
 
 ```bash
-# Uses .env defaults after `bash scripts/setup-awcms-geospatial.sh`
 python3 shared/scripts/generate_professional_map.py
 
 # Or override the defaults explicitly:

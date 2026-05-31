@@ -31,6 +31,7 @@ This repository stays independent and does not replace protected AWCMS-Micro scr
 
 If a root `.env` exists, prefer it for local overrides.
 If not, use `shared/config/awcms-geospatial.env.example` as the reference template.
+After running `bash scripts/setup-awcms-geospatial.sh`, the geospatial scripts can run with repo-local defaults and no manual flag overrides.
 
 ## Migration Goal
 

@@ -33,6 +33,8 @@ faskes-kobar/
 python3 ../../shared/scripts/generate_professional_map.py
 ```
 
+After `bash scripts/setup-awcms-geospatial.sh`, the default sample project can be regenerated without extra flags.
+
 ## Output Files
 
 - `output/peta_faskes_kobar.png` — 300 DPI raster map

@@ -12,6 +12,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Planned
 - Population data per village (BPS)
 - Spatial planning maps (RTRW)
+
+---
+
+## [1.5.0] - 2026-05-31
+
+### Added
+- Repo bootstrap script (`scripts/setup-awcms-geospatial.sh`) to create a local `.env` from the canonical env template
+- Shared `.env` loader for Python automation scripts
+- Default-run behavior for the geospatial map generator and exporters
+- Plugin/template manifest defaults indicating the geospatial plugin is enabled in repo metadata
+
+### Changed
+- README, AGENTS, and operator guides updated for clone-and-setup workflow
+- `shared/scripts/generate_professional_map.py` now reads repo-local defaults from `.env`
+- `shared/scripts/export_faskes.py` and `shared/scripts/export_batas_admin.py` now honor repo-local defaults
+- Quick-start and project README examples now reflect the no-flag default workflow
 - AWCMS-Micro plugin refactor assessment and adapter boundary
 - Parameterize legacy export scripts for reusable job invocation
 - AWCMS-Micro compatibility bridge and env-driven path overrides

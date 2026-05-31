@@ -31,6 +31,7 @@ If you only need the shortest possible workflow, start here:
 
 ## Minimal Steps
 
+Before you start, run `bash scripts/setup-awcms-geospatial.sh` once after clone to create a local `.env`.
 1. Put source data in `projects/<project>/data/`.
 2. Create or update the project GeoPackage at `projects/<project>/data/<project>.gpkg`.
 3. Generate metadata.
@@ -64,6 +65,10 @@ python3 shared/scripts/generate_big_metadata.py \
 ### Render maps
 
 ```bash
+# Uses `.env` defaults after setup when you omit flags.
+python3 shared/scripts/generate_professional_map.py
+
+# Or override the defaults explicitly.
 python3 shared/scripts/generate_professional_map.py \
   --project projects/<project> \
   --sector <sector-name> \

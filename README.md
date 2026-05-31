@@ -19,6 +19,7 @@ bash scripts/setup-awcms-geospatial.sh
 
 The setup script creates a local `.env` from `shared/config/awcms-geospatial.env.example` when needed.
 The core scripts automatically load `.env` if it exists.
+The default `.env` settings target `projects/faskes-kobar/`, the `health` sector, and `faskes` outputs.
 
 ### Generate a Professional Map
 
@@ -72,6 +73,7 @@ python3 shared/scripts/generate_professional_map.py \
 ```
 
 Use the project GeoPackage when available. The generator will prefer `projects/<name>/data/<name>.gpkg` before shapefiles.
+For the default sample project, you can run `python3 shared/scripts/generate_professional_map.py` after setup and let `.env` supply the defaults.
 
 ## Repository Structure
 

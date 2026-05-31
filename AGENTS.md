@@ -54,6 +54,9 @@ awcms-geospatial/
 ```bash
 # Scaffold from template
 cp -r projects/_template projects/<project-name>
+
+# Bootstrap local defaults after clone
+bash scripts/setup-awcms-geospatial.sh
 ```
 
 ### 2. Acquire Source Data
@@ -129,6 +132,8 @@ Canonical workflow:
 5. Render the map with `shared/scripts/generate_professional_map.py`.
 6. Export PNG, PDF, SVG, and a reusable QGIS project.
 7. Warn users that same-named outputs are overwritten.
+
+The shared map generator can now run with `.env` defaults after `scripts/setup-awcms-geospatial.sh` has created a local `.env` file.
 
 Prefer GeoPackage-first packaging. Treat shapefiles as interchange artifacts, not the primary project source.
 

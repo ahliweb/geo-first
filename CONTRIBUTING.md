@@ -23,9 +23,10 @@ For commercial licensing inquiries, contact: [commercial@ahliweb.com](mailto:com
 ## Prerequisites
 
 1. Clone the repo: `git clone <repo-url>`
-2. Ensure GDAL is installed: `ogrinfo --version`
-3. QGIS 3.x for map preview
-4. Python 3 + `osgeo` for scripting
+2. Run `bash scripts/setup-awcms-geospatial.sh`
+3. Ensure GDAL is installed: `ogrinfo --version`
+4. QGIS 3.x for map preview
+5. Python 3 + `osgeo` for scripting
 
 ## Workflow
 
@@ -70,6 +71,8 @@ git checkout -b feat/add-<map-name>
 - Update `CHANGELOG.md` under `[Unreleased]`
 - Before merge, move to release version
 - Git tag: `git tag -a vX.Y.Z -m "description"`
+
+For workflow changes that alter repo bootstrap or default execution, prefer a `MINOR` bump.
 
 ### 6. Commit & Pull Request
 
